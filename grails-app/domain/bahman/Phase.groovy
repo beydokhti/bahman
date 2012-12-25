@@ -3,16 +3,17 @@ package bahman
 class Phase {
     String phase
     String comment
-    String organaization
-    String status //ok-nok-waiting
+    String organization
+    String status
     Date startDate
     Date endDate
+
     static constraints = {
-        status()
+        status(inList: ["OK", "NOK", "Waiting"])
         phase(blank: false)
         comment()
         startDate()
         endDate()
-        organaization()
+        organization()
     }
 }
