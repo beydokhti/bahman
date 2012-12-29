@@ -7,6 +7,7 @@
 		margin: 15px 0px;
 		padding: 0px;
 		text-align: center;
+        margin-right: 100px;
 	}
 
 	#login .inner {
@@ -48,18 +49,18 @@
 		font-weight: bold;
 		float: left;
 		text-align: right;
-		margin-left: -105px;
+		margin-left: -30px;
 		width: 110px;
 		padding-top: 3px;
 		padding-right: 10px;
 	}
 
 	#login #remember_me_holder {
-		padding-left: 120px;
+		padding-left: 20px;
 	}
 
 	#login #submit {
-		margin-left: 15px;
+		margin-right: 100px;
 	}
 
 	#login #remember_me_holder label {
@@ -95,18 +96,18 @@
 
 		<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
 			<p>
-				<label for='username'><g:message code="springSecurity.login.username.label"/>:</label>
+				<label for='username'><g:message code="springSecurity.login.username.label"/></label>
 				<input type='text' class='text_' name='j_username' id='username'/>
 			</p>
 
 			<p>
-				<label for='password'><g:message code="springSecurity.login.password.label"/>:</label>
+				<label for='password'><g:message code="springSecurity.login.password.label"/></label>
 				<input type='password' class='text_' name='j_password' id='password'/>
 			</p>
 
 			<p id="remember_me_holder">
-				<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-				<label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
+                <label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
+                <input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
 			</p>
 
 			<p>
