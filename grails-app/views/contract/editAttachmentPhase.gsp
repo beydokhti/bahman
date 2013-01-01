@@ -90,7 +90,7 @@
         function doSubmit(){
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
                     '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'O']"/>',
-                    undefined,undefined,{width:400})
+                    function(){window.location="<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance.id]"/>"},undefined,{width:400})
         }
         function doReject(){
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
@@ -161,10 +161,16 @@
             <td class="attachment-td"></td>
         </tr>
     </table>
-    <div>
-        <input type="button" onclick="doSubmit()" value="Submit">
-        <input type="button" onclick="doReject()" value="Reject">
-    </div>
+
+    <table>
+        <tr>
+            <td><input type="button" onclick="doSubmit()" value="Submit">
+                <input type="button" onclick="doReject()" value="Reject"></td>
+         <td><input type="text" name="desc"></td>
+        <td><g:link action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'O']">submit</g:link></td>
+
+        <tr>
+    </table>
 
 </div>
 </body>

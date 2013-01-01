@@ -69,7 +69,7 @@ class ContractController {
             else if(user instanceof Manufacturer){
                 desc = contract.manufacturerDesc
             }
-            if (user.code==code || user.description){
+            if (user.code==code || user.description==desc){
                 return [ contractInstance : contract ]
             }
 
@@ -77,7 +77,43 @@ class ContractController {
         }
     }
 
+    def showPhase = {
+        if (params.id){
+            def contract = Contract.findById( params.id )
+            def princ = springSecurityService.getPrincipal()
+            def code=""
+            def desc=""
 
+            if (princ instanceof GrailsUser && contract) {
+                def user = User.findByUsername(princ.username)
+
+                if (user instanceof Broker ) {
+                    def subRoleB = SubRole.findByRoleName("Dealer")
+                    def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
+                    if (!dealer ){
+                        code = contract.buyerBrokerCode
+                    }
+                    else if (dealer){
+                        code = contract.dealerBrokerCode
+                    }
+                }
+
+                else if (user instanceof Customer){
+                    code = contract.customerCode
+                }
+                else if(user instanceof Supplier){
+                    code = contract.supplierCode
+                }
+                else if(user instanceof Manufacturer){
+                    desc = contract.manufacturerDesc
+                }
+                if (user.code==code || user.description==desc){
+                    [ contractInstance : contract ]
+                }
+
+            }
+        }
+    }
     def list() {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {

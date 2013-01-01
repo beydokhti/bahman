@@ -68,9 +68,10 @@ class PhaseController {
         def contract = Contract.get(params.contractId)
         contract.addToPhases(phaseInstance)
         if (contract.save()){
-            render phaseInstance.id
+//            render phaseInstance.id
+//            redirect( controller: "contract",action: "showPhase", params: [id: contract.id])
         }
-        render(view: "show",controllerName:"contract", model: [id:contract.id])
+        render 0
     }
 
     def show() {
