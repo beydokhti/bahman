@@ -21,17 +21,24 @@ class AttachmentController {
     def create() {
         [attachmentInstance: new Attachment(params)]
     }
-
+    def deleteAttachment(){
+        def contract=Contract.get(params.contractId)
+        def att=Attachment.get(params.id)
+        contract.removeFromAttachments(att)
+        contract.save()
+        att.delete()
+        render 0;
+    }
     def save() {
         def attachmentInstance = new Attachment(params)
-        attachmentInstance.uploadDate=new Date()
-        attachmentInstance.status='P'
+        attachmentInstance.uploadDate = new Date()
+        attachmentInstance.status = 'P'
         def princ = springSecurityService.getPrincipal()
-        if (princ instanceof GrailsUser ) {
+        if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
             def org
-            if (user instanceof Broker || user instanceof Supplier ||user instanceof Manufacturer ){
-                attachmentInstance.responsible=user
+            if (user instanceof Broker || user instanceof Supplier || user instanceof Manufacturer) {
+                attachmentInstance.responsible = user
             }
 
         }
@@ -41,9 +48,19 @@ class AttachmentController {
             return
         }
         def contract = Contract.get(params.contractId)
-        contract.settlementCertificate= attachmentInstance
-        if (contract.save()){
-            render attachmentInstance.id
+        if (params.attr == "SC")
+            contract.settlementCertificate = attachmentInstance
+        if (params.attr == "VA")
+            contract.valueAddedTax = attachmentInstance
+        if (params.attr == "AF")
+            contract.applicationForm = attachmentInstance
+        if (params.attr == "Attachment")
+            contract.addToAttachments(attachmentInstance)
+        if (contract.save()) {
+            if (params.attr == "Attachment")
+                render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance])
+            else
+                render attachmentInstance.id
         }//attachmentInstance as JSON
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'attachment.label', default: 'Attachment'), attachmentInstance.id])
 //        redirect(action: "show", id: attachmentInstance.id)
@@ -59,7 +76,12 @@ class AttachmentController {
     }
 
     def form() {
-        def attachmentInstance = new Attachment()
+
+        def attachmentInstance
+        if (params.id)
+            attachmentInstance = Attachment.get(params.id)
+        else
+            attachmentInstance = new Attachment()
         render(template: 'form', model: [attachmentInstance: attachmentInstance])
     }
 
@@ -74,16 +96,30 @@ class AttachmentController {
         [attachmentInstance: attachmentInstance]
     }
 
-    def showDetails(){
+    def showDetails() {
         def contract = Contract.get(params.id)
-        def attachmentInstance = Attachment.get(contract.settlementCertificate.id)
-        if (attachmentInstance) {
-            render(view: "show", model: [attachmentInstance: attachmentInstance])
+        def attachmentInstance
+        if (params.att == 'SC')
+            attachmentInstance = Attachment.get(contract?.settlementCertificate?.id)
+        if (params.att == 'VA')
+            attachmentInstance = Attachment.get(contract?.valueAddedTax?.id)
+        if (params.att == 'AF')
+            attachmentInstance = Attachment.get(contract?.applicationForm?.id)
+        if (!attachmentInstance)
+            attachmentInstance = new Attachment()
 
-        }else{
-            false
-        }
+        render(view: "show", model: [attachmentInstance: attachmentInstance])
     }
+
+    def showAttachmentDetails() {
+        def attachmentInstance = Attachment.get(params.id)
+
+        if (!attachmentInstance)
+            attachmentInstance = new Attachment()
+
+        render(view: "show", model: [attachmentInstance: attachmentInstance])
+    }
+
     def edit() {
         def attachmentInstance = Attachment.get(params.id)
         if (!attachmentInstance) {

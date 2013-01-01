@@ -33,6 +33,9 @@
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/taglib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/test/unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/domain" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/test/integration" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -56,12 +59,6 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails/grails-datastore-mongo/jars/grails-datastore-mongo-1.0.0.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails/grails-datastore-gorm-test/jars/grails-datastore-gorm-test-1.0.7.RELEASE.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.geronimo.specs/geronimo-stax-api_1.0_spec/jars/geronimo-stax-api_1.0_spec-1.0.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/stax/stax-api/jars/stax-api-1.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.xmlbeans/xmlbeans/jars/xmlbeans-2.3.0.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.poi/poi-ooxml-schemas/jars/poi-ooxml-schemas-3.7.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.poi/poi-ooxml/jars/poi-ooxml-3.7.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.poi/poi/jars/poi-3.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
