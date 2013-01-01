@@ -1,21 +1,17 @@
 package bahman
-//
-//import jxl.*
-//import jxl.Workbook
 
-//import org.apache.poi.hssf.model.Sheet
-//import org.apache.poi.hssf.model.Workbook
+import fi.joensuu.joyds1.calendar.JalaliCalendar
+import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
+import org.grails.plugins.excelimport.ExpectedPropertyType
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
-//import org.springframework.web.multipart.MultipartHttpServletRequest
-//import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class ContractController {
     def springSecurityService
-    def PhaseService
+    def phaseService
+    def excelImportService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -189,7 +185,7 @@ class ContractController {
         def contract = new Contract(params)
         if(!contract.hasErrors() && contract.save()) {
             flash.message = "TekEvent ${contract.id} created"
-            PhaseService.addDefaultPhases(contract)
+            phaseService.addDefaultPhases(contract)
         }
     }
 
@@ -219,7 +215,68 @@ class ContractController {
         [contractInstance: contractInstance,lastPhase:lastPhase]
     }
 
-    def importExcel ={
+    def upload() {
+        def file = request.getFile('file')
+        def fileIs = new ByteArrayInputStream(file.bytes)
+        Map CONFIG_COLUMN_MAP = [
+                sheet: 'Sheet1',
+                startRow: 2,
+                columnMap: [
+                        'B': 'contractNo',
+                        'C': 'contractPartNo',
+                        'D': 'contractDate',
+                        'E': 'allotmentDate',
+                        'F': 'settlementDeadline',
+                        'G': 'settlementType',
+                        'H': 'buyerBrokerDesc',
+                        'I': 'dealerBrokerDesc',
+                        'J': 'customerDesc',
+                        'K': 'productSymbol',
+                        'L': 'productDesc',
+                        'M': 'totalShipments',
+                        'N': 'price',
+                        'O': 'contractType',
+                        'P': 'deliveryDate',
+                        'Q': 'manufacturerDesc',
+                        'R': 'deliveryPlace',
+                        'S': 'productMainGroup',
+                        'T': 'productGroup',
+                        'U': 'productSubGroup',
+                        'V': 'weight',
+                        'W': 'quantity',
+                        'X': 'buyerBrokerCode',
+                        'Y': 'dealerBrokerCode',
+                        'Z': 'customerCode',
+                        'AA': 'supplierCode',
+                        'AB': 'boursePrice',
+                        'AC': 'settlementDate',
+                        'AD': 'contractID',
+                        'AE': 'releaseDate'
+                ]
+        ]
+        Map propertyConfigurationMap = [:]
+        CONFIG_COLUMN_MAP.columnMap.each {key, value ->
+            propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
+        }
+        Workbook sb = new XSSFWorkbook(fileIs)
+        def dateFields = ["contractDate", "allotmentDate", "settlementDeadline", "deliveryDate", "settlementDate", "releaseDate"]
+        def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
+        res.each {
+            dateFields.each { field ->
+                def dateParts = it[field].split("/").collect {it as Integer}
+                JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
+                def gc = jc.toJavaUtilGregorianCalendar()
+                it[field] = 'date.struct'
+                it["${field}_year"] = gc.get(Calendar.YEAR) as String
+                it["${field}_month"] = gc.get(Calendar.MONTH) as String
+                it["${field}_day"] = gc.get(Calendar.DATE) as String
+            }
+            Contract contract = new Contract(it)
+            contract.importDate = new Date()
+            contract.save()
+            phaseService.addDefaultPhases(contract)
+        }
 
+        redirect(action: "list")
     }
 }

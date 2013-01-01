@@ -10,7 +10,6 @@
 <div id="list-contract"  class="content scaffold-list" role="main">
 <br>
 <g:form action="upload" method="post" enctype="multipart/form-data">
-    <rg:datePicker name="testDate"  id="testDate" already="true" value="${new java.util.Date()}"/>
     <label for="file">File:</label>
     <input type="file" name="file" id="file"/>
     <input class="save" type="submit" value="Upload"/>
