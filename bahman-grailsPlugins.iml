@@ -9,6 +9,7 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/famfamfam-1.0.1/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.24/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/dynamic-jasper-0.6/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -25,6 +26,11 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/dynamic-jasper-0.6/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/dynamic-jasper-0.6/grails-app/i18n" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/dynamic-jasper-0.6/grails-app/controllers" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/grails-app/services" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/famfamfam-1.0.1">
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/famfamfam-1.0.1/grails-app/taglib" isTestSource="false" />
@@ -70,6 +76,7 @@
       <library name="Grails User Library (bahman-grailsPlugins)">
         <CLASSES>
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/dynamic-jasper-0.6/lib" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.4.jar!/" />
@@ -84,10 +91,17 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails/grails-datastore-mongo/jars/grails-datastore-mongo-1.0.0.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.grails/grails-datastore-gorm-test/jars/grails-datastore-gorm-test-1.0.7.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.geronimo.specs/geronimo-stax-api_1.0_spec/jars/geronimo-stax-api_1.0_spec-1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/stax/stax-api/jars/stax-api-1.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.xmlbeans/xmlbeans/jars/xmlbeans-2.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.poi/poi-ooxml-schemas/jars/poi-ooxml-schemas-3.7.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.poi/poi-ooxml/jars/poi-ooxml-3.7.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.poi/poi/jars/poi-3.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/dynamic-jasper-0.6/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>

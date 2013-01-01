@@ -1,22 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Mary
-  Date: 1/1/13
-  Time: 9:28 AM
-  To change this template use File | Settings | File Templates.
---%>
-
-<%@ page contentType="text/html;charset=UTF-8" %>
+<!doctype html>
 <html>
 <head>
-  <title></title>
+    <meta name="layout" content="main">
+    <g:set var="entityName" value="${message(code: 'contract.label', default: 'Contract')}" />
+    <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
+
+<div id="list-contract"  class="content scaffold-list" role="main">
+<br>
 <g:form action="upload" method="post" enctype="multipart/form-data">
+    <rg:datePicker name="testDate"  id="testDate" already="true" value="${new java.util.Date()}"/>
     <label for="file">File:</label>
     <input type="file" name="file" id="file"/>
     <input class="save" type="submit" value="Upload"/>
 </g:form>
-
+</div>
 </body>
 </html>
