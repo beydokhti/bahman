@@ -1,27 +1,23 @@
 package bahman
-//
-//import jxl.*
-//import jxl.Workbook
 
-//import org.apache.poi.hssf.model.Sheet
-//import org.apache.poi.hssf.model.Workbook
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
-//import org.springframework.web.multipart.MultipartHttpServletRequest
-//import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.ss.usermodel.Workbook
+import org.grails.plugins.excelimport.ExpectedPropertyType
+import fi.joensuu.joyds1.calendar.JalaliCalendar
 
 class ContractController {
     def springSecurityService
-    def PhaseService
-
+    def phaseService
+    def excelImportService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
     }
+
     def delete() {
         def contractInstance = Contract.get(params.id)
         if (!contractInstance) {
@@ -39,41 +35,42 @@ class ContractController {
             redirect(action: "show", id: params.id)
         }
     }
+
     def show = {
-        if (params.id){
-        def contract = Contract.findById( params.id )
-        def princ = springSecurityService.getPrincipal()
-        def code=""
-        def desc=""
+        if (params.id) {
+            def contract = Contract.findById(params.id)
+            def princ = springSecurityService.getPrincipal()
+            def code = ""
+            def desc = ""
 
-        if (princ instanceof GrailsUser && contract) {
-            def user = User.findByUsername(princ.username)
+            if (princ instanceof GrailsUser && contract) {
+                def user = User.findByUsername(princ.username)
 
-            if (user instanceof Broker ) {
-                def subRoleB = SubRole.findByRoleName("Dealer")
-                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
-                if (!dealer ){
-                    code = contract.buyerBrokerCode
+                if (user instanceof Broker) {
+                    def subRoleB = SubRole.findByRoleName("Dealer")
+                    def dealer = UserRole.findByUserAndSubRoles(user, subRoleB)
+                    if (!dealer) {
+                        code = contract.buyerBrokerCode
+                    }
+                    else if (dealer) {
+                        code = contract.dealerBrokerCode
+                    }
                 }
-                else if (dealer){
-                    code = contract.dealerBrokerCode
+
+                else if (user instanceof Customer) {
+                    code = contract.customerCode
                 }
-            }
+                else if (user instanceof Supplier) {
+                    code = contract.supplierCode
+                }
+                else if (user instanceof Manufacturer) {
+                    desc = contract.manufacturerDesc
+                }
+                if (user.code == code || user.description) {
+                    return [contractInstance: contract]
+                }
 
-            else if (user instanceof Customer){
-                code = contract.customerCode
             }
-            else if(user instanceof Supplier){
-                code = contract.supplierCode
-            }
-            else if(user instanceof Manufacturer){
-                desc = contract.manufacturerDesc
-            }
-            if (user.code==code || user.description){
-                return [ contractInstance : contract ]
-            }
-
-        }
         }
     }
 
@@ -82,26 +79,26 @@ class ContractController {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
-            if (user instanceof Broker ) {
+            if (user instanceof Broker) {
                 def subRoleB = SubRole.findByRoleName("Dealer")
-                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
-                if (!dealer ){
+                def dealer = UserRole.findByUserAndSubRoles(user, subRoleB)
+                if (!dealer) {
                     redirect(action: "buyerBroker", params: params)
                 }
-               else if (dealer){
+                else if (dealer) {
                     redirect(action: "dealerBroker", params: params)
                 }
             }
 
-        else if (user instanceof Customer){
-             redirect(action: "Customer", params: params)
-        }
-        else if(user instanceof Supplier){
-            redirect(action: "Supplier", params: params)
-        }
-        else if(user instanceof Manufacturer){
-            redirect(action: "Manufacturer", params: params)
-        }
+            else if (user instanceof Customer) {
+                redirect(action: "Customer", params: params)
+            }
+            else if (user instanceof Supplier) {
+                redirect(action: "Supplier", params: params)
+            }
+            else if (user instanceof Manufacturer) {
+                redirect(action: "Manufacturer", params: params)
+            }
         }
 
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -122,9 +119,10 @@ class ContractController {
 
         def user = User.findByUsername(princ.username)
 
-         [organization: user]
+        [organization: user]
 
     }
+
     def Customer() {
         def princ = springSecurityService.getPrincipal()
 
@@ -133,6 +131,7 @@ class ContractController {
         [customer: user]
 
     }
+
     def Supplier() {
         def princ = springSecurityService.getPrincipal()
 
@@ -141,22 +140,23 @@ class ContractController {
         [organization: user]
 
     }
+
     def Manufacturer() {
         def princ = springSecurityService.getPrincipal()
 
         def user = User.findByUsername(princ.username)
 
-         [organization: user]
+        [organization: user]
 
     }
+
     def save = {
         def contract = new Contract(params)
-        if(!contract.hasErrors() && contract.save()) {
+        if (!contract.hasErrors() && contract.save()) {
             flash.message = "TekEvent ${contract.id} created"
             PhaseService.addDefaultPhases(contract)
         }
     }
-
 
 //    def edit = {
 //        def contractInstance = Contract.findById( params.id )
@@ -172,18 +172,84 @@ class ContractController {
             response.outputStream.flush()
         }
     }
-    def editAttachmentPhase={
-       def contractInstance=Contract.get(params.id)
-       if(!contractInstance){
-          return
-       }
+
+    def editAttachmentPhase = {
+        def contractInstance = Contract.get(params.id)
+        if (!contractInstance) {
+            return
+        }
         //def lll=contractInstance.phases?.find(it?.status=="W")
-        def lastPhaseId =Contract.findByPhase(contractInstance)
-        def lastPhase=Phase.get(lastPhaseId)
-        [contractInstance: contractInstance,lastPhase:lastPhase]
+        def lastPhaseId = Contract.findByPhase(contractInstance)
+        def lastPhase = Phase.get(lastPhaseId)
+        [contractInstance: contractInstance, lastPhase: lastPhase]
     }
 
-    def importExcel ={
+    def importExcel = {
 
+    }
+
+    def upload() {
+        def file = request.getFile('file')
+        def fileIs = new ByteArrayInputStream(file.bytes)
+        Map CONFIG_COLUMN_MAP = [
+                sheet: 'Sheet1',
+                startRow: 2,
+                columnMap: [
+                        'B': 'contractNo',
+                        'C': 'contractPartNo',
+                        'D': 'contractDate',
+                        'E': 'allotmentDate',
+                        'F': 'settlementDeadline',
+                        'G': 'settlementType',
+                        'H': 'buyerBrokerDesc',
+                        'I': 'dealerBrokerDesc',
+                        'J': 'customerDesc',
+                        'K': 'productSymbol',
+                        'L': 'productDesc',
+                        'M': 'totalShipments',
+                        'N': 'price',
+                        'O': 'contractType',
+                        'P': 'deliveryDate',
+                        'Q': 'manufacturerDesc',
+                        'R': 'deliveryPlace',
+                        'S': 'productMainGroup',
+                        'T': 'productGroup',
+                        'U': 'productSubGroup',
+                        'V': 'weight',
+                        'W': 'quantity',
+                        'X': 'buyerBrokerCode',
+                        'Y': 'dealerBrokerCode',
+                        'Z': 'customerCode',
+                        'AA': 'supplierCode',
+                        'AB': 'boursePrice',
+                        'AC': 'settlementDate',
+                        'AD': 'contractID',
+                        'AE': 'releaseDate'
+                ]
+        ]
+        Map propertyConfigurationMap = [:]
+        CONFIG_COLUMN_MAP.columnMap.each {key, value ->
+            propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
+        }
+        Workbook sb = new XSSFWorkbook(fileIs)
+        def dateFields = ["contractDate", "allotmentDate", "settlementDeadline", "deliveryDate", "settlementDate", "releaseDate"]
+        def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
+        res.each {
+            dateFields.each { field ->
+                def dateParts = it[field].split("/").collect {it as Integer}
+                JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
+                def gc = jc.toJavaUtilGregorianCalendar()
+                it[field] = 'date.struct'
+                it["${field}_year"] = gc.get(Calendar.YEAR) as String
+                it["${field}_month"] = gc.get(Calendar.MONTH) as String
+                it["${field}_day"] = gc.get(Calendar.DATE) as String
+            }
+            Contract contract = new Contract(it)
+            contract.importDate = new Date()
+            contract.save()
+            phaseService.addDefaultPhases(contract)
+        }
+
+        redirect(action: "list")
     }
 }
