@@ -49,8 +49,8 @@ class BootStrap {
 //                            ,status:"P"
 //                            ,document: ${resource(dir:'images',file:'settelmentCer.png')}).save()
 
-        def phase1=new Phase(phase: "BuyerBroker",comment: "test1", organization: usr1, startDate:new Date('1391/09/22'),endDate:new Date('1391/09/22'),status:"O" ).save()
-        def phase2=new Phase(phase: "Supplier",comment: "test2", organization: usr6, startDate:new Date('1391/09/22'),status:"W" ).save()
+        def phase1=new Phase(phase: "BuyerBroker",comment: "test1", organization: usr1, startDate:new Date('1391/09/22'),endDate:new Date('1391/09/22'),status:"Pass" ).save()
+        def phase2=new Phase(phase: "Supplier",comment: "test2", organization: usr6, startDate:new Date('1391/09/22'),status:"Waiting" ).save()
 
         def contract1= new Contract(contractNo  :"1391193129",
                 contractPartNo  :"1",

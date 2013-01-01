@@ -399,6 +399,7 @@
         <g:hiddenField name="id" value="${contractInstance?.id}" />
         %{--<g:link class="edit" action="editAttachmentPhase" id="${contractInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>--}%
         <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+        <g:link class="list" action="list" ><g:message code="default.button.list.label" default="List" /></g:link>
     </fieldset>
 </g:form>
 </div>

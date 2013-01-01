@@ -9,7 +9,7 @@ class Phase {
     Date endDate
 
     static constraints = {
-        status(inList: ["O", "N", "W"]) //ok-nok-waiting
+        status(inList: ["Pass", "Reject", "Waiting"]) //ok-nok-waiting
         phase(nullable: false,blank: false, inList: ["DealerBroker","BuyerBroker","Supplier","Manufacturer","Finished"])
         comment(nullable: true,maxSize: 1024)
         startDate(nullable: false)

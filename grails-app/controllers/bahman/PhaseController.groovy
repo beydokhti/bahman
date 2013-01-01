@@ -28,28 +28,28 @@ class PhaseController {
         def phaseInstance = new Phase(params)
 
         phaseInstance.startDate=new Date()
-        if (prevPhase.phase=="BuyerBroker" && params.status=="O")  {
+        if (prevPhase.phase=="BuyerBroker" && params.status=="Pass")  {
             phaseInstance.phase="Supplier"
          }
-        else if(prevPhase.phase=="Supplier" && params.status=="O") {
+        else if(prevPhase.phase=="Supplier" && params.status=="Pass") {
             phaseInstance.phase="Manufacturer"
         }
-        else if(prevPhase.phase=="Manufacturer" && params.status=="O") {
+        else if(prevPhase.phase=="Manufacturer" && params.status=="Pass") {
             phaseInstance.phase="Finished"
         }
-        else if(prevPhase.phase=="Manufacturer" && params.status=="R") {
+        else if(prevPhase.phase=="Manufacturer" && params.status=="Reject") {
             phaseInstance.phase="Supplier"
         }
-        else if(prevPhase.phase=="Supplier" && params.status=="R") {
+        else if(prevPhase.phase=="Supplier" && params.status=="Reject") {
             phaseInstance.phase="BuyerBroker"
         }
-        else if(prevPhase.phase=="BuyerBroker" && params.status=="R") {
+        else if(prevPhase.phase=="BuyerBroker" && params.status=="Reject") {
             phaseInstance.phase="DealerBroker"
         }
         if (phaseInstance.phase=="Finished"){
-            phaseInstance.status="O"
+            phaseInstance.status="Pass"
         }else{
-            phaseInstance.status="W"
+            phaseInstance.status="Waiting"
         }
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {

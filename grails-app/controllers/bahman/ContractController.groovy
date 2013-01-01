@@ -215,6 +215,10 @@ class ContractController {
         [contractInstance: contractInstance,lastPhase:lastPhase]
     }
 
+    def importExcel(){
+
+    }
+
     def upload() {
         def file = request.getFile('file')
         def fileIs = new ByteArrayInputStream(file.bytes)
