@@ -33,6 +33,9 @@
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/taglib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/test/unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/domain" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/test/integration" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -44,8 +47,6 @@
           <root url="file://$MODULE_DIR$/../RapidGrails/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd/jars/jodd-3.3.4.jar!/" />
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jodd/jodd-wot/jars/jodd-wot-3.3.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
