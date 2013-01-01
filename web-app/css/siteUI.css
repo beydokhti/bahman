@@ -1,0 +1,154 @@
+.moduleHeader{
+	width:100%;
+	border-bottom:2px solid #DEDEDE;
+	margin-bottom:2px;
+	color:#FF9B01;
+	font-family:tahoma;
+	font-weight:bold;
+	padding-bottom:2px;
+}
+/*XXXXXXXXStatusbar*/
+#search{
+    height: 29px;
+    margin-right: 40px;
+    margin-top: 9px;
+    opacity: 1;
+    /*min-width: 253px;*/
+	width:100%;
+}
+#topLink{
+	text-align:center;
+	margin-top:13px;
+}
+.topLinks  a{
+	color:#004B91;
+	font-family:tahoma;
+	font-size:15px;
+	border-left:1px solid #DDDDDD;
+	text-decoration:none;
+}
+
+/*XXXXXXXXrightDivBody*/
+/*******Slideshow*/
+.slideModuleConetnt{
+	direction:ltr;
+}
+.bx-wrapper{
+	/*width:100% !important;*/
+	/*direction:ltr;*/
+	text-align:right;
+}
+.bx-window{
+/*	float:left;*/
+}
+.bx-prev,.bx-next{
+
+}
+
+/*********/
+
+
+.module{
+	padding:2px;
+}
+	/*XXXXXXX offList XXXXX*/
+.offListList{
+	display:inline;
+}
+.offList{
+	float:right;
+	width:90px;
+	margin-left:50px;
+}
+.offListImage{
+	width:106px;
+	height:141px;
+}
+.offListImage img{
+	width:106px;
+	height:141px;
+}
+.offListDesc{
+
+}
+.offListPrice{
+
+}
+	/*XXXXXXX NewProduct XXXXX*/
+	
+.newProductList{
+	display:inline;
+}
+.newProductList .moduleHeader{
+	background-image:url("../../images/site/new-products.png");
+}
+.newProduct{
+	float:right;
+	width:90px;
+	margin-left:50px;
+}
+.newProductImage{
+	width:106px;
+	height:141px;
+}
+.newProductImage img{
+	width:106px;
+	height:141px;
+}
+.newProductDesc{
+
+}
+.newProductPrice{
+
+}
+	/*XXXXXXXSlideShowXXXX*/
+.slideShowDiv{
+	width:65%;
+	height:340px;
+	float:left;
+	overflow:hidden;
+}
+.slide-show .moduleHeader{
+	display:none;
+}
+.slideShowImage{
+	width:100%;
+	height:100%;
+	float:left;
+}
+.slideShowImage img{
+	width:600px;
+	height:300px;
+}
+
+/*XXXXXXXMostSoldXXXXX*/
+.mostSold{
+	float:right;
+	width:200px;
+	padding-bottom:20px;
+}
+.mostSoldImage{
+	width:83px;
+	height:93px;
+	float:right;
+}
+.mostSoldImage img{
+	width:83px;
+	height:93px;
+}
+.mostSoldDesc{
+
+}
+.mostSoldPrice{
+
+}
+.mostSoldinfo{
+	float:right;
+	padding-right:3px;
+}
+/*XXXXXXXXLeftDivBody*/
+.namadeEtemadeMeli{
+	margin:0 auto 0 auto;
+	width:170px;
+	display:block;
+}

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../RapidGrails/lib/hvjavacal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../RapidGrails/lib/fonts.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../Import Execl/jexcelapi_2_6_12" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
