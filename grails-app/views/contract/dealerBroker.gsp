@@ -15,7 +15,16 @@
         </rg:criteria>
     </rg:grid>
     <rg:dialog id="contract" title="Contract Form">
-        <rg:fields bean="${new bahman.Contract()}"></rg:fields>
+        <rg:fields bean="${new bahman.Contract()}">
+            <rg:modify>
+                <rg:hiddenReference field="phases"></rg:hiddenReference>
+                <rg:hiddenReference field="attachments"></rg:hiddenReference>
+                <rg:hiddenReference field="applicationForm"></rg:hiddenReference>
+                <rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>
+                <rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>
+                <rg:hiddenReference field="importDate"></rg:hiddenReference>
+            </rg:modify>
+        </rg:fields>
         <rg:saveButton domainClass="${bahman.Contract}"/>
         <rg:cancelButton/>
     </rg:dialog>

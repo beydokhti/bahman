@@ -25,6 +25,7 @@
     <ckeditor:resources/>
     <g:javascript plugin="rapid-grails" src="angular.min.js"></g:javascript>
     <g:javascript library="jquery"></g:javascript>
+
     <r:layoutResources/>
     <jqui:resources theme="bootstrap"></jqui:resources>
 
@@ -79,7 +80,7 @@
 
 
 <div id="footer" role="contentinfo">
-    <g:message code="application.name" default="Cash Management System"/> | <g:message code="application.copyRight"
+    <g:message code="application.name" default="Management System"/> | <g:message code="application.copyRight"
                                                                                        default="© AGAH-IT 2012"/>
 </div><!-- end #footer -->
 

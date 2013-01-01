@@ -5,7 +5,10 @@ class Organization extends User {
     String description
 
     static constraints = {
-        code (nullable: false,blank: false,maxSize: 50,unique: true)
+        code (nullable: false,blank: false,maxSize: 50)//,unique: true)
         description (nullable: false,blank:false,maxSize: 200)
+    }
+    String toString(){
+        "$code,$description"
     }
 }

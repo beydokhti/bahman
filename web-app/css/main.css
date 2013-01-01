@@ -40,6 +40,7 @@ input:-moz-placeholder {
     padding: 3px;
 }
 
+
 .fieldcontain span.property-label{
     border-bottom:1px solid #DDDDDD;
     margin-left: 10px;
@@ -50,6 +51,23 @@ input:-moz-placeholder {
     text-shadow: White 0 1px 1px;
     margin-bottom: 0;
     width: 40%;
+    max-width: 100px;
+    text-align: left;
+    display: inline-block;
+    padding-left:5px;
+    vertical-align: top;
+}
+
+.fieldcontain span.property-label-small{
+    border-bottom:1px solid #DDDDDD;
+    margin-left: 10px;
+    background: #EFEFEF;
+    padding: 3px;
+    border-radius: 3px;
+    box-shadow: White 0 0 3px;
+    text-shadow: White 0 1px 1px;
+    margin-bottom: 0;
+    width: 10%;
     max-width: 100px;
     text-align: left;
     display: inline-block;
@@ -334,12 +352,116 @@ fieldset,
     /*min-height: 40px;*/
     clear: both;
 }
+.detail-td-attach{
+    width: 40%;
+}
+
+.detail-td{
+
+}
+
+.detailcontain span.property-label-small{
+    border-bottom:1px solid #DDDDDD;
+    margin-left: 20px;
+    margin-right: 0px;
+    background: #DFDDFF;
+    margin-top: 0px;
+    /*padding: 3px;*/
+    border-radius: 3px;
+    box-shadow: White 0 0 3px;
+    text-shadow: White 0 1px 1px;
+    margin-bottom:0px;
+    width: 35%;
+    text-align: left;
+    display: inline-block;
+    padding-left:5px;
+    /*vertical-align: top;*/
+}
+
+.detailcontain span.property-value-small{
+    margin-top: 1px;
+    font-weight: bold;
+    /*margin-bottom:1px;*/
+    padding: 3px;
+    width:55%;
+    display: inline-block;
+    text-align: right;
+}
+
+.detail-property-list {
+    background-color: #ffffff;
+    border: none;
+    margin-right: 3%;
+    width: 100%;
+    /*margin-top: 2px;*/
+
+    /*display: inline-block;*/
+}
+
+.detail-property-list .detailcontain {
+    list-style: none;
+    overflow: hidden;
+    zoom: 1;
+    display: inline-block;
+}
+
+.detailcontain{
+    /*display: table-row-group;*/
+    margin-top: 1px;
+    background-color:#FFFFFF;
+    margin-bottom: 0px;
+    width: 100%;
+    /*border-radius: 30px;*/
+    }
+.phase{
+    background-color: #DFDDFF ;
+    font-weight: 20px;
+    width: 100%;
+    text-align: center;
+
+}
+.phase-table{
+    border: 1px;
+    border-color:#DFDDFF  ;
+    border-style: solid;
+    border-radius: 5px 5px 5px 5px;
+    text-align: center;
+}
+
+.phase-td-head{
+    border: 1px;
+    border-color:#DFDDFF  ;
+    border-style: solid;
+    border-radius: 5px 5px 5px 5px;
+    background-color:#DFDDFF ;
+    text-align: center;
+}
+.phasecontain{
+    margin-top: 50px;
+    background-color:#FFFFFF;
+    margin-bottom: 0px;
+    width:100%;
+        /*margin-right:50px;*/
+    /*margin-left: 50px;*/
+
+}
+.phase-td{
+    width:10%
+}
+.phase-middletd{
+    width:50%
+}
+
+.attachment-td{
+    width: 33%;
+    text-align: center;
+}
 
 .fieldcontain label,
 .fieldcontain .property-label {
 	color: #666666;
     display: block;
-	width: 100%;
+	/*width: 10%;*/
     margin-bottom:3px;
 }
 
