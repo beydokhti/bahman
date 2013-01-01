@@ -78,13 +78,31 @@
                     });
         }
 
-        function showDialog(){
+        function showDialog(src){
+            if  (src='SC') {
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
                                   '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>',
                                 function(res){
                                     var url=" <g:createLink action="getImage"/>/"+res
                                    $("#attachmentImgSettlement").attr("src",url)
                                 },undefined,{width:400})
+            }
+            else if(src='VA'){
+                loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
+                        '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>',
+                        function(res){
+                            var url=" <g:createLink action="getImage"/>/"+res
+                            $("#attachmentImgValue").attr("src",url)
+                        },undefined,{width:400})
+            }
+            else if(src='AF'){
+                loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
+                        '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>',
+                        function(res){
+                            var url=" <g:createLink action="getImage"/>/"+res
+                            $("#attachmentImgApplication").attr("src",url)
+                        },undefined,{width:400})
+            }
 
         }
         function doSubmit(){
@@ -146,19 +164,19 @@
         </table>
         <table>
         <tr>
-            <td class="attachment-td"><input type="button" onclick="showDialog()" value="Settlement Certificate"></td>
-            <td class="attachment-td"></td>
-            <td class="attachment-td"></td>
+            <td class="attachment-td"><input type="button" onclick="showDialog('SC')" value="Settlement Certificate"></td>
+            <td class="attachment-td"><input type="button" onclick="showDialog('VA')" value="value Added Tax"></td>
+            <td class="attachment-td"><input type="button" onclick="showDialog('AF')" value="Settlement Certificate"></td>
         </tr>
         <tr>
             <td class="attachment-td"><img id="attachmentImgSettlement"  src="<g:createLink action="getImage" params="[id:contractInstance?.settlementCertificate?.id]" />" width="300"></td>
-            <td class="attachment-td"></td>
-            <td class="attachment-td"></td>
+            <td class="attachment-td"><img id="attachmentImgValue"  src="<g:createLink action="getImage" params="[id:contractInstance?.settlementCertificate?.id]" />" width="300"></td>
+            <td class="attachment-td"><img id="attachmentImgApplication"  src="<g:createLink action="getImage" params="[id:contractInstance?.settlementCertificate?.id]" />" width="300"></td>
         </tr>
         <tr>
             <td class="attachment-td"><g:link action="showDetails" controller="attachment" params="[id:contractInstance.id]" >Show Details</g:link> </td>
-            <td class="attachment-td"></td>
-            <td class="attachment-td"></td>
+            <td class="attachment-td"><g:link action="showDetails" controller="attachment" params="[id:contractInstance.id]" >Show Details</g:link> </td>
+            <td class="attachment-td"><g:link action="showDetails" controller="attachment" params="[id:contractInstance.id]" >Show Details</g:link> </td>
         </tr>
     </table>
 
