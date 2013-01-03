@@ -376,7 +376,7 @@
                             <td class="phase-td-head"><g:message code="phase.enddate.label" default="End Date" /> </td>
                             <td class="phase-td-head"><g:message code="phase.organization.label" default="Organization" /> </td>
                         </tr>
-                        <g:each in="${contractInstance.phases}" var="p">
+                        <g:each in="${contractInstance.phases?.sort{it.id}}" var="p">
                             <tr>
                                 %{--<span class="property-value-small" aria-labelledby="phases-label"><g:link controller="phase" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>--}%
                                 <td class="phase-table"><span class="property-value-small" >${p.phase}</span></td>

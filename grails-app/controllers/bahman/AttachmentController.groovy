@@ -60,7 +60,7 @@ class AttachmentController {
             if (params.attr == "Attachment")
                 render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance])
             else
-                render attachmentInstance.id
+                render attachmentInstance as JSON
         }//attachmentInstance as JSON
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'attachment.label', default: 'Attachment'), attachmentInstance.id])
 //        redirect(action: "show", id: attachmentInstance.id)

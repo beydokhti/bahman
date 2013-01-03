@@ -77,7 +77,7 @@ class Contract {
     static def findByPhase (Contract contract){
         for (p in contract.phases)
         {
-            if (p.status=='W')
+            if (p.status=='Waiting')
                 return p.id
         }
         return 0

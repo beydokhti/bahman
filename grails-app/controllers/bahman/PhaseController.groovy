@@ -29,8 +29,11 @@ class PhaseController {
 
         phaseInstance.startDate=new Date()
         if (prevPhase.phase=="BuyerBroker" && params.status=="Pass")  {
-            phaseInstance.phase="Supplier"
+            phaseInstance.phase="DealerBroker"
          }
+        if (prevPhase.phase=="DealerBroker" && params.status=="Pass")  {
+            phaseInstance.phase="Supplier"
+        }
         else if(prevPhase.phase=="Supplier" && params.status=="Pass") {
             phaseInstance.phase="Manufacturer"
         }
@@ -41,11 +44,14 @@ class PhaseController {
             phaseInstance.phase="Supplier"
         }
         else if(prevPhase.phase=="Supplier" && params.status=="Reject") {
-            phaseInstance.phase="BuyerBroker"
-        }
-        else if(prevPhase.phase=="BuyerBroker" && params.status=="Reject") {
             phaseInstance.phase="DealerBroker"
         }
+        else if(prevPhase.phase=="DealerBroker" && params.status=="Reject") {
+            phaseInstance.phase="BuyerBroker"
+        }
+//        else if(prevPhase.phase=="BuyerBroker" && params.status=="Reject") {
+//            phaseInstance.phase="DealerBroker"
+//        }
         if (phaseInstance.phase=="Finished"){
             phaseInstance.status="Pass"
         }else{
@@ -60,6 +66,8 @@ class PhaseController {
             }
 
         }
+        prevPhase.comment=phaseInstance.comment
+        phaseInstance.comment=""
         prevPhase.save()
         if (!phaseInstance.save(flush: true)) {
 //            render(view: "create", model: [phaseInstance: phaseInstance])

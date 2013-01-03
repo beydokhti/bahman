@@ -84,24 +84,27 @@
                 loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
                         '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,
                         function (res) {
-                            var url = " <g:createLink action="getImage"/>/" + res
+                            var url = " <g:createLink action="getImage"/>/" + res.id
                             $("#attachmentImgSettlement").attr("src", url)
+                            $("#attachmentImgSettlementDesc").html(res.description)
                         }, undefined, {width:400})
             }
             else if (src == 'VA') {
                 loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
                         '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,
                         function (res) {
-                            var url = " <g:createLink action="getImage"/>/" + res
+                            var url = " <g:createLink action="getImage"/>/" + res.id
                             $("#attachmentImgValue").attr("src", url)
+                            $("#attachmentImgValueDesc").html(res.description)
                         }, undefined, {width:400})
             }
             else if (src == 'AF') {
                 loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
                         '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,
                         function (res) {
-                            var url = " <g:createLink action="getImage"/>/" + res
+                            var url = " <g:createLink action="getImage"/>/" + res.id
                             $("#attachmentImgApplication").attr("src", url)
+                            $("#attachmentImgApplicationDesc").html(res.description)
                         }, undefined, {width:400})
             }
 
@@ -204,13 +207,13 @@
         <tr>
             <td class="attachment-td"><img id="attachmentImgSettlement" src="<g:createLink action="getImage"
                                                                                            params="[id: contractInstance?.settlementCertificate?.id]"/>"
-                                           width="300"></td>
+                                           width="300"><br><div id="attachmentImgSettlementDesc">${contractInstance?.settlementCertificate?.description}</div></td>
             <td class="attachment-td"><img id="attachmentImgValue" src="<g:createLink action="getImage"
                                                                                       params="[id: contractInstance?.valueAddedTax?.id]"/>"
-                                           width="300"></td>
+                                           width="300"><br><div id="attachmentImgValueDesc">${contractInstance?.valueAddedTax?.description}</div></td>
             <td class="attachment-td"><img id="attachmentImgApplication" src="<g:createLink action="getImage"
                                                                                             params="[id: contractInstance?.applicationForm?.id]"/>"
-                                           width="300"></td>
+                                           width="300"><br><div id="attachmentImgApplicationDesc">${contractInstance?.applicationForm?.description}</div></td>
         </tr>
         <tr>
             <td class="attachment-td"><g:link action="showDetails" controller="attachment"
