@@ -21,9 +21,12 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'msgGrowl.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rg-rtl.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'jquery-ui-rtl.css')}" type="text/css">
-
+    <r:require modules="bootstrap"/>
     <ckeditor:resources/>
+    %{--<g:javascript library="prototype" />--}%
+
     <g:javascript plugin="rapid-grails" src="angular.min.js"></g:javascript>
+
     <g:javascript library="jquery"></g:javascript>
 
     <r:layoutResources/>
@@ -31,6 +34,7 @@
 
     <g:javascript plugin="rapid-grails" src="utils.js"></g:javascript>
     <g:javascript plugin="rapid-grails" src="grid_utils.js"></g:javascript>
+    <g:javascript plugin="rapid-grails" src="jquery.json-2.3.min.js"></g:javascript>
 
     <link rel="stylesheet"
           href="${resource(dir: 'css/datepicker', file: 'ui.datepicker.css', plugin: 'rapid-grails')}"/>
@@ -65,17 +69,17 @@
 </head>
 
 <body dir="rtl">
-<div id="bokeh"><div id="container">
-    <div id="header" role="banner">
-        <h1 id="logo">Application Title</h1>
-    </div><!-- end #header -->
 
-    %{--<g:render template="/menu"/>--}%
+<div id="bokeh">
+    <div class="container">
+        <div id="header" role="banner">
+            <h1 id="logo">Application Title</h1>
+        </div>
+        <div id="content" >
+            <g:layoutBody/>
+        </div>
 
-    <div id="content">
-        <g:layoutBody/>
     </div>
-</div>
 </div>
 
 

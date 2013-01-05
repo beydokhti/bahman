@@ -32,14 +32,17 @@ class Contract {
     String contractID
     Date releaseDate
     Date importDate
-    Attachment settlementCertificate
-    Attachment valueAddedTax
-    Attachment applicationForm
+//    Attachment settlementCertificate
+//    Attachment valueAddedTax
+//    Attachment applicationForm
     static hasMany = [attachments:Attachment,
             phases:Phase]
+//    static transients = ['prevStatus','lastPhase']
 
     static constraints = {
-        contractNo (blank:false,maxSize: 50)
+        prevStatus()
+        lastPhase()
+        contractNo (blank:false,maxSize: 50,unique: "contractPartNo")
         contractPartNo (blank:false,maxSize: 50)
         buyerBrokerDesc (nullable:false,maxSize: 200)
         dealerBrokerDesc (nullable:false,maxSize: 200)
@@ -70,9 +73,9 @@ class Contract {
         contractID (nullable:false,maxSize: 50)
         releaseDate (nullable:false)
         importDate (nullable:false)
-        settlementCertificate(nullable:true)
-        valueAddedTax(nullable:true)
-        applicationForm(nullable:true)
+//        settlementCertificate(nullable:true)
+//        valueAddedTax(nullable:true)
+//        applicationForm(nullable:true)
     }
     static def findByPhase (Contract contract){
         for (p in contract.phases)
@@ -81,5 +84,34 @@ class Contract {
                 return p.id
         }
         return 0
+    }
+    transient def getLastPhase(){
+        if (this.phases) {
+                for (p in this?.phases)
+            {
+                if (p.status=='Waiting')
+                    return p.phase
+            }
+    }
+        return ""
+    }
+    transient def getPrevStatus(){
+        if (this.phases){
+            String oldPhase="Pass"
+            String lastStatus=""
+            for (p in this?.phases?.sort{it.id})
+            {
+                if (p.status=='Waiting')
+                {
+                    break
+                }
+                else
+                    oldPhase=p.status
+            }
+            if (oldPhase=="Pass")
+                return "New"
+            else if (oldPhase=="Reject")
+                return "Failed"
+        }
     }
 }

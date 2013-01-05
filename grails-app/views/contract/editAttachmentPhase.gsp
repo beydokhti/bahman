@@ -79,50 +79,52 @@
                     });
         }
 
-        function showDialog(src) {
-            if (src == 'SC') {
-                loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                        '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,
-                        function (res) {
-                            var url = " <g:createLink action="getImage"/>/" + res.id
-                            $("#attachmentImgSettlement").attr("src", url)
-                            $("#attachmentImgSettlementDesc").html(res.description)
-                        }, undefined, {width:400})
-            }
-            else if (src == 'VA') {
-                loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                        '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,
-                        function (res) {
-                            var url = " <g:createLink action="getImage"/>/" + res.id
-                            $("#attachmentImgValue").attr("src", url)
-                            $("#attachmentImgValueDesc").html(res.description)
-                        }, undefined, {width:400})
-            }
-            else if (src == 'AF') {
-                loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                        '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,
-                        function (res) {
-                            var url = " <g:createLink action="getImage"/>/" + res.id
-                            $("#attachmentImgApplication").attr("src", url)
-                            $("#attachmentImgApplicationDesc").html(res.description)
-                        }, undefined, {width:400})
-            }
+        %{--function showDialog(src) {--}%
+            %{--if (src == 'SC') {--}%
+                %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',--}%
+                        %{--'<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,--}%
+                        %{--function (res) {--}%
+                            %{--var url = " <g:createLink action="getImage"/>/" + res.id--}%
+                            %{--$("#attachmentImgSettlement").attr("src", url)--}%
+                            %{--$("#attachmentImgSettlementDesc").html(res.description)--}%
+                        %{--}, undefined, {width:400})--}%
+            %{--}--}%
+            %{--else if (src == 'VA') {--}%
+                %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',--}%
+                        %{--'<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,--}%
+                        %{--function (res) {--}%
+                            %{--var url = " <g:createLink action="getImage"/>/" + res.id--}%
+                            %{--$("#attachmentImgValue").attr("src", url)--}%
+                            %{--$("#attachmentImgValueDesc").html(res.description)--}%
+                        %{--}, undefined, {width:400})--}%
+            %{--}--}%
+            %{--else if (src == 'AF') {--}%
+                %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',--}%
+                        %{--'<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id]"/>&attr='+src,--}%
+                        %{--function (res) {--}%
+                            %{--var url = " <g:createLink action="getImage"/>/" + res.id--}%
+                            %{--$("#attachmentImgApplication").attr("src", url)--}%
+                            %{--$("#attachmentImgApplicationDesc").html(res.description)--}%
+                        %{--}, undefined, {width:400})--}%
+            %{--}--}%
 
-        }
-        function doSubmit() {
+        %{--}--}%
+
+
+        function doSubmitReject(act) {
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
-                    '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Pass']"/>',
+                    '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:act]"/>',
                     function () {
                         window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance.id]"/>"
                     }, undefined, {width:400})
         }
-        function doReject() {
-            loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
-                    '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Reject']"/>',
-                    function () {
-                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance.id]"/>"
-                    }, undefined, {width:400})
-        }
+        %{--function doReject() {--}%
+            %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',--}%
+                    %{--'<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Reject']"/>',--}%
+                    %{--function () {--}%
+                        %{--window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance.id]"/>"--}%
+                    %{--}, undefined, {width:400})--}%
+        %{--}--}%
         function doAddAttachment(){
 
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
@@ -144,6 +146,16 @@
                 })
             }
         }
+
+        %{--function doDownloadAttachment(id){--}%
+                %{--$.ajax({--}%
+                    %{--url:'<g:createLink action="downloadAttachment" controller="attachment" />',--}%
+                    %{--data:{--}%
+                        %{--id:id--}%
+                    %{--}--}%
+                %{--}).success(function(data){--}%
+                        %{--})--}%
+        %{--}--}%
     </script>
 </head>
 
@@ -197,33 +209,33 @@
             </td>
         </tr>
     </table>
-    <table>
-        <tr>
-            <td class="attachment-td"><input type="button" onclick="showDialog('SC')" value="Settlement Certificate">
-            </td>
-            <td class="attachment-td"><input type="button" onclick="showDialog('VA')" value="value Added Tax"></td>
-            <td class="attachment-td"><input type="button" onclick="showDialog('AF')" value="Application Form"></td>
-        </tr>
-        <tr>
-            <td class="attachment-td"><img id="attachmentImgSettlement" src="<g:createLink action="getImage"
-                                                                                           params="[id: contractInstance?.settlementCertificate?.id]"/>"
-                                           width="300"><br><div id="attachmentImgSettlementDesc">${contractInstance?.settlementCertificate?.description}</div></td>
-            <td class="attachment-td"><img id="attachmentImgValue" src="<g:createLink action="getImage"
-                                                                                      params="[id: contractInstance?.valueAddedTax?.id]"/>"
-                                           width="300"><br><div id="attachmentImgValueDesc">${contractInstance?.valueAddedTax?.description}</div></td>
-            <td class="attachment-td"><img id="attachmentImgApplication" src="<g:createLink action="getImage"
-                                                                                            params="[id: contractInstance?.applicationForm?.id]"/>"
-                                           width="300"><br><div id="attachmentImgApplicationDesc">${contractInstance?.applicationForm?.description}</div></td>
-        </tr>
-        <tr>
-            <td class="attachment-td"><g:link action="showDetails" controller="attachment"
-                                              params="[id: contractInstance.id, att: 'SC']">Show Details</g:link></td>
-            <td class="attachment-td"><g:link action="showDetails" controller="attachment"
-                                              params="[id: contractInstance.id, att: 'VA']">Show Details</g:link></td>
-            <td class="attachment-td"><g:link action="showDetails" controller="attachment"
-                                              params="[id: contractInstance.id, att: 'AF']">Show Details</g:link></td>
-        </tr>
-    </table>
+    %{--<table>--}%
+        %{--<tr>--}%
+            %{--<td class="attachment-td"><input type="button" onclick="showDialog('SC')" value="Settlement Certificate">--}%
+            %{--</td>--}%
+            %{--<td class="attachment-td"><input type="button" onclick="showDialog('VA')" value="value Added Tax"></td>--}%
+            %{--<td class="attachment-td"><input type="button" onclick="showDialog('AF')" value="Application Form"></td>--}%
+        %{--</tr>--}%
+        %{--<tr>--}%
+            %{--<td class="attachment-td"><img id="attachmentImgSettlement" src="<g:createLink action="getImage"--}%
+                                                                                           %{--params="[id: contractInstance?.settlementCertificate?.id]"/>"--}%
+                                           %{--width="300"><br><div id="attachmentImgSettlementDesc">${contractInstance?.settlementCertificate?.description}</div></td>--}%
+            %{--<td class="attachment-td"><img id="attachmentImgValue" src="<g:createLink action="getImage"--}%
+                                                                                      %{--params="[id: contractInstance?.valueAddedTax?.id]"/>"--}%
+                                           %{--width="300"><br><div id="attachmentImgValueDesc">${contractInstance?.valueAddedTax?.description}</div></td>--}%
+            %{--<td class="attachment-td"><img id="attachmentImgApplication" src="<g:createLink action="getImage"--}%
+                                                                                            %{--params="[id: contractInstance?.applicationForm?.id]"/>"--}%
+                                           %{--width="300"><br><div id="attachmentImgApplicationDesc">${contractInstance?.applicationForm?.description}</div></td>--}%
+        %{--</tr>--}%
+        %{--<tr>--}%
+            %{--<td class="attachment-td"><g:link action="showDetails" controller="attachment"--}%
+                                              %{--params="[id: contractInstance.id, att: 'SC']">Show Details</g:link></td>--}%
+            %{--<td class="attachment-td"><g:link action="showDetails" controller="attachment"--}%
+                                              %{--params="[id: contractInstance.id, att: 'VA']">Show Details</g:link></td>--}%
+            %{--<td class="attachment-td"><g:link action="showDetails" controller="attachment"--}%
+                                              %{--params="[id: contractInstance.id, att: 'AF']">Show Details</g:link></td>--}%
+        %{--</tr>--}%
+    %{--</table>--}%
     <div class="row-fluid">
         <ul class="thumbnails" id="attachment-container">
             <g:each in="${contractInstance?.attachments}" var="attachment">
@@ -233,8 +245,8 @@
     </div>
     <div style="text-align:center ">
         <input class="btn" type="button" onclick="doAddAttachment()" value="Add Attachment">
-        <input class="btn" type="button" onclick="doSubmit()" value="Submit">
-        <input class="btn" type="button" onclick="doReject()" value="Reject">
+        <input class="btn" type="button" onclick="doSubmitReject('Pass')" value="Submit">
+        <input class="btn" type="button" onclick="doSubmitReject('Reject')" value="Reject">
     </div>
 
 </div>

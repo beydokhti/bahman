@@ -275,12 +275,22 @@ class ContractController {
                 it["${field}_month"] = gc.get(Calendar.MONTH) as String
                 it["${field}_day"] = gc.get(Calendar.DATE) as String
             }
+
             Contract contract = new Contract(it)
             contract.importDate = new Date()
-            contract.save()
+            def oldContract = Contract.findByContractNoAndContractPartNo(contract.contractNo,contract.contractPartNo)
+            if (oldContract)
+            {
+                oldContract.settlementDate=contract.settlementDate
+                oldContract.save()
+            }
+            else{
+                contract.save()
+            }
             phaseService.addDefaultPhases(contract)
         }
 
         redirect(action: "list")
     }
+
 }

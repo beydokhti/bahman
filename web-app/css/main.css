@@ -75,6 +75,9 @@ input:-moz-placeholder {
     vertical-align: top;
 }
 
+. fieldcontain  div{
+  display: inline-block;
+}
 .formRow{
     max-width: 800px;
 }
@@ -260,7 +263,7 @@ img {
 }
 
 /* NAVIGATION MENU */
-
+   /*
 .nav {
 	padding: 0.5em 0.75em;
     float: left;
@@ -328,7 +331,7 @@ img {
 .nav a.create {
 	background-image: url(../images/skin/database_add.png);
 }
-
+*/
 /* CREATE/EDIT FORMS AND SHOW PAGES */
 
 fieldset,
@@ -356,7 +359,14 @@ fieldset,
     width: 40%;
 }
 
-.detail-td{
+.field-label {
+    background: #DFDDFF;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.field-value{
+    background: #DFDDDD;
 
 }
 
@@ -391,7 +401,7 @@ fieldset,
 .detail-property-list {
     background-color: #ffffff;
     border: none;
-    margin-right: 3%;
+    /*margin-right: 3%;*/
     width: 100%;
     /*margin-top: 2px;*/
 

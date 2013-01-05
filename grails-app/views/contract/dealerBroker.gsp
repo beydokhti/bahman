@@ -9,9 +9,21 @@
 <body>
 
 <div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
+    <rg:criteria inline='true'>
+        <rg:like name="contractNo" />
+        <rg:like name="contractPartNo" />
+        <rg:like name="buyerBrokerDesc" />
+        <rg:like name="dealerBrokerDesc" />
+        <rg:like name="customerDesc" />
+        <rg:eq name="dealerBrokerCode" value="${organization.code}" hidden="true"/>
+        <rg:filterGrid grid="ContractGrid" />
+    </rg:criteria>
     <rg:grid domainClass="${bahman.Contract}">
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization.code}"/>
+            %{--<rg:alias name='phases' value='m'/>--}%
+            %{--<rg:eq name='m.status' vlaue='Waiting'/>--}%
+            %{--<rg:eq name='m.phase' vlaue='DealerBroker'/>--}%
         </rg:criteria>
     </rg:grid>
     <rg:dialog id="contract" title="Contract Form">
@@ -23,6 +35,8 @@
                 <rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>
                 <rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>
                 <rg:hiddenReference field="importDate"></rg:hiddenReference>
+                <rg:ignoreField field="prevStatus"></rg:ignoreField>
+                <rg:ignoreField field="lastPhase"></rg:ignoreField>
             </rg:modify>
         </rg:fields>
         <rg:saveButton domainClass="${bahman.Contract}"/>

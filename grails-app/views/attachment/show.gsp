@@ -48,7 +48,17 @@
 					
 				</li>
 				</g:if>
-			
+
+
+                <g:if test="${attachmentInstance?.fileName}">
+                    <li class="fieldcontain">
+                        <span id="status-label" class="property-label"><g:message code="attachment.fileName.label" default="File Name" /></span>
+
+                        <span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${attachmentInstance}" field="fileName"/></span>
+
+                    </li>
+                </g:if>
+
 				<g:if test="${attachmentInstance?.uploadDate}">
 				<li class="fieldcontain">
 					<span id="uploadDate-label" class="property-label"><g:message code="attachment.uploadDate.label" default="Upload Date" /></span>

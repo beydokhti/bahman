@@ -31,6 +31,14 @@ class AttachmentController {
     }
     def save() {
         def attachmentInstance = new Attachment(params)
+//        def contentType = attachmentInstance.document.contentType
+//        def fileName = attachmentInstance.document.originalFilename
+//        def size = attachmentInstance.document.size
+//        attachmentInstance.fileName=request.getFileNames()
+        def file = request.getFile("document")
+        attachmentInstance.fileName=file.originalFilename
+        attachmentInstance.contentType=file.getContentType();
+
         attachmentInstance.uploadDate = new Date()
         attachmentInstance.status = 'P'
         def princ = springSecurityService.getPrincipal()
@@ -48,13 +56,13 @@ class AttachmentController {
             return
         }
         def contract = Contract.get(params.contractId)
-        if (params.attr == "SC")
-            contract.settlementCertificate = attachmentInstance
-        if (params.attr == "VA")
-            contract.valueAddedTax = attachmentInstance
-        if (params.attr == "AF")
-            contract.applicationForm = attachmentInstance
-        if (params.attr == "Attachment")
+//        if (params.attr == "SC")
+//            contract.settlementCertificate = attachmentInstance
+//        if (params.attr == "VA")
+//            contract.valueAddedTax = attachmentInstance
+//        if (params.attr == "AF")
+//            contract.applicationForm = attachmentInstance
+//        if (params.attr == "Attachment")
             contract.addToAttachments(attachmentInstance)
         if (contract.save()) {
             if (params.attr == "Attachment")
@@ -84,6 +92,7 @@ class AttachmentController {
             attachmentInstance = new Attachment()
         render(template: 'form', model: [attachmentInstance: attachmentInstance])
     }
+
 
     def show() {
         def attachmentInstance = Attachment.get(params.id)
@@ -179,4 +188,17 @@ class AttachmentController {
             redirect(action: "show", id: params.id)
         }
     }
+    def downloadAttachment(){
+        def attachment = Attachment.get(params.id)
+        byte[] content = attachment.document
+        if (!attachment ) {
+            response.sendError(404, "Not Found \n")
+            return
+        }
+        response.setHeader("Content-disposition", "attachment; filename = ${attachment.fileName}");render(contentType: "${attachment.contentType}", text:"mtb");
+        response.contentType = "application/octet-stream"
+        response.outputStream << content
+        response.outputStream.flush()
+    }
+
 }

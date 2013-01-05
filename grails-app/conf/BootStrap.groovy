@@ -50,7 +50,8 @@ class BootStrap {
 //                            ,document: ${resource(dir:'images',file:'settelmentCer.png')}).save()
 
         def phase1=new Phase(phase: "BuyerBroker",comment: "test1", organization: usr1, startDate:new Date('1391/09/22'),endDate:new Date('1391/09/22'),status:"Pass" ).save()
-        def phase2=new Phase(phase: "Supplier",comment: "test2", organization: usr6, startDate:new Date('1391/09/22'),status:"Waiting" ).save()
+        def phase2=new Phase(phase: "DealerBroker",comment: "test2", organization: usr6, startDate:new Date('1391/09/22'),status:"Waiting" ).save()
+        def phase3=new Phase(phase: "BuyerBroker",comment: "test1", organization: usr1, startDate:new Date('1391/09/22'),status:"Waiting" ).save()
 
         def contract1= new Contract(contractNo  :"1391193129",
                 contractPartNo  :"1",
@@ -89,7 +90,48 @@ class BootStrap {
         contract1.addToPhases(phase1)
         contract1.addToPhases(phase2)
         contract1.save()
+        def contract2= new Contract(contractNo  :"1391193129",
+                contractPartNo  :"2",
+                contractDate :new Date('1391/09/22'),
+                allotmentDate :new Date('1391/09/22'),
+                settlementDeadline :new Date('1391/09/27'),
+                settlementType  :"نقد?",
+                dealerBrokerDesc  :"بهمن",
+                buyerBrokerDesc  :"بانک کشاورز?",
+                customerDesc  :"شرکت نو?ن ش?م? سلفچگان",
+                productSymbol  :"TORC-LUSUB-00",
+                productDesc  :"گوگرد کلوخه",
+                totalShipments  :"30",
+                price  :"2570",
+                contractType  :"نقد?",
+                deliveryDate :new Date('1391/09/27'),
+                manufacturerDesc  :"پالا?شگاه تبر?ز",
+                deliveryPlace  :"انبار کارخانه",
+                productMainGroup  :"پتروش?م? و فرآورده ها? نفت?",
+                productGroup  :"گوگرد",
+                productSubGroup  :"گوگرد",
+                weight  :"1000",
+                quantity  :"30000",
+                buyerBrokerCode  :"24",
+                dealerBrokerCode  :"31",
+                customerCode  :"11140",
+                supplierCode  :"359",
+                boursePrice  :"2570",
+                settlementDate :new Date('1391/09/29'),
+                contractID  :"102419312900164",
+                releaseDate :new Date('1391/09/22'),
+                importDate :new Date('1391/09/22'),
+//                settlementCertificate:attachment
+        ).save()
+
+        contract2.addToPhases(phase3)
+        contract2.save()
+
     }
+
+
+
+
     def destroy = {
     }
 }

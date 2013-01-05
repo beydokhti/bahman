@@ -1,88 +1,112 @@
 <!doctype html>
 <html>
-	<head>
-		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
-		<style type="text/css" media="screen">
-			#status {
-				background-color: #eee;
-				border: .2em solid #fff;
-				margin: 2em 2em 1em;
-				padding: 1em;
-				width: 12em;
-				float: left;
-				-moz-box-shadow: 0px 0px 1.25em #ccc;
-				-webkit-box-shadow: 0px 0px 1.25em #ccc;
-				box-shadow: 0px 0px 1.25em #ccc;
-				-moz-border-radius: 0.6em;
-				-webkit-border-radius: 0.6em;
-				border-radius: 0.6em;
-			}
+<head>
+    <meta name="layout" content="main"/>
+    <title>Welcome to Grails</title>
+    <style type="text/css" media="screen">
+    #status {
+        background-color: #eee;
+        border: .2em solid #fff;
+        margin: 2em 2em 1em;
+        padding: 1em;
+        width: 12em;
+        float: left;
+        -moz-box-shadow: 0px 0px 1.25em #ccc;
+        -webkit-box-shadow: 0px 0px 1.25em #ccc;
+        box-shadow: 0px 0px 1.25em #ccc;
+        -moz-border-radius: 0.6em;
+        -webkit-border-radius: 0.6em;
+        border-radius: 0.6em;
+    }
 
-			.ie6 #status {
-				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
-			}
+    .ie6 #status {
+        display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
+    }
 
-			#status ul {
-				font-size: 0.9em;
-				list-style-type: none;
-				margin-bottom: 0.6em;
-				padding: 0;
-			}
-            
-			#status li {
-				line-height: 1.3;
-			}
+    #status ul {
+        font-size: 0.9em;
+        list-style-type: none;
+        margin-bottom: 0.6em;
+        padding: 0;
+    }
 
-			#status h1 {
-				text-transform: uppercase;
-				font-size: 1.1em;
-				margin: 0 0 0.3em;
-			}
+    #status li {
+        line-height: 1.3;
+    }
 
-			#page-body {
-				margin: 2em 1em 1.25em 18em;
-			}
+    #status h1 {
+        text-transform: uppercase;
+        font-size: 1.1em;
+        margin: 0 0 0.3em;
+    }
 
-			h2 {
-				margin-top: 1em;
-				margin-bottom: 0.3em;
-				font-size: 1em;
-			}
+    #page-body {
+        margin: 2em 1em 1.25em 18em;
+    }
 
-			p {
-				line-height: 1.5;
-				margin: 0.25em 0;
-			}
+    h2 {
+        margin-top: 1em;
+        margin-bottom: 0.3em;
+        font-size: 1em;
+    }
 
-			#controller-list ul {
-				list-style-position: inside;
-			}
+    p {
+        line-height: 1.5;
+        margin: 0.25em 0;
+    }
 
-			#controller-list li {
-				line-height: 1.3;
-				list-style-position: inside;
-				margin: 0.25em 0;
-			}
+    #controller-list ul {
+        list-style-position: inside;
+    }
 
-			@media screen and (max-width: 480px) {
-				#status {
-					display: none;
-				}
+    #controller-list li {
+        line-height: 1.3;
+        list-style-position: inside;
+        margin: 0.25em 0;
+    }
 
-				#page-body {
-					margin: 0 1em 1em;
-				}
+    @media screen and (max-width: 480px) {
+        #status {
+            display: none;
+        }
 
-				#page-body h1 {
-					margin-top: 0;
-				}
-			}
-		</style>
-	</head>
-	<body>
-    <div><p><g:link action="importExcel" controller="contract"  >Import Contract</g:link></p></div>
-    <div><p><g:link action="list" controller="contract" >Dashboards</g:link></p></div>
+        #page-body {
+            margin: 0 1em 1em;
+        }
 
-    </body>
+        #page-body h1 {
+            margin-top: 0;
+        }
+    }
+    </style>
+</head>
+
+<body>
+<div class="row">
+    <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+            <li class="">
+                <a href="<g:createLink action="importExcel" controller="contract"/>">
+                    <i class="icon-chevron-right"></i>
+                    <g:message code="index.import" default="Import" />
+                </a>
+
+            </li>
+            <li class="">
+                <a href="<g:createLink action="list" controller="contract" />"
+                    <i class="icon-chevron-right"></i>
+                    <g:message code="index.dashboard" default="Dashboard" />
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="span9">
+    </div>
+</div>
+
+                %{--<div><p><g:link action="importExcel" controller="contract">Import Contract</g:link></p></div>--}%
+
+                %{--<div><p><g:link action="list" controller="contract">Dashboards</g:link></p></div>--}%
+
+</body>
 </html>
