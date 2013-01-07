@@ -74,11 +74,17 @@ input:-moz-placeholder {
     padding-left:5px;
     vertical-align: top;
 }
+.fieldcontain div{
+    display: inline-block;
+}
+
 
 .inline .fieldcontain,.inline input[type=button]  {
-     display: inline-block;
-     /*width: 100px;*/
- }
+  display: inline-block;
+    /*margin-top: 0px;*/
+    /*padding: 0px 0px;*/
+    vertical-align: baseline;
+}
 .formRow{
     max-width: 800px;
 }

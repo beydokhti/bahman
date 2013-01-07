@@ -71,13 +71,14 @@ class ContractController {
                 userType="Manufacturer"
             }
 //            def lp=contract.lastPhase
-            if(userType!=contract.lastPhase)
-//                userType="Allowed"
-//            else
-                userType="Illegal"
+            String limit=""
+            if(userType==contract.lastPhase)
+                limit="Allowed"
+            else
+                limit="Illegal"
 
             if (user.code==code || user.description==desc){
-                return [ contractInstance : contract , userType:userType]
+                return [ contractInstance : contract , userType:userType,limit:limit]
             }
 
         }
@@ -194,6 +195,8 @@ class ContractController {
     }
     def save = {
         def contract = new Contract(params)
+        if (!contract.importDate)
+            contract.importDate=new Date()
         if(!contract.hasErrors() && contract.save()) {
             flash.message = "TekEvent ${contract.id} created"
             phaseService.addDefaultPhases(contract)
@@ -344,6 +347,17 @@ class ContractController {
         }
 
         redirect(action: "list")
+    }
+
+    def showAttachmentPhaseDraft(){
+        def contractInstance=Contract.get(params.id)
+        if(!contractInstance){
+            return
+        }
+        //def lll=contractInstance.phases?.find(it?.status=="W")
+        def lastPhaseId =Contract.findByPhase(contractInstance)
+        def lastPhase=Phase.get(lastPhaseId)
+        [contractInstance: contractInstance,lastPhase:lastPhase]
     }
 
 }

@@ -66,6 +66,8 @@ class PhaseController {
             }
 
         }
+        prevPhase.organization=phaseInstance.organization
+        phaseInstance.organization=null
         prevPhase.comment=phaseInstance.comment
         phaseInstance.comment=""
         prevPhase.save()

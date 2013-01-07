@@ -19,22 +19,30 @@
         %{--<rg:saveButton domainClass="${bahman.Contract}"/>--}%
         %{--<rg:cancelButton/>--}%
     %{--</rg:dialog>--}%
+
     <rg:criteria inline='true'>
         <rg:like name="contractNo" />
         <rg:like name="contractPartNo" />
         <rg:like name="buyerBrokerDesc" />
         <rg:like name="dealerBrokerDesc" />
-        <rg:like name="customerDesc" />
+        %{--<rg:like name="customerDesc" />--}%
         <rg:eq name="customerCode" value="${organization?.code}" hidden="true"/>
         <rg:filterGrid grid="ContractGrid" />
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}">
+    <rg:grid domainClass="${bahman?.Contract}"
+    columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc']]"
+    >
         <rg:criteria>
             <rg:eq name="customerCode" value="${organization?.code}"/>
         %{--<rg:alias name='phases' value='m'/>--}%
         %{--<rg:eq name='m.status' value='Waiting'/>--}%
         %{--<rg:eq name='m.phase' value='DealerBroker'/>--}%
         </rg:criteria>
+        %{--<rg:modify>--}%
+            %{--<rg:hiddenReference field="prevStatus"></rg:hiddenReference>--}%
+            %{--<rg:hiddenReference field="lastPhase"></rg:hiddenReference>--}%
+
+        %{--</rg:modify>--}%
     </rg:grid>
     <rg:dialog id="contract" title="Contract Form">
         <rg:fields bean="${new bahman.Contract()}">

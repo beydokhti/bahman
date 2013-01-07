@@ -14,7 +14,7 @@ class Phase {
         comment(nullable: true,maxSize: 1024)
         startDate(nullable: false)
         endDate(nullable: true)
-        organization(nullable: false,maxSize: 50)
+        organization(nullable: true,maxSize: 50)
         phaseName()
         statusName()
     }

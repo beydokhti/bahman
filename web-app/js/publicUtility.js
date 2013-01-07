@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var loadOverlayForm = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
+var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
     if (!params)
         params = {}
     $.ajaxSettings.traditional = true;
@@ -27,27 +27,19 @@ var loadOverlayForm = function (remoteAddress, saveAddress, saveCallback, loadCa
                     'ذخیره':function () {
                         if (params && params.beforeSubmit)
                             params.beforeSubmit();
-                        r.ajaxSubmit({
-                            url:saveAddress,
-                            type:"post",
-                            success:function (resp) {
-                                if (params && params.afterSave)
-                                    params.afterSave(resp)
-//                                            if (resp == 0 || typeof resp == 'object') {
-                                if (saveCallback) {
-                                    saveCallback(resp)
+                        if((params.confirm=='Y' && confirm("Are-you-sure"))||params.confirm=='N' ){
+                            r.ajaxSubmit({
+                                url:saveAddress,
+                                type:"post",
+                                success:function (resp) {
+                                    if (params && params.afterSave)
+                                        params.afterSave(resp)
+                                    if (saveCallback) {
+                                        saveCallback(resp)
+                                    }
                                 }
-//                                                var r = $("#ajax-form" + remoteAddress.hashCode());
-//                                                r.dialog("destroy");
-//                                                r.remove()
-//                                            }
-// else {
-//                                                var r = $("#ajax-form" + remoteAddress.hashCode());
-//                                                r.html(resp);
-//                                                r.dialog("open");
-//                                            }
-                            }
-                        })
+                            })
+                        }
                         $(this).dialog("close");
                     },
                     "انصراف":function () {

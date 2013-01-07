@@ -42,10 +42,10 @@
                 undefined, undefined, {width: 1000})
     }
 </script>
-<g:if test="${type == 'Draft'}">
-    <div class="well">
-</g:if>
-<li class="span4" id="main_${attachment?.id}" style="background-color:#add8e6">
+<li class="span4" id="main_${attachment?.id}">
+    <g:if test="${type == 'Draft'}">
+        <div class="well">
+    </g:if>
 
 <div class="thumbnail">
     <g:if test="${attachment?.contentType}">
@@ -86,19 +86,19 @@
             %{--<a class="btn btn-primary" href="#" onclick="doDeleteAttachment(${attachment?.id})"><g:message code="delete" /></a>--}%
             %{--<a class="btn" href="#" onclick="doDownloadAttachment(${attachment?.id})"><g:message code="download" /></a>--}%
             <a class="btn" href="<g:createLink action="downloadAttachment" controller="attachment"
-                                               params="[id: attachment?.id]"/>"><g:message code="download"/></a>
+                                               params="[id: attachment?.id]"/>"><g:message code="Download"/></a>
             <a class="btn" href="<g:createLink action="showAttachmentDetails" controller="attachment"
-                                               params="[id: attachment?.id]"/>"><g:message code="show details"/></a>
+                                               params="[id: attachment?.id]"/>"><g:message code="Details"/></a>
             <g:if test="${attachment?.contentType && attachment?.contentType?.contains("/")}">
                 <g:if test="${attachment.contentType.substring(0, attachment.contentType.indexOf('/')).toLowerCase() == 'image'}">
-                    <a class="btn" href="#" onclick="doPrintImage(${attachment?.id})"><g:message code="print"/></a>
+                    <a class="btn" href="#" onclick="doPrintImage(${attachment?.id})"><g:message code="Print"/></a>
                 %{--<a class="btn" href="<g:createLink action="printImage" controller="attachment" params="[id: attachment?.id]"/>"><g:message code="download"/></a>--}%
                 </g:if>
             </g:if>
         </p>
     </div>
 </div>
-<g:if test="${type == 'Draft'}">
-    </div>
-</g:if>
+    <g:if test="${type == 'Draft'}">
+        </div>
+    </g:if>
 </li>
