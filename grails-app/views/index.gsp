@@ -83,26 +83,49 @@
 
 <body>
 <div class="row">
-    <div class="span3 bs-docs-sidebar">
-        <ul class="nav nav-list bs-docs-sidenav">
-            <li class="">
-                <a href="<g:createLink action="importExcel" controller="contract"/>">
-                    <i class="icon-chevron-right"></i>
-                    <g:message code="index.import" default="Import" />
-                </a>
+    <div class="span3">
+     %{--bs-docs-sidebar">--}%
+        %{--<ul class="nav nav-list bs-docs-sidenav">--}%
+            %{--<li class="">--}%
+                %{--<a href="<g:createLink action="importExcel" controller="contract"/>">--}%
+                    %{--<i class="icon-chevron-right"></i>--}%
+                    %{--<g:message code="index.import" default="Import" />--}%
+                %{--</a>--}%
 
-            </li>
-            <li class="">
-                <a href="<g:createLink action="list" controller="contract" />"
-                    <i class="icon-chevron-right"></i>
-                    <g:message code="index.dashboard" default="Dashboard" />
-                </a>
-            </li>
-        </ul>
+            %{--</li>--}%
+            %{--<li class="">--}%
+                %{--<a href="<g:createLink action="list" controller="contract" />"--}%
+                    %{--<i class="icon-chevron-right"></i>--}%
+                    %{--<g:message code="index.dashboard" default="Dashboard" />--}%
+                %{--</a>--}%
+            %{--</li>--}%
+        %{--</ul>--}%
     </div>
     <div class="span9">
+    <div style="height: 70px"> </div>
+
+    <div style="height: 150px">
+        <a href="<g:createLink action="importExcel" controller="contract" />">
+           <img src="${resource(dir:"images",file:"import.png" )} ">
+            <g:message code="index.import.label" default="Import" />
+        </a>       
     </div>
-</div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="list" controller="contract" />">
+                <img src="${resource(dir:"images",file:"pencil.png" )} ">
+                <g:message code="index.list.label" default="Dashboard"/>
+            </a>
+        </div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="list" controller="contract" />">
+                <img src="${resource(dir:"images",file:"pencil.png" )} ">
+                <g:message code="index.list.label" default="Dashboard"/>
+            </a>
+        </div>
+
+    </div>
 
                 %{--<div><p><g:link action="importExcel" controller="contract">Import Contract</g:link></p></div>--}%
 

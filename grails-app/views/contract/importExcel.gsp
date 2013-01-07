@@ -25,11 +25,11 @@
 
 <div id="list-contract"  class="content scaffold-list" role="main">
 <br>
-<g:form action="upload" method="post" enctype="multipart/form-data">
+<g:form action="upload" method="post" enctype="multipart/form-data" style="margin-top: 100px">
     <span class="btn btn-file">
-    <g:message code="importexcel.file" default="Management System"/>
+    <g:message code="importexcel.file.label" default="Management System"/>
     <input type="file" name="file" id="file" style="display: none" onChange="Handlechange();"/>
-    <input type="text" id="filename" readonly="true"/>
+    <input type="text" id="filename" readonly="true" style="margin-top: 19px ; width:300px"/>
     <input type="button" value="Click to select file" id="fakeBrowse" onclick="HandleBrowseClick();">
     <input class="save" type="submit" value="Upload"/>
     </span>

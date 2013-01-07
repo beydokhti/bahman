@@ -18,13 +18,13 @@
 	<input type="file" id="document" name="document" />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: attachmentInstance, field: 'status', 'error')} ">
-	<label for="status">
-		<g:message code="attachment.status.label" default="Status" />
-		
-	</label>
-	<g:select name="status" from="${attachmentInstance.constraints.status.inList}" value="${attachmentInstance?.status}" valueMessagePrefix="attachment.status" noSelection="['': '']"/>
-</div>
+%{--<div class="fieldcontain ${hasErrors(bean: attachmentInstance, field: 'status', 'error')} ">--}%
+	%{--<label for="status">--}%
+		%{--<g:message code="attachment.status.label" default="Status" />--}%
+		%{----}%
+	%{--</label>--}%
+	%{--<g:select name="status" from="${attachmentInstance.constraints.status.inList}" value="${attachmentInstance?.status}" valueMessagePrefix="attachment.status" noSelection="['': '']"/>--}%
+%{--</div>--}%
 
 %{--<div class="fieldcontain ${hasErrors(bean: attachmentInstance, field: 'uploadDate', 'error')} required">--}%
 	%{--<label for="uploadDate">--}%

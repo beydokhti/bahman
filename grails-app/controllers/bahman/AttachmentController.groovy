@@ -6,6 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class AttachmentController {
     def springSecurityService
+    def smsService
 
     static allowedMethods = [update: "POST", delete: "POST"]
 
@@ -22,11 +23,16 @@ class AttachmentController {
         [attachmentInstance: new Attachment(params)]
     }
     def deleteAttachment(){
-        def contract=Contract.get(params.contractId)
+//        def contract=Contract.get(params.contractId)
         def att=Attachment.get(params.id)
-        contract.removeFromAttachments(att)
-        contract.save()
-        att.delete()
+//        contract.removeFromAttachments(att)
+//        contract.save()
+//        att.delete()
+        if (att)
+        {
+            att.status="R"
+            att.save()
+        }
         render 0;
     }
     def save() {
@@ -36,8 +42,13 @@ class AttachmentController {
 //        def size = attachmentInstance.document.size
 //        attachmentInstance.fileName=request.getFileNames()
         def file = request.getFile("document")
-        attachmentInstance.fileName=file.originalFilename
-        attachmentInstance.contentType=file.getContentType();
+        try {
+            attachmentInstance.fileName=file.originalFilename
+            attachmentInstance.contentType=file.getContentType();
+        }
+       catch (Exception e){
+           attachmentInstance.fileName=""
+       }
 
         attachmentInstance.uploadDate = new Date()
         attachmentInstance.status = 'P'
@@ -72,6 +83,58 @@ class AttachmentController {
         }//attachmentInstance as JSON
 //        flash.message = message(code: 'default.created.message', args: [message(code: 'attachment.label', default: 'Attachment'), attachmentInstance.id])
 //        redirect(action: "show", id: attachmentInstance.id)
+    }
+
+
+    def saveDraft() {
+        def attachmentInstance = new Attachment(params)
+        def file = request.getFile("document")
+        try {
+            attachmentInstance.fileName=file.originalFilename
+            attachmentInstance.contentType=file.getContentType();
+        }
+        catch (Exception e){
+        }
+
+        attachmentInstance.uploadDate = new Date()
+        attachmentInstance.status = 'P'
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            def org
+            if (user instanceof Broker || user instanceof Supplier || user instanceof Manufacturer) {
+                attachmentInstance.responsible = user
+            }
+
+        }
+
+        def contract = Contract.get(params.contractId)
+        Integer version=1
+        for (d in contract.drafts)
+        {
+            d.status='R'
+            d.save()
+            version ++
+        }
+        attachmentInstance.version=version
+        if (!attachmentInstance.save(flush: true)) {
+            return
+        }
+        contract.addToDrafts(attachmentInstance)
+        if (contract.save()) {
+                def customer=Customer.findByCode(contract.customerCode)
+                if (customer){
+                def msg = message(code: "sms.smsMsg1")  +contract.customerDesc+message(code: "sms.smsMsg2") +contract.contractNo+"/"+contract.contractPartNo+message(code: "sms.smsMsg3")
+                msg =msg+attachmentInstance.description+message(code: "sms.smsMsg4")
+
+                smsService.sendSms(msg,customer.mobileNo)
+                    }
+            if (params.attr == "Attachment")
+                render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance,type:'Draft'])
+            else
+                render attachmentInstance as JSON
+        }
+
     }
 
     def getImage() {
@@ -195,10 +258,15 @@ class AttachmentController {
             response.sendError(404, "Not Found \n")
             return
         }
-        response.setHeader("Content-disposition", "attachment; filename = ${attachment.fileName}");render(contentType: "${attachment.contentType}", text:"mtb");
+        response.setHeader("Content-disposition", "attachment; filename = ${attachment.fileName}");//render(contentType: "${attachment.contentType}", text:"mtb");
         response.contentType = "application/octet-stream"
         response.outputStream << content
         response.outputStream.flush()
+    }
+
+    def printImage(){
+        def attachment = Attachment.get(params.attachmentId)
+        render(template: 'printImage', model: [attachment: attachment])
     }
 
 }

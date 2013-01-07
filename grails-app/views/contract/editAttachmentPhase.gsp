@@ -109,15 +109,26 @@
             %{--}--}%
 
         %{--}--}%
-
-
-        function doSubmitReject(act) {
+        function doSubmit() {
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
-                    '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:act]"/>',
+                    '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Pass']"/>',
                     function () {
-                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance.id]"/>"
+                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance?.id]"/>"
                     }, undefined, {width:400})
         }
+
+        function doReject() {
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
+                    '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Reject']"/>',
+                    function () {
+                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance?.id]"/>"
+                    }, undefined, {width:400})
+        }
+        %{--function doPrintImage(attId){--}%
+            %{--loadOverlayAttachmentPhase('<g:createLink action="printImage" controller="attachment" params="[attachmentId:attId]"/>',--}%
+                    %{--undefined,--}%
+                    %{--undefined, undefined, {width:400})--}%
+        %{--}--}%
         %{--function doReject() {--}%
             %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',--}%
                     %{--'<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Reject']"/>',--}%
@@ -239,14 +250,36 @@
     <div class="row-fluid">
         <ul class="thumbnails" id="attachment-container">
             <g:each in="${contractInstance?.attachments}" var="attachment">
-                <g:render template="viewAttachment" model="[attachment:attachment]"/>
+                %{--<g:if test="${attachment.status!='R'}">--}%
+                    <g:if test="${attachment.responsible.code==user.code}">
+                        <g:render template="viewAttachment" model="[attachment:attachment]"/>
+                    </g:if>
+                    <g:else>
+                        <g:render template="showAttachment" model="[attachment:attachment]"/>
+                    </g:else>
+                %{--</g:if>--}%
+                %{--<g:fieldValue    bean="${user}" field="code"/>--}%
+                %{--<g:fieldValue    bean="${contractInstance.attachments.responsible}" field="code"/>--}%
+            </g:each>
+        </ul>
+    </div>
+
+    <div class="row-fluid">
+        <ul class="thumbnails" id="draft-container">
+            <g:each in="${contractInstance?.drafts}" var="draft">
+            %{--<g:if test="${draft.status!='R'}">--}%
+                <g:render template="showAttachment" model="[attachment:draft,type:'Draft']"/>
+            %{--</g:if>--}%
             </g:each>
         </ul>
     </div>
     <div style="text-align:center ">
+
         <input class="btn" type="button" onclick="doAddAttachment()" value="Add Attachment">
-        <input class="btn" type="button" onclick="doSubmitReject('Pass')" value="Submit">
-        <input class="btn" type="button" onclick="doSubmitReject('Reject')" value="Reject">
+        <input class="btn" type="button" onclick="doSubmit()" value="Submit">
+        <g:if test="${lastPhase.phase!='BuyerBroker'}">
+            <input class="btn" type="button" onclick="doReject()" value="Reject">
+        </g:if>
     </div>
 
 </div>

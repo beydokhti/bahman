@@ -75,9 +75,10 @@ input:-moz-placeholder {
     vertical-align: top;
 }
 
-. fieldcontain  div{
-  display: inline-block;
-}
+.inline .fieldcontain,.inline input[type=button]  {
+     display: inline-block;
+     /*width: 100px;*/
+ }
 .formRow{
     max-width: 800px;
 }
@@ -351,10 +352,18 @@ fieldset,
 }
 
 .fieldcontain {
+    /*display: inline-block;*/
 	margin-top: 1em;
     /*min-height: 40px;*/
     clear: both;
 }
+
+/*.fieldcontainblock {*/
+    /*display: inline-block;*/
+    /*margin-top: 1em;*/
+    /*min-height: 40px;*/
+    /*clear: both;*/
+/*}*/
 .detail-td-attach{
     width: 40%;
 }

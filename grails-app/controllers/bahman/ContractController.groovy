@@ -44,29 +44,40 @@ class ContractController {
 
         if (princ instanceof GrailsUser && contract) {
             def user = User.findByUsername(princ.username)
-
+            String userType=""
             if (user instanceof Broker ) {
                 def subRoleB = SubRole.findByRoleName("Dealer")
                 def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
                 if (!dealer ){
                     code = contract.buyerBrokerCode
+                    userType="BuyerBroker"
                 }
                 else if (dealer){
                     code = contract.dealerBrokerCode
+                    userType="DealerBroker"
                 }
             }
 
             else if (user instanceof Customer){
                 code = contract.customerCode
+                userType="customer"
             }
             else if(user instanceof Supplier){
                 code = contract.supplierCode
+                userType="Supplier"
             }
             else if(user instanceof Manufacturer){
                 desc = contract.manufacturerDesc
+                userType="Manufacturer"
             }
+//            def lp=contract.lastPhase
+            if(userType!=contract.lastPhase)
+//                userType="Allowed"
+//            else
+                userType="Illegal"
+
             if (user.code==code || user.description==desc){
-                return [ contractInstance : contract ]
+                return [ contractInstance : contract , userType:userType]
             }
 
         }
@@ -199,16 +210,58 @@ class ContractController {
     def getImage() {
         if (params.id) {
             def attachment = Attachment.get(params.id)
+            String ct = attachment.contentType.substring(0, attachment.contentType.indexOf('/')).toLowerCase()
+            if (ct=='image') {
             response.contentType = 'image/png'
             response.outputStream << attachment.document
             response.outputStream.flush()
+            }
+//            else if(attachment.contentType.toLowerCase()=="application/pdf"){
+//                def file= grailsAttributes.getApplicationContext().getResource("/images/pdf.png").getFile()
+//                response.contentType = 'image/png'
+//                response.outputStream << file
+//                response.outputStream.flush()
+//            }
         }
     }
+
     def editAttachmentPhase={
-       def contractInstance=Contract.get(params.id)
-       if(!contractInstance){
-          return
-       }
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+
+            def contractInstance=Contract.get(params.id)
+            if(!contractInstance){
+                return
+            }
+            def lastPhaseId =Contract.findByPhase(contractInstance)
+            def lastPhase=Phase.get(lastPhaseId)
+            if (lastPhase && user)
+                [contractInstance: contractInstance,lastPhase:lastPhase,user:user]
+        }
+    }
+
+    def editAttachmentPhaseDraft={
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+
+            def contractInstance=Contract.get(params.id)
+            if(!contractInstance){
+                return
+            }
+            def lastPhaseId =Contract.findByPhase(contractInstance)
+            def lastPhase=Phase.get(lastPhaseId)
+            if (lastPhase && user)
+                [contractInstance: contractInstance,lastPhase:lastPhase,user:user]
+        }
+    }
+
+    def showAttachmentPhase={
+        def contractInstance=Contract.get(params.id)
+        if(!contractInstance){
+            return
+        }
         //def lll=contractInstance.phases?.find(it?.status=="W")
         def lastPhaseId =Contract.findByPhase(contractInstance)
         def lastPhase=Phase.get(lastPhaseId)

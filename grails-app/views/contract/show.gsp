@@ -9,13 +9,13 @@
 	</head>
 	<body>
 		<a href="#show-contract" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
+		%{--<div class="nav" role="navigation">--}%
+			%{--<ul>--}%
+				%{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
+				%{--<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
+				%{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+			%{--</ul>--}%
+		%{--</div>--}%
 		<div id="show-contract" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -23,18 +23,65 @@
 			</g:if>
         <div class="detail-property-list">
         <div class="row">
-            <g:each in="${contractInstance?.properties?}" var="c" status="i">
-                <g:if test="${ (i % 3) == 0}">
+            <g:set var="counter" value="${0}"></g:set>
+            <g:each in="${contractInstance?.properties?.sort()}" var="c">
+                %{--status="i">--}%
+                <g:if test="${ (counter % 3) == 0}">
                    </div>
                    <div class="row">
                 </g:if>
                 <span>
                     %{--<g:if test="contract.${c.key}.label" >--}%
                         %{--<g:if test="${c.key}!='Attachments'">--}%
-                    <div class="span2"><div class="field-label"><g:message code="contract.${c.key}.label" default="" /></div> </div>
-                    <div class="span2">${c.value}</div>
+                    <g:if test="${c.key.toString().equals('contractNo') ||
+                            c.key.toString().equals('contractPartNo') ||
+//                            c.key.toString().equals('contractDate') ||
+//                            c.key.toString().equals('allotmentDate') ||
+//                            c.key.toString().equals('settlementDeadline') ||
+                            c.key.toString().equals('settlementType') ||
+                            c.key.toString().equals('buyerBrokerDesc') ||
+                            c.key.toString().equals('dealerBrokerDesc') ||
+                            c.key.toString().equals('customerDesc') ||
+                            c.key.toString().equals('productSymbol') ||
+                            c.key.toString().equals('productDesc') ||
+                            c.key.toString().equals('totalShipments') ||
+                            c.key.toString().equals('price') ||
+                            c.key.toString().equals('contractType') ||
+//                            c.key.toString().equals('deliveryDate') ||
+                            c.key.toString().equals('manufacturerDesc') ||
+                            c.key.toString().equals('deliveryPlace') ||
+                            c.key.toString().equals('productMainGroup') ||
+                            c.key.toString().equals('productGroup') ||
+                            c.key.toString().equals('productSubGroup') ||
+                            c.key.toString().equals('weight') ||
+                            c.key.toString().equals('quantity') ||
+                            c.key.toString().equals('buyerBrokerCode') ||
+                            c.key.toString().equals('dealerBrokerCode') ||
+                            c.key.toString().equals('customerCode') ||
+                            c.key.toString().equals('supplierCode') ||
+                            c.key.toString().equals('boursePrice') ||
+                            c.key.toString().equals('contractID')}">
+
+                        <div class="span2"><div class="field-label"><g:message code="contract.${c.key}.label" default="" /></div> </div>
+                        <div class="span2"> ${c.value}</div>
+                        <g:set var="counter" value="${counter+1}"></g:set>
+                    </g:if>
+                    %{--<g:else></g:else>--}%
                     %{--</g:if>--}%
                     %{--</g:if>--}%
+            <g:if test="${       c.key.toString().equals('contractDate') ||
+                    c.key.toString().equals('allotmentDate') ||
+                    c.key.toString().equals('settlementDeadline') ||
+                    c.key.toString().equals('deliveryDate') ||
+                    c.key.toString().equals('settlementDate') ||
+                    c.key.toString().equals('releaseDate') ||
+                    c.key.toString().equals('importDate')}">
+                        <div class="span2"><div class="field-label"><g:message code="contract.${c.key}.label" default="" /></div> </div>
+                        <div class="span2"><g:formatDate format="yyyy/MM/dd" date="${c.value}"></g:formatDate></div>
+                    <g:set var="counter" value="${counter+1}"></g:set>
+                    </g:if>
+
+
                 </span>
             </g:each>
         </div>
@@ -397,8 +444,8 @@
                         <g:each in="${contractInstance.phases?.sort{it.id}}" var="p">
                             <tr>
                                 %{--<span class="property-value-small" aria-labelledby="phases-label"><g:link controller="phase" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>--}%
-                                <td class="phase-table"><span class="property-value-small" >${p.phase}</span></td>
-                                <td class="phase-table"><span class="property-value-small" >${p.status}</span></td>
+                                <td class="phase-table"><span class="property-value-small" >${p.phaseName}</span></td>
+                                <td class="phase-table"><span class="property-value-small" >${p.statusName}</span></td>
                                 <td class="phase-table"><span class="property-value-small" >${p.comment}</span></td>
                                 <td class="phase-table"><span class="property-value-small" ><rg:formatJalaliDate date="${p.startDate}"/></span></td>
                                 <td class="phase-table"><span class="property-value-small" ><rg:formatJalaliDate date="${p.endDate}"/></span></td>
@@ -415,8 +462,20 @@
 			<g:form>
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${contractInstance?.id}" />
-					<g:link class="edit" action="editAttachmentPhase" id="${contractInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    <g:if test="${userType!="Illegal"}">
+                        <g:if test="${userType=="Supplier"}">
+                            <g:link class="edit" action="editAttachmentPhaseDraft" id="${contractInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                        </g:if>
+                        <g:else>
+					        <g:link class="edit" action="editAttachmentPhase" id="${contractInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                        </g:else>
+                    </g:if>
+                    <g:else>
+                            <g:link class="show" action="showAttachmentPhase" id="${contractInstance?.id}"><g:message code="default.button.show.label" default="Show" /></g:link>
+                    </g:else>
+                    <g:if test="${userType=="dealerBroker"}">
+					    <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    </g:if>
 				</fieldset>
 			</g:form>
 		</div>

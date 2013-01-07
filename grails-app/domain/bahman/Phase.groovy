@@ -15,8 +15,34 @@ class Phase {
         startDate(nullable: false)
         endDate(nullable: true)
         organization(nullable: false,maxSize: 50)
+        phaseName()
+        statusName()
     }
     String toString(){
+
     "$phase"
+    }
+
+    transient getPhaseName(){
+        if (phase=="BuyerBroker")
+            return "کارگزار خریدار"
+        else if (phase=="DealerBroker")
+            return   "کارگزار فروشنده"
+        else if (phase=="Supplier")
+            return "بازرگانی"
+        else if (phase=="Manufacturer")
+            return "تولید کننده"
+        else if (phase=="Finished")
+            return "پایان"
+    }
+
+    transient getStatusName(){
+        if (status=='Pass')
+            return "تایید"
+        else if (status=='Reject')
+            return "برگشت"
+        else if (status=='Waiting')
+            return "درحال انتظار"
+
     }
 }

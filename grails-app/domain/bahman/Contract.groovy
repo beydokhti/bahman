@@ -36,7 +36,8 @@ class Contract {
 //    Attachment valueAddedTax
 //    Attachment applicationForm
     static hasMany = [attachments:Attachment,
-            phases:Phase]
+            phases:Phase,
+            drafts:Attachment]
 //    static transients = ['prevStatus','lastPhase']
 
     static constraints = {
@@ -76,6 +77,9 @@ class Contract {
 //        settlementCertificate(nullable:true)
 //        valueAddedTax(nullable:true)
 //        applicationForm(nullable:true)
+        drafts (nullable: true)
+        attachments (nullable: true)
+        phases(nullable: true)
     }
     static def findByPhase (Contract contract){
         for (p in contract.phases)
