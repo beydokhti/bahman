@@ -443,8 +443,7 @@
                         <td class="phase-td-head"><g:message code="phase.comment.label" default="Comment"/></td>
                         <td class="phase-td-head"><g:message code="phase.startdate.label" default="Start Date"/></td>
                         <td class="phase-td-head"><g:message code="phase.enddate.label" default="End Date"/></td>
-                        <td class="phase-td-head"><g:message code="phase.organization.label"
-                                                             default="Organization"/></td>
+                        <td class="phase-td-head"><g:message code="phase.organization.label" default="Organization"/></td>
                     </tr>
                     <g:each in="${contractInstance.phases?.sort { it.id }}" var="p">
                         <tr>
@@ -456,16 +455,29 @@
                                     date="${p.startDate}"/></span></td>
                             <td class="phase-table"><span class="property-value-small"><rg:formatJalaliDate
                                     date="${p.endDate}"/></span></td>
-                            <td class="phase-table"><span
-                                    class="property-value-small">${p.organization.description}</span></td>
+                            %{--<td class="phase-table"><span  class="property-value-small">${p.organization.description}</span></td>--}%
                         </tr>
                     </g:each>
                 </table>
             </div>
+
+
         </td>
         <td class="phase-td"></td>
     </tr>
 </table>
+
+%{--<div class="row">--}%
+    %{--<div class=" class="phasecontain"">--}%
+    %{--<div class="span1 offset2" ><g:message code="phase.phase.label" default="Phase"/></div>--}%
+    %{--<div class="span1" ><g:message code="phase.status.label" default="Status"/></div>--}%
+    %{--<div class="span1" ><g:message code="phase.comment.label" default="Comment"/></div>--}%
+    %{--<div class="span3" ><g:message code="phase.startdate.label" default="Start Date"/></div>--}%
+    %{--<div class="span1" ><g:message code="phase.enddate.label" default="End Date"/></div>--}%
+    %{--<div class="span1" ><g:message code="phase.organization.label" default="Organization"/></div>--}%
+%{--</div>--}%
+%{--</div>--}%
+
 
 <g:form>
     <fieldset class="buttons">

@@ -14,7 +14,7 @@ class PhaseService {
         }
             else
         {user =User.findByUsername("user0")}
-        contract.addToPhases new Phase(phase: "BuyerBroker",comment: "", organization:user, startDate:new Date(),status:"Waiting" ).save()
+        contract.addToPhases new Phase(phase: "BuyerBroker",comment: "", organization:null, startDate:new Date(),status:"Waiting" ).save()
         contract.save()
     }
 }
