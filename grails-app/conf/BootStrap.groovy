@@ -16,23 +16,25 @@ class BootStrap {
         def orgRole=new Role(authority: "Organization").save()
         def custRole=new Role(authority: "Customer").save()
 
-        def subRole1=new SubRole(roleName:"Buyer").save()
-        def subRole2=new SubRole(roleName:"Dealer").save()
+//        def subRole1=new SubRole(roleName:"Buyer").save()
+//        def subRole2=new SubRole(roleName:"Dealer").save()
 
-        def usr0=new Broker(code: "31",description:"بهمن",username: "user0",password: "test",enabled: true).save()
+        def usr0=new Broker(code: "31",description:"بهمن",username: "user0",password: "test",enabled: true,brokerType: "DealerBroker").save()
+//        usr0.save()
         def userRole0= UserRole.create(usr0,orgRole)
-        userRole0.addToSubRoles(subRole2)
-        userRole0.addToSubRoles(subRole1)
+//        userRole0.addToSubRoles(subRole2)
+//        userRole0.addToSubRoles(subRole1)
 //       --------------------------------
-        def usr1=new Broker(code: "24",description:"بانک کشاورزي",username: "user1",password: "test",enabled: true).save()
+        def usr1=new Broker(code: "24",description:"بانک کشاورزي",username: "user1",password: "test",enabled: true,brokerType: "BuyerBroker").save()
+//        usr1.save().sav
         def userRole1= UserRole.create(usr1,orgRole)
-        userRole1.addToSubRoles(subRole1)
+//        userRole1.addToSubRoles(subRole1)
 
 
-        def usr2=new Broker(code: "31",description:"بهمن",username: "user2",password: "test",enabled: true).save()
+        def usr2=new Broker(code: "31",description:"بهمن",username: "user2",password: "test",enabled: true,brokerType: "DealerBroker").save()
         def userRole2= UserRole.create(usr2,orgRole)
-        userRole2.addToSubRoles(subRole2)
-        userRole2.addToSubRoles(subRole1)
+//        userRole2.addToSubRoles(subRole2)
+//        userRole2.addToSubRoles(subRole1)
 
         def usr4=new Customer (code: "11140",description:"شرکت نوين شيمي سلفچگان",username: "user4",password: "test",enabled: true,mobileNo:'09125348230').save()
         def userRole4= UserRole.create(usr4,custRole)

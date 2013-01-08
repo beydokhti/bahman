@@ -62,7 +62,7 @@
 
         <div style="height: 150px">
             <a href="<g:createLink action="list" controller="broker"/>">
-                <img src="${resource(dir:"images",file:"user-g.png" )} ">
+                <img src="${resource(dir:"images",file:"user.png" )} ">
                 <g:message code="broker.list.label" default="Broker"/>
             </a>
         </div>

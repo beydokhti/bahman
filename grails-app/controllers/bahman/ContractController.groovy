@@ -46,16 +46,18 @@ class ContractController {
             def user = User.findByUsername(princ.username)
             String userType=""
             if (user instanceof Broker ) {
-                def subRoleB = SubRole.findByRoleName("Dealer")
-                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
-                if (!dealer ){
-                    code = contract.buyerBrokerCode
-                    userType="BuyerBroker"
-                }
-                else if (dealer){
-                    code = contract.dealerBrokerCode
-                    userType="DealerBroker"
-                }
+//                def subRoleB = SubRole.findByRoleName("Dealer")
+//                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
+//                if (user.brokerType="Dealer")
+//                if (!dealer ){
+//                    code = contract.buyerBrokerCode
+//                    userType="BuyerBroker"
+//                }
+//                else if (dealer){
+//                    code = contract.dealerBrokerCode
+//                    userType="DealerBroker"
+//                }
+                userType=user.brokerType
             }
 
             else if (user instanceof Customer){
@@ -96,14 +98,21 @@ class ContractController {
                 def user = User.findByUsername(princ.username)
 
                 if (user instanceof Broker ) {
-                    def subRoleB = SubRole.findByRoleName("Dealer")
-                    def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
-                    if (!dealer ){
+//                    def subRoleB = SubRole.findByRoleName("Dealer")
+//                    def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
+//                    if (!dealer ){
+//                        code = contract.buyerBrokerCode
+//                    }
+//                    else if (dealer){
+//                        code = contract.dealerBrokerCode
+//                    }
+                    if (user.brokerType=="BuyerBroker" ){
                         code = contract.buyerBrokerCode
                     }
-                    else if (dealer){
+                    else if (user.brokerType=="DealerBroker"){
                         code = contract.dealerBrokerCode
                     }
+
                 }
 
                 else if (user instanceof Customer){
@@ -127,12 +136,12 @@ class ContractController {
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
             if (user instanceof Broker ) {
-                def subRoleB = SubRole.findByRoleName("Dealer")
-                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
-                if (!dealer ){
+//                def subRoleB = SubRole.findByRoleName("Dealer")
+//                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
+                if (user.brokerType=="BuyerBroker" ){
                     redirect(action: "buyerBroker", params: params)
                 }
-               else if (dealer){
+               else if (user.brokerType=="DealerBroker"){
                     redirect(action: "dealerBroker", params: params)
                 }
             }
@@ -201,6 +210,7 @@ class ContractController {
             flash.message = "TekEvent ${contract.id} created"
             phaseService.addDefaultPhases(contract)
         }
+        render 0
     }
 
 

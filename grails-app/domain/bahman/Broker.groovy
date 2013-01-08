@@ -3,25 +3,22 @@ package bahman
 class Broker extends Organization{
 
     String brokerType
+
     static constraints = {
-//        brokerSubRoleName()
-        brokerType(nullable: false,inList: ["Buyer","Dealer"])
+        brokerTypeName()
+        brokerType(nullable: false,inList: ["BuyerBroker","DealerBroker"])
     }
+
     String toString(){
         "$code,$description"
     }
-//    transient brokerSubRoleName(){
-//        def userRole = UserRole.findByUser(this)
-//        def dealer="N"
-//        for (sb in userRole.subRoles)
-//        {
-//            if (sb.roleName =="Dealer")
-//                dealer="Y"
-//        }
-//        if (dealer.equals("Y"))
-//            return "کارگزار فروشنده"
-//        else
-//            return "کارگزار خریدار"
 
-//    }
+    transient getBrokerTypeName(){
+
+        if (brokerType.equals("DealerBroker"))
+            return "کارگزار فروشنده"
+        else
+            return "کارگزار خریدار"
+
+    }
 }
