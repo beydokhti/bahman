@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Welcome to Grails</title>
+    <title>Bahman Kala</title>
     <style type="text/css" media="screen">
     #status {
         background-color: #eee;
@@ -84,52 +84,69 @@
 <body>
 <div class="row">
     <div class="span3">
-     %{--bs-docs-sidebar">--}%
+        %{--bs-docs-sidebar">--}%
         %{--<ul class="nav nav-list bs-docs-sidenav">--}%
-            %{--<li class="">--}%
-                %{--<a href="<g:createLink action="importExcel" controller="contract"/>">--}%
-                    %{--<i class="icon-chevron-right"></i>--}%
-                    %{--<g:message code="index.import" default="Import" />--}%
-                %{--</a>--}%
+        %{--<li class="">--}%
+        %{--<a href="<g:createLink action="importExcel" controller="contract"/>">--}%
+        %{--<i class="icon-chevron-right"></i>--}%
+        %{--<g:message code="index.import" default="Import" />--}%
+        %{--</a>--}%
 
-            %{--</li>--}%
-            %{--<li class="">--}%
-                %{--<a href="<g:createLink action="list" controller="contract" />"--}%
-                    %{--<i class="icon-chevron-right"></i>--}%
-                    %{--<g:message code="index.dashboard" default="Dashboard" />--}%
-                %{--</a>--}%
-            %{--</li>--}%
+        %{--</li>--}%
+        %{--<li class="">--}%
+        %{--<a href="<g:createLink action="list" controller="contract" />"--}%
+        %{--<i class="icon-chevron-right"></i>--}%
+        %{--<g:message code="index.dashboard" default="Dashboard" />--}%
+        %{--</a>--}%
+        %{--</li>--}%
         %{--</ul>--}%
     </div>
+
     <div class="span9">
-    <div style="height: 70px"> </div>
-
-    <div style="height: 150px">
-        <a href="<g:createLink action="importExcel" controller="contract" />">
-           <img src="${resource(dir:"images",file:"import.png" )} ">
-            <g:message code="index.import.label" default="Import" />
-        </a>       
-    </div>
+        %{--<div class="row">--}%
+        %{--<div class="span5">--}%
+        <div style="height: 70px"></div>
 
         <div style="height: 150px">
-            <a href="<g:createLink action="list" controller="contract" />">
-                <img src="${resource(dir:"images",file:"pencil.png" )} ">
-                <g:message code="index.list.label" default="Dashboard"/>
+            <a href="<g:createLink action="importExcel" controller="contract"/>">
+                <img src="${resource(dir: "images", file: "import.png")} ">
+                <g:message code="index.import.label" default="Import"/>
             </a>
         </div>
 
         <div style="height: 150px">
-            <a href="<g:createLink action="list" controller="contract" />">
-                <img src="${resource(dir:"images",file:"pencil.png" )} ">
+            <a href="<g:createLink action="list" controller="contract"/>">
+                <img src="${resource(dir: "images", file: "pencil.png")} ">
                 <g:message code="index.list.label" default="Dashboard"/>
             </a>
         </div>
+        %{--</div>--}%
+
+        %{--<div class="span5">--}%
+        <div style="height: 70px"></div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="report" controller="report"/>">
+                <img src="${resource(dir: "images", file: "report.png")} ">
+                <g:message code="index.report.label" default="Report"/>
+            </a>
+        </div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="userAdmin" controller="userAdmin"/>">
+                <img src="${resource(dir: "images", file: "userAdmin.png")} ">
+                <g:message code="index.userAdmin.label" default="User Admin"/>
+            </a>
+        </div>
+
+        %{--</div>--}%
+        %{--</div>--}%
 
     </div>
 
-                %{--<div><p><g:link action="importExcel" controller="contract">Import Contract</g:link></p></div>--}%
+    %{--<div><p><g:link action="importExcel" controller="contract">Import Contract</g:link></p></div>--}%
 
-                %{--<div><p><g:link action="list" controller="contract">Dashboards</g:link></p></div>--}%
+    %{--<div><p><g:link action="list" controller="contract">Dashboards</g:link></p></div>--}%
 
 </body>
 </html>

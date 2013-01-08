@@ -9,13 +9,13 @@
 </head>
 <body>
 <a href="#show-contract" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-    </ul>
-</div>
+%{--<div class="nav" role="navigation">--}%
+    %{--<ul>--}%
+        %{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
+        %{--<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
+        %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+    %{--</ul>--}%
+%{--</div>--}%
 <div id="show-contract" class="content scaffold-show" role="main">
 <h1><g:message code="default.show.label" args="[entityName]" /></h1>
 <g:if test="${flash.message}">
@@ -374,17 +374,17 @@
                         <td class="phase-td-head"><g:message code="phase.comment.label" default="Comment" /> </td>
                         <td class="phase-td-head"><g:message code="phase.startdate.label" default="Start Date" /> </td>
                         <td class="phase-td-head"><g:message code="phase.enddate.label" default="End Date" /> </td>
-                        <td class="phase-td-head"><g:message code="phase.organization.label" default="Organization" /> </td>
+                        %{--<td class="phase-td-head"><g:message code="phase.organization.label" default="Organization" /> </td>--}%
                     </tr>
                     <g:each in="${contractInstance?.phases?.sort{it.id}}" var="p">
                         <tr>
                             %{--<span class="property-value-small" aria-labelledby="phases-label"><g:link controller="phase" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>--}%
-                            <td class="phase-table"><span class="property-value-small" >${p.phase}</span></td>
-                            <td class="phase-table"><span class="property-value-small" >${p.status}</span></td>
+                            <td class="phase-table"><span class="property-value-small" >${p.phaseName}</span></td>
+                            <td class="phase-table"><span class="property-value-small" >${p.statusName}</span></td>
                             <td class="phase-table"><span class="property-value-small" >${p.comment}</span></td>
                             <td class="phase-table"><span class="property-value-small" ><rg:formatJalaliDate date="${p.startDate}"/></span></td>
                             <td class="phase-table"><span class="property-value-small" ><rg:formatJalaliDate date="${p.endDate}"/></span></td>
-                            <td class="phase-table"><span class="property-value-small" >${p.organization.description}</span></td>
+                            %{--<td class="phase-table"><span class="property-value-small" >${p.organization?.description}</span></td>--}%
                         </tr>
                     </g:each>
                 </table>

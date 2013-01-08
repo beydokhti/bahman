@@ -443,7 +443,7 @@
                         <td class="phase-td-head"><g:message code="phase.comment.label" default="Comment"/></td>
                         <td class="phase-td-head"><g:message code="phase.startdate.label" default="Start Date"/></td>
                         <td class="phase-td-head"><g:message code="phase.enddate.label" default="End Date"/></td>
-                        <td class="phase-td-head"><g:message code="phase.organization.label" default="Organization"/></td>
+                        %{--<td class="phase-td-head"><g:message code="phase.organization.label" default="Organization"/></td>--}%
                     </tr>
                     <g:each in="${contractInstance.phases?.sort { it.id }}" var="p">
                         <tr>

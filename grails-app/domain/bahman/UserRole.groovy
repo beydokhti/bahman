@@ -8,7 +8,7 @@ class UserRole implements Serializable {
 
 	User user
 	Role role
-    static hasMany = [subRoles:SubRole]
+//    static hasMany = [subRoles:SubRole]
 
 	boolean equals(other) {
 		if (!(other instanceof UserRole)) {
@@ -45,15 +45,15 @@ class UserRole implements Serializable {
 		true
 	}
 
-      static boolean findByUserAndSubRoles (User user,SubRole subRole){
-          def userRole = UserRole.findByUser(user)
-          for (sb in userRole.subRoles)
-          {
-              if (sb.id==subRole.id)
-                  return true
-          }
-          false
-      }
+//      static boolean findByUserAndSubRoles (User user,SubRole subRole){
+//          def userRole = UserRole.findByUser(user)
+//          for (sb in userRole.subRoles)
+//          {
+//              if (sb.id==subRole.id)
+//                  return true
+//          }
+//          false
+//      }
 
 //    static boolean addSubRole(User user, Role role,SubRole subRole){
 //        UserRole instance = findByUserAndRole(user, role)

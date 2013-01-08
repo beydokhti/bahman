@@ -10,6 +10,9 @@
 <html>
 <head>
   <title></title>
+    <meta name="layout" content="main">
+    <g:set var="entityName" value="${message(code: 'userAdmin.label', default: 'Phase')}" />
+    <title><g:message code="default.edit.label" args="[entityName]" /></title>
     <g:javascript src="publicUtility.js"></g:javascript>
     %{--<script type="text/javascript">--}%
 
@@ -24,6 +27,11 @@
 
 </head>
 <body>
+<div class="nav" role="navigation">
+    <ul>
+        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+    </ul>
+</div>
 <div class="row">
     <div class="span3">
 
@@ -33,11 +41,33 @@
 
         <div style="height: 150px">
             <a href="<g:createLink action="list" controller="customer" />">
-                <img src="${resource(dir:"images",file:"user.png" )} ">
-                <g:message code="customer.list.label" default="Dashboard"/>
+                <img src="${resource(dir:"images",file:"customer.png" )} ">
+                <g:message code="customer.list.label" default="Customer List"/>
+            </a>
+        </div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="list" controller="manufacturer" />">
+                <img src="${resource(dir:"images",file:"user-m.png" )} ">
+                <g:message code="manufacturer.list.label" default="Manufacturer"/>
+            </a>
+        </div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="list" controller="supplier" />">
+                <img src="${resource(dir:"images",file:"user-r.png" )} ">
+                <g:message code="supplier.list.label" default="Supplier"/>
+            </a>
+        </div>
+
+        <div style="height: 150px">
+            <a href="<g:createLink action="list" controller="broker"/>">
+                <img src="${resource(dir:"images",file:"user-g.png" )} ">
+                <g:message code="broker.list.label" default="Broker"/>
             </a>
         </div>
 
     </div>
+</div>
 </body>
 </html>

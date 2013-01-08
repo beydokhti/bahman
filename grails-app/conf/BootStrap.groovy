@@ -24,7 +24,7 @@ class BootStrap {
         userRole0.addToSubRoles(subRole2)
         userRole0.addToSubRoles(subRole1)
 //       --------------------------------
-        def usr1=new Broker(code: "24",description:"بانک کشاورز?",username: "user1",password: "test",enabled: true).save()
+        def usr1=new Broker(code: "24",description:"بانک کشاورزي",username: "user1",password: "test",enabled: true).save()
         def userRole1= UserRole.create(usr1,orgRole)
         userRole1.addToSubRoles(subRole1)
 
@@ -34,10 +34,10 @@ class BootStrap {
         userRole2.addToSubRoles(subRole2)
         userRole2.addToSubRoles(subRole1)
 
-        def usr4=new Customer (code: "11140",description:"شرکت نو?ن ش?م? سلفچگان",username: "user4",password: "test",enabled: true,mobileNo:'09125348230').save()
+        def usr4=new Customer (code: "11140",description:"شرکت نوين شيمي سلفچگان",username: "user4",password: "test",enabled: true,mobileNo:'09125348230').save()
         def userRole4= UserRole.create(usr4,custRole)
 
-        def usr5=new Manufacturer (code: "01",description:"پالا?شگاه تبر?ز",username: "user5",password: "test",enabled: true) .save()
+        def usr5=new Manufacturer (code: "01",description:"پالايشگاه تبريز",username: "user5",password: "test",enabled: true) .save()
         def userRole5= UserRole.create(usr5,orgRole)
 
         def usr6=new Supplier (code: "359",description:"عرضه کننده",username: "user6",password: "test",enabled: true) .save()
@@ -62,19 +62,19 @@ class BootStrap {
                 contractDate :new Date('1391/09/22'),
                 allotmentDate :new Date('1391/09/22'),
                 settlementDeadline :new Date('1391/09/27'),
-                settlementType  :"نقد?",
+                settlementType  :"نقدي",
                 dealerBrokerDesc  :"بهمن",
-                buyerBrokerDesc  :"بانک کشاورز?",
-                customerDesc  :"شرکت نو?ن ش?م? سلفچگان",
+                buyerBrokerDesc  :"بانک کشاورزي",
+                customerDesc  :"شرکت نوين شيمي سلفچگان",
                 productSymbol  :"TORC-LUSUB-00",
                 productDesc  :"گوگرد کلوخه",
                 totalShipments  :"30",
                 price  :"2570",
-                contractType  :"نقد?",
+                contractType  :"نقدي",
                 deliveryDate :new Date('1391/09/27'),
-                manufacturerDesc  :"پالا?شگاه تبر?ز",
+                manufacturerDesc  :"پالايشگاه تبريز",
                 deliveryPlace  :"انبار کارخانه",
-                productMainGroup  :"پتروش?م? و فرآورده ها? نفت?",
+                productMainGroup  :"پتروشيمي و فرآورده هاي نفتي",
                 productGroup  :"گوگرد",
                 productSubGroup  :"گوگرد",
                 weight  :"1000",
@@ -99,19 +99,19 @@ class BootStrap {
                 contractDate :new Date('1391/09/22'),
                 allotmentDate :new Date('1391/09/22'),
                 settlementDeadline :new Date('1391/09/27'),
-                settlementType  :"نقد?",
+                settlementType  :"نقدي",
                 dealerBrokerDesc  :"بهمن",
-                buyerBrokerDesc  :"بانک کشاورز?",
-                customerDesc  :"شرکت نو?ن ش?م? سلفچگان",
+                buyerBrokerDesc  :"بانک کشاورزي",
+                customerDesc  :"شرکت نوين شيمي سلفچگان",
                 productSymbol  :"TORC-LUSUB-00",
                 productDesc  :"گوگرد کلوخه",
                 totalShipments  :"30",
                 price  :"2570",
-                contractType  :"نقد?",
+                contractType  :"نقدي",
                 deliveryDate :new Date('1391/09/27'),
-                manufacturerDesc  :"پالا?شگاه تبر?ز",
+                manufacturerDesc  :"پالايشگاه تبريز",
                 deliveryPlace  :"انبار کارخانه",
-                productMainGroup  :"پتروش?م? و فرآورده ها? نفت?",
+                productMainGroup  :"پتروشيمي و فرآورده هاي نفتي",
                 productGroup  :"گوگرد",
                 productSubGroup  :"گوگرد",
                 weight  :"1000",
@@ -137,19 +137,19 @@ class BootStrap {
                 contractDate :new Date('1391/09/22'),
                 allotmentDate :new Date('1391/09/22'),
                 settlementDeadline :new Date('1391/09/27'),
-                settlementType  :"نقد?",
+                settlementType  :"نقدي",
                 dealerBrokerDesc  :"بهمن",
-                buyerBrokerDesc  :"بانک کشاورز?",
-                customerDesc  :"شرکت نو?ن ش?م? سلفچگان",
+                buyerBrokerDesc  :"بانک کشاورزي",
+                customerDesc  :"شرکت نوين شيمي سلفچگان",
                 productSymbol  :"TORC-LUSUB-00",
                 productDesc  :"گوگرد کلوخه",
                 totalShipments  :"30",
                 price  :"2570",
-                contractType  :"نقد?",
+                contractType  :"نقدي",
                 deliveryDate :new Date('1391/09/27'),
-                manufacturerDesc  :"پالا?شگاه تبر?ز",
+                manufacturerDesc  :"پالايشگاه تبريز",
                 deliveryPlace  :"انبار کارخانه",
-                productMainGroup  :"پتروش?م? و فرآورده ها? نفت?",
+                productMainGroup  :"پتروشيمي و فرآورده هاي نفتي",
                 productGroup  :"گوگرد",
                 productSubGroup  :"گوگرد",
                 weight  :"1000",

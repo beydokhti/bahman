@@ -42,7 +42,6 @@ class Contract {
 
     static constraints = {
         prevStatus()
-        lastPhase()
         contractNo (blank:false,maxSize: 50,unique: "contractPartNo")
         contractPartNo (blank:false,maxSize: 50)
         buyerBrokerDesc (nullable:false,maxSize: 200)
@@ -80,6 +79,7 @@ class Contract {
         drafts (nullable: true)
         attachments (nullable: true)
         phases(nullable: true)
+        lastPhase()
     }
     static def findByPhase (Contract contract){
         for (p in contract.phases)
