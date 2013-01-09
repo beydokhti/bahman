@@ -46,7 +46,7 @@
 					
 						<td>${fieldValue(bean: attachmentInstance, field: "status")}</td>
 
-						<td><g:formatDate date="${attachmentInstance.uploadDate}" /></td>
+						<td><rg:formatJalaliDate date="${attachmentInstance.uploadDate}" /></td>
 					
 						<td>${fieldValue(bean: attachmentInstance, field: "responsible")}</td>
 					

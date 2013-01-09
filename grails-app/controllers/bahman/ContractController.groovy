@@ -58,6 +58,10 @@ class ContractController {
 //                    userType="DealerBroker"
 //                }
                 userType=user.brokerType
+                if (user.brokerType=="BuyerBroker")
+                    code = contract.buyerBrokerCode
+                else
+                    code = contract.dealerBrokerCode
             }
 
             else if (user instanceof Customer){
@@ -203,9 +207,30 @@ class ContractController {
 
     }
     def save = {
+        def princ = springSecurityService.getPrincipal()
+
         def contract = new Contract(params)
         if (!contract.importDate)
             contract.importDate=new Date()
+        if(!contract.dealerBrokerCode){
+            if (princ instanceof GrailsUser) {
+                def user = User.findByUsername(princ.username)
+                if (user instanceof Broker && user.brokerType=="DealerBroker"){
+                    contract.dealerBrokerCode =user.code
+                    contract.dealerBrokerDesc=user.description
+                }
+            }
+        }
+        if(!contract.buyerBrokerCode){
+            if (princ instanceof GrailsUser) {
+                def user = User.findByUsername(princ.username)
+                if (user instanceof Broker && user.brokerType=="BuyerBroker"){
+                    contract.buyerBrokerCode =user.code
+                    contract.buyerBrokerDesc=user.description
+                }
+            }
+        }
+
         if(!contract.hasErrors() && contract.save()) {
             flash.message = "TekEvent ${contract.id} created"
             phaseService.addDefaultPhases(contract)

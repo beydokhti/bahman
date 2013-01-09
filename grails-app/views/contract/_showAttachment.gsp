@@ -90,9 +90,9 @@
             <a class="btn" href="<g:createLink action="showAttachmentDetails" controller="attachment"
                                                params="[id: attachment?.id]"/>"><g:message code="Details"/></a>
             <g:if test="${attachment?.contentType && attachment?.contentType?.contains("/")}">
-                <g:if test="${attachment.contentType.substring(0, attachment.contentType.indexOf('/')).toLowerCase() == 'image'}">
-                    <a class="btn" href="#" onclick="doPrintImage(${attachment?.id})"><g:message code="Print"/></a>
-                %{--<a class="btn" href="<g:createLink action="printImage" controller="attachment" params="[id: attachment?.id]"/>"><g:message code="download"/></a>--}%
+                <g:if test="${attachment?.contentType?.substring(0, attachment?.contentType?.indexOf('/')).toLowerCase() == 'image'}">
+                    %{--<a class="btn" href="#" onclick="doPrintImage(${attachment?.id})"><g:message code="Print"/></a>--}%
+                    <a class="btn" href="<g:createLink action="printView" controller="attachment" params="[attachmentId: attachment?.id]"/>"><g:message code="print"/></a>
                 </g:if>
             </g:if>
         </p>

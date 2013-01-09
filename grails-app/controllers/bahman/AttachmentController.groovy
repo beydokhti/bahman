@@ -269,4 +269,8 @@ class AttachmentController {
         render(template: 'printImage', model: [attachment: attachment])
     }
 
+    def printView(){
+        def attachment = Attachment.get(params.attachmentId)
+        render(template: 'printImage', model: [attachment: attachment])
+    }
 }

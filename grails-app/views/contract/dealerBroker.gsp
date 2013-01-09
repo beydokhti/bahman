@@ -7,7 +7,13 @@
     <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
-
+<div class="nav" role="navigation">
+    <ul>
+        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+        %{--<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
+        %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+    </ul>
+</div>
 <div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
     %{--<div >--}%
         %{--<g:message code="contract.new.label" default="" />--}%
@@ -37,11 +43,13 @@
             <rg:modify>
                 <rg:hiddenReference field="phases"></rg:hiddenReference>
                 <rg:hiddenReference field="attachments"></rg:hiddenReference>
-                <rg:hiddenReference field="applicationForm"></rg:hiddenReference>
-                <rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>
-                <rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>
+                %{--<rg:hiddenReference field="applicationForm"></rg:hiddenReference>--}%
+                %{--<rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>--}%
+                %{--<rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>--}%
                 <rg:hiddenReference field="importDate"></rg:hiddenReference>
                 <rg:hiddenReference field="drafts"></rg:hiddenReference>
+                <rg:hiddenReference filed="dealerBrokerCode"></rg:hiddenReference>
+                <rg:hiddenReference filed="dealerBrokerDesc"></rg:hiddenReference>
                 <rg:ignoreField field="prevStatus"></rg:ignoreField>
                 <rg:ignoreField field="lastPhase"></rg:ignoreField>
             </rg:modify>
@@ -55,7 +63,7 @@
     }
     </g:javascript>
     <input type="button" ng-click="openContractCreateDialog()" value="create">
-    <input type="button" ng-click="openContractEditDialog()" value="edit">
+    %{--<input type="button" ng-click="openContractEditDialog()" value="edit">--}%
 
     <rg:criteria inline='true'>
         <rg:like name="contractNo" />

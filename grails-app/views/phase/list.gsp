@@ -48,9 +48,9 @@
 					
 						<td>${fieldValue(bean: phaseInstance, field: "comment")}</td>
 					
-						<td><g:formatDate date="${phaseInstance.startDate}" /></td>
+						<td><rg:formatJalaliDate date="${phaseInstance.startDate}" /></td>
 					
-						<td><g:formatDate date="${phaseInstance.endDate}" /></td>
+						<td><rg:formatJalaliDate date="${phaseInstance.endDate}" /></td>
 					
 						<td>${fieldValue(bean: phaseInstance, field: "organization")}</td>
 					

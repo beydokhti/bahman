@@ -23,7 +23,7 @@
 		<g:message code="contract.contractDate.label" default="Contract Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="contractDate" precision="day"  value="${contractInstance?.contractDate}"  />
+	<rg:datePicker name="contractDate" precision="day"  value="${contractInstance?.contractDate}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'allotmentDate', 'error')} required">
@@ -31,7 +31,7 @@
 		<g:message code="contract.allotmentDate.label" default="Allotment Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="allotmentDate" precision="day"  value="${contractInstance?.allotmentDate}"  />
+	<rg:datePicker name="allotmentDate" precision="day"  value="${contractInstance?.allotmentDate}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'settlementDeadline', 'error')} required">
@@ -39,7 +39,7 @@
 		<g:message code="contract.settlementDeadline.label" default="Settlement Deadline" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="settlementDeadline" precision="day"  value="${contractInstance?.settlementDeadline}"  />
+	<rg:datePicker name="settlementDeadline" precision="day"  value="${contractInstance?.settlementDeadline}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'settlementType', 'error')} ">
@@ -119,7 +119,7 @@
 		<g:message code="contract.deliveryDate.label" default="Delivery Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="deliveryDate" precision="day"  value="${contractInstance?.deliveryDate}"  />
+	<rg:datePicker name="deliveryDate" precision="day"  value="${contractInstance?.deliveryDate}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'manufacturerDesc', 'error')} ">
@@ -223,7 +223,7 @@
 		<g:message code="contract.settlementDate.label" default="Settlement Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="settlementDate" precision="day"  value="${contractInstance?.settlementDate}"  />
+	<rg:datePicker name="settlementDate" precision="day"  value="${contractInstance?.settlementDate}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'contractID', 'error')} ">
@@ -239,7 +239,7 @@
 		<g:message code="contract.releaseDate.label" default="Release Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="releaseDate" precision="day"  value="${contractInstance?.releaseDate}"  />
+	<rg:datePicker name="releaseDate" precision="day"  value="${contractInstance?.releaseDate}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'importDate', 'error')} required">
@@ -247,7 +247,7 @@
 		<g:message code="contract.importDate.label" default="Import Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="importDate" precision="day"  value="${contractInstance?.importDate}"  />
+	<rg:datePicker name="importDate" precision="day"  value="${contractInstance?.importDate}"  />
 </div>
 
 %{--<div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'settlementCertificate', 'error')} required">--}%

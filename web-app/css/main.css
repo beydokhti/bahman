@@ -454,9 +454,9 @@ fieldset,
 }
 
 .phase-td-head{
-    border: 1px;
-    border-color:#DFDDFF  ;
-    border-style: solid;
+    /*border: 1px;*/
+    /*border-color:#DFDDFF  ;*/
+    /*border-style: solid;*/
     border-radius: 5px 5px 5px 5px;
     background-color:#DFDDFF ;
     text-align: center;

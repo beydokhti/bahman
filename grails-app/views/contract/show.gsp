@@ -8,8 +8,16 @@
 </head>
 
 <body>
+<div class="nav" role="navigation">
+    <ul>
+        %{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
+        %{--<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
+        %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+        <li><g:link action="list" controller="contract" ><g:message code="default.button.list.label"/></g:link></li>
+    </ul>
+</div>
 <a href="#show-contract" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
-                                                               default="Skip to content&hellip;"/></a>
+                                                               %{--default="Skip to content&hellip;"/></a>
 %{--<div class="nav" role="navigation">--}%
 %{--<ul>--}%
 %{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
@@ -18,7 +26,7 @@
 %{--</ul>--}%
 %{--</div>--}%
 <div id="show-contract" class="content scaffold-show" role="main">
-<h1><g:message code="default.show.label" args="[entityName]"/></h1>
+%{--<h1><g:message code="default.show.label" args="[entityName]"/></h1>--}%
 <g:if test="${flash.message}">
     <div class="message" role="status">${flash.message}</div>
 </g:if>
@@ -82,7 +90,7 @@
                 <div class="span2"><div class="field-label"><g:message code="contract.${c.key}.label" default=""/></div>
                 </div>
 
-                <div class="span2"><g:formatDate format="yyyy/MM/dd" date="${c.value}"></g:formatDate></div>
+                <div class="span2"><rg:formatJalaliDate date="${c.value}"></rg:formatJalaliDate></div>
                 <g:set var="counter" value="${counter + 1}"></g:set>
             </g:if>
 
@@ -445,7 +453,7 @@
                         <td class="phase-td-head"><g:message code="phase.enddate.label" default="End Date"/></td>
                         %{--<td class="phase-td-head"><g:message code="phase.organization.label" default="Organization"/></td>--}%
                     </tr>
-                    <g:each in="${contractInstance.phases?.sort { it.id }}" var="p">
+                    <g:each in="${contractInstance?.phases?.sort { it.id }}" var="p">
                         <tr>
                             %{--<span class="property-value-small" aria-labelledby="phases-label"><g:link controller="phase" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>--}%
                             <td class="phase-table"><span class="property-value-small">${p.phaseName}</span></td>
@@ -499,7 +507,7 @@
             </g:if>
             <g:else>
                 <g:link class="show" action="showAttachmentPhase" id="${contractInstance?.id}"><g:message
-                        code="default.button.show.label" default="Show"/></g:link>
+                        code="default.show.label" default="Show"/></g:link>
             </g:else>
         </g:else>
         <g:if test="${userType == "dealerBroker"}">

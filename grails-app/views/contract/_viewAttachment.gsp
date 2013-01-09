@@ -36,7 +36,7 @@
                 });
     }
 
-    function doPrintImage(attId) {
+    function doPrintImage() {
         loadOverlayPrint('<g:createLink action="printImage" controller="attachment" params="[attachmentId:attachment?.id]"/>',
                 undefined,
                 undefined, undefined, {width: 1000})
@@ -62,7 +62,7 @@
                      style="max-width: 150px;max-height: 200px">
             </g:if>
             <g:else>
-                <img id="img_${attachment?.id}" src="${resource(dir: 'images', file: 'attachments.png')}" alt=""
+                <img id="img_${attachment?.id}" src="${resource(dir: 'images', file: 'attachments.png')}" id="${attachment?.id}" alt=""
                      style="max-width: 150px;max-height: 200px">
             </g:else>
         </g:if>
@@ -82,10 +82,10 @@
                 <a class="btn" href="<g:createLink action="showAttachmentDetails" controller="attachment"
                                                    params="[id: attachment?.id]"/>"><g:message code="Details"/></a>
                 <g:if test="${attachment?.contentType && attachment?.contentType?.contains("/")}">
-                    <g:if test="${attachment.contentType.substring(0, attachment.contentType.indexOf('/')).toLowerCase() == 'image'}">
-                        <a class="btn" href="#" id="deleteBtn" onclick="doPrintImage(${attachment?.id})"><g:message
-                                code="Print"/></a>
-                    %{--<a class="btn" href="<g:createLink action="printImage" controller="attachment" params="[id: attachment?.id]"/>"><g:message code="download"/></a>--}%
+                    <g:if test="${attachment?.contentType?.substring(0, attachment?.contentType?.indexOf('/')).toLowerCase() == 'image'}">
+                        %{--<a class="btn" href="#" id="printBtn" onclick="doPrintImage()"><g:message--}%
+                                %{--code="Print"/></a>--}%
+                    <a class="btn" href="<g:createLink action="printView" controller="attachment" params="[attachmentId: attachment?.id]"/>"><g:message code="print"/></a>
                     </g:if>
                 </g:if>
             </p>

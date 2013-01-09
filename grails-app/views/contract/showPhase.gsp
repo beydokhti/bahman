@@ -8,6 +8,14 @@
     <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
+<div class="nav" role="navigation">
+    <ul>
+        %{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
+        %{--<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
+        %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+        <li><g:link action="list" controller="contract" ><g:message code="default.button.list.label"/></g:link></li>
+    </ul>
+</div>
 <a href="#show-contract" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 %{--<div class="nav" role="navigation">--}%
     %{--<ul>--}%
@@ -17,7 +25,7 @@
     %{--</ul>--}%
 %{--</div>--}%
 <div id="show-contract" class="content scaffold-show" role="main">
-<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+%{--<h1><g:message code="default.show.label" args="[entityName]" /></h1>--}%
 <g:if test="${flash.message}">
     <div class="message" role="status">${flash.message}</div>
 </g:if>
@@ -49,7 +57,7 @@
             <div class="detailcontain">
                 <span id="contractDate-label" class="property-label-small"><g:message code="contract.contractDate.label" default="Contract Date" /></span>
 
-                <span class="property-value-small" aria-labelledby="contractDate-label"><g:formatDate  date="${contractInstance?.contractDate}" /></span>
+                <span class="property-value-small" aria-labelledby="contractDate-label"><rg:formatJalaliDate  date="${contractInstance?.contractDate}" /></span>
             </div>
         </div>
     </td>
@@ -62,7 +70,7 @@
             <div class="detailcontain">
                 <span id="allotmentDate-label" class="property-label-small"><g:message code="contract.allotmentDate.label" default="Allotment Date" /></span>
 
-                <span class="property-value-small" aria-labelledby="allotmentDate-label"><g:formatDate  date="${contractInstance?.allotmentDate}" /></span>
+                <span class="property-value-small" aria-labelledby="allotmentDate-label"><rg:formatJalaliDate  date="${contractInstance?.allotmentDate}" /></span>
             </div>
         </div>
     </td>
@@ -72,7 +80,7 @@
             <div class="detailcontain">
                 <span id="settlementDeadline-label" class="property-label-small"><g:message code="contract.settlementDeadline.label" default="Settlement Deadline" /></span>
 
-                <span class="property-value-small" aria-labelledby="settlementDeadline-label"><g:formatDate  date="${contractInstance?.settlementDeadline}" /></span>
+                <span class="property-value-small" aria-labelledby="settlementDeadline-label"><rg:formatJalaliDate  date="${contractInstance?.settlementDeadline}" /></span>
             </div>
         </div>
     </td>
@@ -151,7 +159,7 @@
             <div class="detailcontain">
                 <span id="deliveryDate-label" class="property-label-small"><g:message code="contract.deliveryDate.label" default="Delivery Date" /></span>
 
-                <span class="property-value-small" aria-labelledby="deliveryDate-label"><g:formatDate date="${contractInstance?.deliveryDate}" /></span>
+                <span class="property-value-small" aria-labelledby="deliveryDate-label"><rg:formatJalaliDate date="${contractInstance?.deliveryDate}" /></span>
             </div>
         </div>
     </td>
@@ -335,7 +343,7 @@
             <div class="detailcontain">
                 <span id="settlementDate-label" class="property-label-small"><g:message code="contract.settlementDate.label" default="Settlement Date" /></span>
 
-                <span class="property-value-small" aria-labelledby="settlementDate-label"><g:formatDate date="${contractInstance?.settlementDate}" /></span>
+                <span class="property-value-small" aria-labelledby="settlementDate-label"><rg:formatJalaliDate date="${contractInstance?.settlementDate}" /></span>
             </div>
         </div>
     </td>
@@ -356,7 +364,7 @@
             <div class="detailcontain">
                 <span id="releaseDate-label" class="property-label-small"><g:message code="contract.releaseDate.label" default="Release Date" /></span>
 
-                <span class="property-value-small" aria-labelledby="releaseDate-label"><g:formatDate date="${contractInstance?.releaseDate}" /></span>
+                <span class="property-value-small" aria-labelledby="releaseDate-label"><rg:formatJalaliDate date="${contractInstance?.releaseDate}" /></span>
             </div>
         </div>
     </td>

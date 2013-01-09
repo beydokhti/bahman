@@ -13,7 +13,7 @@
     <meta name="layout" content="main">
     <r:require modules="bootstrap"/>
     <g:set var="entityName" value="${message(code: 'attachment.label', default: 'attachment')}"/>
-    <title><g:message code="default.list.label" args="[entityName]"/></title>
+    <title><g:message code="default.attachment.label" args="[entityName]"/></title>
     <script type="text/javascript">
 
         var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
@@ -171,12 +171,16 @@
 </head>
 
 <body>
-
+<div class="nav" role="navigation">
+    <ul>
+         <li><g:link action="list" controller="contract" contractInstance="${contractInstance}"><g:message code="default.list.label"/></g:link></li>
+    </ul>
+</div>
 <div id="list-attachment" ng-controller="attachmentController" class="content scaffold-list" role="main">
     <rg:dialog id="attachment" title="Attachment Form">
 
         <rg:fields bean="${new bahman.Attachment()}"></rg:fields>
-        <rg:saveButton domainClass="${bahman.Attachment}" conroller="attachment" action="save" params="[type: 'POST']"/>
+        <rg:saveButton domainClass="${bahman?.Attachment}" conroller="attachment" action="save" params="[type: 'POST']"/>
         <rg:cancelButton/>
     </rg:dialog>
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>

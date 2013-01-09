@@ -11,8 +11,8 @@
 <head>
   <title></title>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'userAdmin.label', default: 'Phase')}" />
-    <title><g:message code="default.edit.label" args="[entityName]" /></title>
+    <g:set var="entityName" value="${message(code: 'userAdmin.label', default: 'User Admin')}" />
+    <title><g:message code="userAdmin.label" args="[entityName]" /></title>
     <g:javascript src="publicUtility.js"></g:javascript>
     %{--<script type="text/javascript">--}%
 

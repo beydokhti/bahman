@@ -100,6 +100,8 @@ class Contract {
         return ""
     }
     transient def getPrevStatus(){
+        def today=new Date()
+        def phaseCount=0
         if (this.phases){
             String oldPhase="Pass"
             String lastStatus=""
@@ -107,15 +109,22 @@ class Contract {
             {
                 if (p.status=='Waiting')
                 {
+                    phaseCount++
                     break
                 }
                 else
                     oldPhase=p.status
             }
             if (oldPhase=="Pass")
-                return "New"
+                if (settlementDeadline<today && phaseCount<2){
+                    return "Expired"
+                }else{
+                    return "New"
+                }
             else if (oldPhase=="Reject")
                 return "Failed"
         }
     }
+
+
 }

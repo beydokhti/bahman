@@ -54,7 +54,7 @@
 				<li class="fieldcontain">
 					<span id="startDate-label" class="property-label"><g:message code="phase.startDate.label" default="Start Date" /></span>
 					
-						<span class="property-value" aria-labelledby="startDate-label"><g:formatDate date="${phaseInstance?.startDate}" /></span>
+						<span class="property-value" aria-labelledby="startDate-label"><rg:formatJalaliDate date="${phaseInstance?.startDate}" /></span>
 					
 				</li>
 				</g:if>
@@ -63,7 +63,7 @@
 				<li class="fieldcontain">
 					<span id="endDate-label" class="property-label"><g:message code="phase.endDate.label" default="End Date" /></span>
 					
-						<span class="property-value" aria-labelledby="endDate-label"><g:formatDate date="${phaseInstance?.endDate}" /></span>
+						<span class="property-value" aria-labelledby="endDate-label"><rg:formatJalaliDate date="${phaseInstance?.endDate}" /></span>
 					
 				</li>
 				</g:if>

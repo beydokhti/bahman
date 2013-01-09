@@ -22,7 +22,7 @@
     <rg:dialog id="attachment" title="Attachment Form">
 
         <rg:fields bean="${new bahman.Attachment()}"></rg:fields>
-        <rg:saveButton domainClass="${bahman.Attachment}" conroller="attachment" action="save" params="[type: 'POST']"/>
+        <rg:saveButton domainClass="${bahman?.Attachment}" conroller="attachment" action="save" params="[type: 'POST']"/>
         <rg:cancelButton/>
     </rg:dialog>
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
