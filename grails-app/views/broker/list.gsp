@@ -63,7 +63,7 @@
 			%{--</div>--}%
 		%{--</div>--}%
     <div id="list-broker" ng-controller="brokerController" class="content scaffold-list" role="main">
-        <rg:grid domainClass="${bahman?.Broker}" caption="لیست  کارگزاری ها"
+        <rg:grid domainClass="${bahman.Broker}" caption="لیست  کارگزاری ها"
                  columns="[[name:'brokerTypeName'],[name:'username'],[name:'code'],[name:'description'],[name:'enabled']]"
         >
         %{--<rg:criteria>--}%
@@ -72,8 +72,12 @@
         </rg:grid>
 
         <rg:dialog id="broker" title="broker Form">
-            <rg:fields bean="${new bahman.Broker()}"></rg:fields>
-            <rg:saveButton domainClass="${bahman?.Broker}" conroller="broker" params="[method:'post']"/>
+            <rg:fields bean="${new bahman.Broker()}">
+                <rg:modify>
+                    <rg:ignoreField field="brokerTypeName"/>
+                </rg:modify>
+            </rg:fields>
+            <rg:saveButton domainClass="${bahman.Broker}" conroller="broker" params="[method:'post']"/>
             <rg:cancelButton/>
         </rg:dialog>
         <input type="button" ng-click="openBrokerCreateDialog()" value="create">
