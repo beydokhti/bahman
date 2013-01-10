@@ -493,27 +493,31 @@
         <g:if test="${limit == "Allowed"}">
             <g:if test="${userType == "Supplier"}">
                 <g:link class="edit" action="editAttachmentPhaseDraft" id="${contractInstance?.id}"><g:message
-                        code="default.button.edit.label" default="Edit"/></g:link>
+                        code="default.attachment.label" default="Attachments"/></g:link>
             </g:if>
             <g:else>
                 <g:link class="edit" action="editAttachmentPhase" id="${contractInstance?.id}"><g:message
-                        code="default.button.edit.label" default="Edit"/></g:link>
+                        code="default.attachment.label" default="Attachments"/></g:link>
             </g:else>
         </g:if>
         <g:else>
             <g:if test="${userType == "Supplier"}">
                 <g:link class="edit" action="showAttachmentPhaseDraft" id="${contractInstance?.id}"><g:message
-                        code="default.button.edit.label" default="Edit"/></g:link>
+                        code="default.attachment.label" default="Attachments"/></g:link>
             </g:if>
             <g:else>
                 <g:link class="show" action="showAttachmentPhase" id="${contractInstance?.id}"><g:message
                         code="default.show.label" default="Show"/></g:link>
             </g:else>
         </g:else>
-        <g:if test="${userType == "dealerBroker"}">
+        <g:if test="${userType == "DealerBroker"}">
+            <g:link class="edit" action="edit" id="${contractInstance?.id}"><g:message
+                    code="default.button.edit.label" default="Edit"/></g:link>
             <g:actionSubmit class="delete" action="delete"
                             value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"
+            style="margin-top: 0px"/>
+
         </g:if>
     </fieldset>
 </g:form>

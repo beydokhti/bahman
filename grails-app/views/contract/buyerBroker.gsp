@@ -46,6 +46,32 @@
             <rg:eq name='m.phase' value='BuyerBroker'/>
         </rg:criteria>
     </rg:grid>
+
+    <rg:dialog id="contract" title="Contract Form" >
+        <rg:fields bean="${new bahman.Contract()}">
+            <rg:modify>
+                <rg:hiddenReference field="phases"></rg:hiddenReference>
+                <rg:hiddenReference field="attachments"></rg:hiddenReference>
+            %{--<rg:hiddenReference field="applicationForm"></rg:hiddenReference>--}%
+            %{--<rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>--}%
+            %{--<rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>--}%
+                <rg:hiddenReference field="importDate"></rg:hiddenReference>
+                <rg:hiddenReference field="drafts"></rg:hiddenReference>
+                <rg:hiddenReference filed="buyerBrokerCode"></rg:hiddenReference>
+                <rg:hiddenReference filed="buyerBrokerDesc"></rg:hiddenReference>
+                <rg:ignoreField field="prevStatus"></rg:ignoreField>
+                <rg:ignoreField field="lastPhase"></rg:ignoreField>
+            </rg:modify>
+        </rg:fields>
+        <rg:saveButton domainClass="${bahman?.Contract}" saveCallback="refresh" conroller="contract" params="[method:'post']"/>
+        <rg:cancelButton/>
+    </rg:dialog>
+    <g:javascript>
+        function refresh(resp){
+            $("#ContractRejectGrid").trigger("reloadGrid")
+        }
+    </g:javascript>
+    <input type="button" ng-click="openContractCreateDialog()" value="create">
     <rg:criteria inline='true'>
         <rg:like name="contractNo"/>
         <rg:like name="contractPartNo"/>
@@ -66,25 +92,7 @@
             <rg:ne name='m.phase' value='BuyerBroker'/>
         </rg:criteria>
     </rg:grid>
-    %{--<rg:dialog id="contract" title="Contract Form">--}%
-    %{--<rg:fields bean="${new bahman.Contract()}">--}%
-    %{--<rg:modify>--}%
-    %{--<rg:hiddenReference field="phases"></rg:hiddenReference>--}%
-    %{--<rg:hiddenReference field="attachments"></rg:hiddenReference>--}%
-    %{--<rg:hiddenReference field="applicationForm"></rg:hiddenReference>--}%
-    %{--<rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>--}%
-    %{--<rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>--}%
-    %{--<rg:hiddenReference field="importDate"></rg:hiddenReference>--}%
-    %{--<rg:ignoreField field="prevStatus"></rg:ignoreField>--}%
-    %{--<rg:ignoreField field="lastPhase"></rg:ignoreField>--}%
-    %{--</rg:modify>--}%
-    %{--</rg:fields>--}%
-    %{--<rg:saveButton domainClass="${bahman?.Contract}"/>--}%
-    %{--<rg:cancelButton/>--}%
-    %{--</rg:dialog>--}%
 
-    %{--<input type="button" ng-click="openContractCreateDialog()" value="create">--}%
-    %{--<input type="button" ng-click="openContractEditDialog()" value="edit">--}%
 
 </div>
 </body>

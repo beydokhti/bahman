@@ -107,13 +107,14 @@
         %{--<div class="span5">--}%
         <div style="height: 70px"></div>
 
+%{--<sec:ifAllGranted roles="${RoleHelper.DealerBroker}">--}%
         <div style="height: 150px">
             <a href="<g:createLink action="importExcel" controller="contract"/>">
                 <img src="${resource(dir: "images", file: "import.png")} ">
                 <g:message code="index.import.label" default="Import"/>
             </a>
         </div>
-
+    %{--</sec:ifAllGranted>--}%
         <div style="height: 150px">
             <a href="<g:createLink action="list" controller="contract"/>">
                 <img src="${resource(dir: "images", file: "pencil.png")} ">

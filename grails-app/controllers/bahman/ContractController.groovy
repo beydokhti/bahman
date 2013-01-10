@@ -239,12 +239,12 @@ class ContractController {
     }
 
 
-//    def edit = {
-//        def contractInstance = Contract.findById( params.id )
-//        if(contractInstance) {
-//            return [ contractInstance : contractInstance ]
-//        }
-//    }
+    def edit = {
+        def contractInstance = Contract.findById( params.id )
+        if(contractInstance) {
+            return [ contractInstance : contractInstance ]
+        }
+    }
     def getImage() {
         if (params.id) {
             def attachment = Attachment.get(params.id)
@@ -393,6 +393,35 @@ class ContractController {
         def lastPhaseId =Contract.findByPhase(contractInstance)
         def lastPhase=Phase.get(lastPhaseId)
         [contractInstance: contractInstance,lastPhase:lastPhase]
+    }
+
+    def update() {
+        def contractInstance = Contract.get(params.id)
+        if (!contractInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'contract.label', default: 'contract'), params.id])
+            redirect(action: "list")
+            return
+        }
+        if (params.version) {
+            def version = params.version.toLong()
+            if (contractInstance.version > version) {
+                contractInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'contract.label', default: 'contract')] as Object[],
+                        "Another user has updated this contract while you were editing")
+                render(view: "edit", model: [contractInstance: contractInstance])
+                return
+            }
+        }
+
+        contractInstance.properties = params
+
+        if (!contractInstance.save(flush: true)) {
+            render(view: "edit", model: [contractInstance: contractInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'contract.label', default: 'contract'), contractInstance.id])
+        redirect(action: "show", id: contractInstance.id)
     }
 
 }
