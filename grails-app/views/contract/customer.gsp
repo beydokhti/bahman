@@ -29,7 +29,7 @@
         <rg:eq name="customerCode" value="${organization?.code}" hidden="true"/>
         <rg:filterGrid grid="ContractGrid" />
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}"
+    <rg:grid domainClass="${bahman.Contract}"
     columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc']]"
     >
         <rg:criteria>
@@ -57,7 +57,7 @@
                 <rg:ignoreField field="lastPhase"></rg:ignoreField>
             </rg:modify>
         </rg:fields>
-        <rg:saveButton domainClass="${bahman?.Contract}"/>
+        <rg:saveButton domainClass="${bahman.Contract}"/>
         <rg:cancelButton/>
     </rg:dialog>
 

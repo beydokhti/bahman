@@ -66,7 +66,7 @@ class ContractController {
 
             else if (user instanceof Customer){
                 code = contract.customerCode
-                userType="customer"
+                userType="Customer"
             }
             else if(user instanceof Supplier){
                 code = contract.supplierCode
@@ -83,8 +83,12 @@ class ContractController {
             else
                 limit="Illegal"
 
+            String showAmendment="False"
+            String phaseStatus=Contract.findByPhaseStatus(contract,userType)
+            if (!phaseStatus.equals(""))
+                showAmendment="True"
             if (user.code==code || user.description==desc){
-                return [ contractInstance : contract , userType:userType,limit:limit]
+                return [ contractInstance : contract , userType:userType,limit:limit,showAmendment:showAmendment]
             }
 
         }
@@ -161,8 +165,8 @@ class ContractController {
         }
         }
 
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [contractInstanceList: Contract.list(params), contractInstanceTotal: Contract.count()]
+//        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+//        [contractInstanceList: Contract.list(params), contractInstanceTotal: Contract.count()]
     }
 
     def buyerBroker() {
@@ -323,8 +327,8 @@ class ContractController {
                         'E': 'allotmentDate',
                         'F': 'settlementDeadline',
                         'G': 'settlementType',
-                        'H': 'buyerBrokerDesc',
-                        'I': 'dealerBrokerDesc',
+                        'H': 'dealerBrokerDesc',
+                        'I': 'buyerBrokerDesc',
                         'J': 'customerDesc',
                         'K': 'productSymbol',
                         'L': 'productDesc',

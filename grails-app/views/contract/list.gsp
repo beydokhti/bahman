@@ -11,9 +11,9 @@
 
 		<div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
             <rg:grid domainClass="${bahman.Contract}">
-                <rg:criteria>
-                    <rg:eq name="customerCode" value="${"asdasd"}"/>
-                </rg:criteria>
+                %{--<rg:criteria>--}%
+                    %{--<rg:eq name="customerCode" value="${"asdasd"}"/>--}%
+                %{--</rg:criteria>--}%
             </rg:grid>
             <rg:dialog id="contract" title="Contract Form">
                 <rg:fields bean="${new bahman.Contract()}"></rg:fields>

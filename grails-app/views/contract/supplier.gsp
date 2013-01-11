@@ -38,7 +38,7 @@
         <rg:eq name='m.phase' value='Supplier' hidden="true"/>
         <rg:filterGrid grid="ContractGrid"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}">
+    <rg:grid domainClass="${bahman.Contract}">
         <rg:criteria>
             <rg:eq name="supplierCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -58,7 +58,7 @@
         <rg:ne name='m.phase' value='Supplier' hidden="true"/>
         <rg:filterGrid grid="ContractAllGrid"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}" idPostfix="All">
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="All">
         <rg:criteria>
             <rg:eq name="supplierCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>

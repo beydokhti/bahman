@@ -64,7 +64,7 @@
 			%{--</div>--}%
 		%{--</div>--}%
     <div id="list-customer" ng-controller="customerController" class="content scaffold-list" role="main">
-        <rg:grid domainClass="${bahman?.Customer}" caption="لیست کارگزاران">
+        <rg:grid domainClass="${bahman.Customer}" caption="لیست کارگزاران">
             %{--<rg:criteria>--}%
                 %{--<rg:eq name="customerCode" value="${"asdasd"}"/>--}%
             %{--</rg:criteria>--}%
@@ -72,7 +72,7 @@
 
         <rg:dialog id="customer" title="Customer Form">
             <rg:fields bean="${new bahman.Customer()}"></rg:fields>
-            <rg:saveButton domainClass="${bahman?.Customer}" conroller="customer" params="[method:'post']"/>
+            <rg:saveButton domainClass="${bahman.Customer}" conroller="customer" params="[method:'post']"/>
             <rg:cancelButton/>
         </rg:dialog>
         <input type="button" ng-click="openCustomerCreateDialog()" value="create">

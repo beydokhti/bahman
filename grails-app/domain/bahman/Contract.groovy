@@ -37,7 +37,8 @@ class Contract {
 //    Attachment applicationForm
     static hasMany = [attachments:Attachment,
             phases:Phase,
-            drafts:Attachment]
+            drafts:Attachment,
+            amendments:Amendment]
 //    static transients = ['prevStatus','lastPhase']
 
     static constraints = {
@@ -89,6 +90,16 @@ class Contract {
         }
         return 0
     }
+
+    static def findByPhaseStatus (Contract contract,String phase){
+        for (p in contract.phases)
+        {
+            if (p.phase==phase)
+                return p.status
+        }
+        return ""
+    }
+
     transient def getLastPhase(){
         if (this.phases) {
                 for (p in this?.phases)
@@ -99,6 +110,8 @@ class Contract {
     }
         return ""
     }
+
+
     transient def getPrevStatus(){
         def today=new Date()
         def phaseCount=0

@@ -30,7 +30,7 @@
         <rg:eq name='m.phase' value='DealerBroker'  hidden="true"/>
         <rg:filterGrid grid="ContractGrid" />
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}"  caption="در انتظار تایید">
+    <rg:grid domainClass="${bahman.Contract}"  caption="در انتظار تایید">
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -53,7 +53,7 @@
         <rg:eq name='m.phase' value='DealerBroker'  hidden="true"/>
         <rg:filterGrid grid="ContractRejectGrid"  hidden="true"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}" idPostfix="Reject" caption="مابقی قرارداد ها">
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="Reject" caption="مابقی قرارداد ها">
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -77,7 +77,7 @@
                 <rg:ignoreField field="lastPhase"></rg:ignoreField>
             </rg:modify>
         </rg:fields>
-        <rg:saveButton domainClass="${bahman?.Contract}" saveCallback="refresh" conroller="contract" params="[method:'post']"/>
+        <rg:saveButton domainClass="${bahman.Contract}" saveCallback="refresh" conroller="contract" params="[method:'post']"/>
         <rg:cancelButton/>
     </rg:dialog>
     <g:javascript>

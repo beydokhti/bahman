@@ -63,7 +63,7 @@
 			%{--</div>--}%
 		%{--</div>--}%
     <div id="list-supplier" ng-controller="supplierController" class="content scaffold-list" role="main">
-        <rg:grid domainClass="${bahman?.Supplier}" caption="لیست بازرگانی">
+        <rg:grid domainClass="${bahman.Supplier}" caption="لیست بازرگانی">
         %{--<rg:criteria>--}%
         %{--<rg:eq name="supplierCode" value="${"asdasd"}"/>--}%
         %{--</rg:criteria>--}%
@@ -71,7 +71,7 @@
 
         <rg:dialog id="supplier" title="supplier Form">
             <rg:fields bean="${new bahman.Supplier()}"></rg:fields>
-            <rg:saveButton domainClass="${bahman?.Supplier}" conroller="supplier" params="[method:'post']"/>
+            <rg:saveButton domainClass="${bahman.Supplier}" conroller="supplier" params="[method:'post']"/>
             <rg:cancelButton/>
         </rg:dialog>
         <input type="button" ng-click="openSupplierCreateDialog()" value="create">

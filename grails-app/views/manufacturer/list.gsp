@@ -64,7 +64,7 @@
 			%{--</div>--}%
 		%{--</div>--}%
     <div id="list-manufacturer" ng-controller="manufacturerController" class="content scaffold-list" role="main">
-        <rg:grid domainClass="${bahman?.Manufacturer}" caption="لیست تولید کننده">
+        <rg:grid domainClass="${bahman.Manufacturer}" caption="لیست تولید کننده">
         %{--<rg:criteria>--}%
         %{--<rg:eq name="manufacturerCode" value="${"asdasd"}"/>--}%
         %{--</rg:criteria>--}%
@@ -72,7 +72,7 @@
 
         <rg:dialog id="manufacturer" title="Manufacturer Form">
             <rg:fields bean="${new bahman.Manufacturer()}"></rg:fields>
-            <rg:saveButton domainClass="${bahman?.Manufacturer}" conroller="manufacturer" params="[method:'post']"/>
+            <rg:saveButton domainClass="${bahman.Manufacturer}" conroller="manufacturer" params="[method:'post']"/>
             <rg:cancelButton/>
         </rg:dialog>
         <input type="button" ng-click="openManufacturerCreateDialog()" value="create">

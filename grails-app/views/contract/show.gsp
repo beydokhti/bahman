@@ -509,7 +509,12 @@
                 <g:link class="show" action="showAttachmentPhase" id="${contractInstance?.id}"><g:message
                         code="default.show.label" default="Show"/></g:link>
             </g:else>
+
         </g:else>
+        <g:if test="${showAmendment.equals("True")}">
+            <g:link class="list" action="list" controller="Amendment" id="${contractInstance.id}"  ><g:message
+                    code="amendment.list.label" default="Amendments"/></g:link>
+        </g:if>
         <g:if test="${userType == "DealerBroker"}">
             <g:link class="edit" action="edit" id="${contractInstance?.id}"><g:message
                     code="default.button.edit.label" default="Edit"/></g:link>
@@ -519,6 +524,7 @@
             style="margin-top: 0px"/>
 
         </g:if>
+
     </fieldset>
 </g:form>
 </div>

@@ -38,7 +38,7 @@
         <rg:eq name='m.phase' value='BuyerBroker' hidden="true"/>
         <rg:filterGrid grid="ContractGrid"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}">
+    <rg:grid domainClass="${bahman.Contract}">
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -63,7 +63,7 @@
                 <rg:ignoreField field="lastPhase"></rg:ignoreField>
             </rg:modify>
         </rg:fields>
-        <rg:saveButton domainClass="${bahman?.Contract}" saveCallback="refresh" conroller="contract" params="[method:'post']"/>
+        <rg:saveButton domainClass="${bahman.Contract}" saveCallback="refresh" conroller="contract" params="[method:'post']"/>
         <rg:cancelButton/>
     </rg:dialog>
     <g:javascript>
@@ -84,7 +84,7 @@
         <rg:ne name='m.phase' value='BuyerBroker' hidden="true"/>
         <rg:filterGrid grid="ContractAllGrid"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman?.Contract}" idPostfix="All">
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="All">
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
