@@ -254,14 +254,14 @@
     <div class="row-fluid">
         <ul class="thumbnails" id="attachment-container">
             <g:each in="${contractInstance?.attachments}" var="attachment">
-                %{--<g:if test="${attachment.status!='R'}">--}%
+                <g:if test="${attachment.status!='R'}">
                     <g:if test="${attachment.responsible.code==user.code}">
                         <g:render template="viewAttachment" model="[attachment:attachment]"/>
                     </g:if>
                     <g:else>
                         <g:render template="showAttachment" model="[attachment:attachment]"/>
                     </g:else>
-                %{--</g:if>--}%
+                </g:if>
                 %{--<g:fieldValue    bean="${user}" field="code"/>--}%
                 %{--<g:fieldValue    bean="${contractInstance.attachments.responsible}" field="code"/>--}%
             </g:each>
@@ -271,9 +271,9 @@
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
             <g:each in="${contractInstance?.drafts}" var="draft">
-            %{--<g:if test="${draft.status!='R'}">--}%
+            <g:if test="${draft.status!='R'}">
                 <g:render template="showAttachment" model="[attachment:draft,type:'Draft']"/>
-            %{--</g:if>--}%
+            </g:if>
             </g:each>
         </ul>
     </div>

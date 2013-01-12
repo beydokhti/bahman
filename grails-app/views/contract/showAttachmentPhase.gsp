@@ -61,18 +61,18 @@
     <div class="row-fluid">
         <ul class="thumbnails" id="attachment-container">
             <g:each in="${contractInstance?.attachments}" var="attachment">
-                %{--<g:if test="${attachment.status!='R'}">--}%
+                <g:if test="${attachment.status!='R'}">
                     <g:render template="showAttachment" model="[attachment:attachment]"/>
-                %{--</g:if>--}%
+                </g:if>
             </g:each>
         </ul>
     </div>
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
             <g:each in="${contractInstance?.drafts}" var="draft">
-            %{--<g:if test="${draft.status!='R'}">--}%
+            <g:if test="${draft.status!='R'}">
                    <g:render template="showAttachment" model="[attachment:draft,type:'Draft']"/>
-            %{--</g:if>--}%
+            </g:if>
             </g:each>
         </ul>
     </div>

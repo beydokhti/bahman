@@ -87,6 +87,28 @@
     </g:javascript>
     <input type="button" ng-click="openContractCreateDialog()" value="create">
     %{--<input type="button" ng-click="openContractEditDialog()" value="edit">--}%
+    <rg:criteria inline='true'>
+        <rg:like name="contractNo" />
+        <rg:like name="contractPartNo" />
+        <rg:like name="buyerBrokerDesc" />
+    %{--<rg:like name="dealerBrokerDesc" />--}%
+        <rg:like name="customerDesc" />
+        <rg:eq name="dealerBrokerCode" value="${organization?.code}"  hidden="true"/>
+        <rg:alias name='phases' value='m'/>
+        %{--<rg:ne name='m.status' value='Waiting' hidden="true"/>--}%
+        <rg:eq name='m.phase' value='Finished'  hidden="true"/>
+        <rg:filterGrid grid="ContractFinishedGrid"  hidden="true"/>
+    </rg:criteria>
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="قراردادهای تحویل شده"
+             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"
+    >
+        <rg:criteria>
+            <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
+            <rg:alias name='phases' value='m'/>
+            %{--<rg:eq name='m.status' value='Waiting'/>--}%
+            <rg:eq name='m.phase' value='Finished'/>
+        </rg:criteria>
+    </rg:grid>
 </div>
 </body>
 </html>

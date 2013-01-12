@@ -93,6 +93,30 @@
         </rg:criteria>
     </rg:grid>
 
+    <rg:criteria inline='true'>
+        <rg:like name="contractNo"/>
+        <rg:like name="contractPartNo"/>
+    %{--<rg:like name="buyerBrokerDesc"/>--}%
+        <rg:like name="dealerBrokerDesc"/>
+        <rg:like name="customerDesc"/>
+        <rg:eq name="buyerBrokerCode" value="${organization?.code}" hidden="true"/>
+        <rg:alias name='phases' value='m'/>
+        %{--<rg:eq name='m.status' value='Waiting' hidden="true"/>--}%
+        <rg:eq name='m.phase' value='Finished' hidden="true"/>
+        <rg:filterGrid grid="ContractFinishedGrid"/>
+    </rg:criteria>
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="قرارداد های تحویل شده"
+             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"
+    >
+        <rg:criteria>
+            <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
+            <rg:alias name='phases' value='m'/>
+            %{--<rg:eq name='m.status' value='Waiting'/>--}%
+            <rg:eq name='m.phase' value='Finished'/>
+        </rg:criteria>
+    </rg:grid>
+
+
 
 </div>
 </body>

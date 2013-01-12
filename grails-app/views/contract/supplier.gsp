@@ -38,7 +38,7 @@
         <rg:eq name='m.phase' value='Supplier' hidden="true"/>
         <rg:filterGrid grid="ContractGrid"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman.Contract}">
+    <rg:grid domainClass="${bahman.Contract}" caption="قراردادهای در انتظار تایید">
         <rg:criteria>
             <rg:eq name="supplierCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -58,7 +58,7 @@
         <rg:ne name='m.phase' value='Supplier' hidden="true"/>
         <rg:filterGrid grid="ContractAllGrid"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman.Contract}" idPostfix="All">
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="All" captin="مابقی قراردادها">
         <rg:criteria>
             <rg:eq name="supplierCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -86,6 +86,27 @@
     %{--<input type="button" ng-click="openContractCreateDialog()" value="create">--}%
     %{--<input type="button" ng-click="openContractEditDialog()" value="edit">--}%
 
+    <rg:criteria inline='true'>
+        <rg:like name="contractNo"/>
+        <rg:like name="contractPartNo"/>
+        <rg:like name="buyerBrokerDesc"/>
+        <rg:like name="dealerBrokerDesc"/>
+    %{--<rg:like name="customerDesc"/>--}%
+        <rg:eq name="supplierCode" value="${organization?.code}" hidden="true"/>
+        <rg:alias name='phases' value='m'  hidden="true"/>
+        %{--<rg:eq name='m.status' value='Waiting'  hidden="true"/>--}%
+        <rg:eq name='m.phase' value='Finished' hidden="true"/>
+        <rg:filterGrid grid="ContractFinishedGrid"/>
+    </rg:criteria>
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="قرارداهای تکمیل شده"
+             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
+        <rg:criteria>
+            <rg:eq name="supplierCode" value="${organization?.code}"/>
+            <rg:alias name='phases' value='m'/>
+            %{--<rg:eq name='m.status' value='Waiting'/>--}%
+            <rg:eq name='m.phase' value='Finished'/>
+        </rg:criteria>
+    </rg:grid>
 </div>
 </body>
 </html>

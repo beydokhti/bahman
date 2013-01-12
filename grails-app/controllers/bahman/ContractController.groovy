@@ -319,7 +319,7 @@ class ContractController {
         def fileIs = new ByteArrayInputStream(file.bytes)
         Map CONFIG_COLUMN_MAP = [
                 sheet: 'Sheet1',
-                startRow: 2,
+                startRow: 1,
                 columnMap: [
                         'B': 'contractNo',
                         'C': 'contractPartNo',
@@ -381,8 +381,9 @@ class ContractController {
             }
             else{
                 contract.save()
+                phaseService.addDefaultPhases(contract)
             }
-            phaseService.addDefaultPhases(contract)
+
         }
 
         redirect(action: "list")

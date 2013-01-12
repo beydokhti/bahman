@@ -28,32 +28,32 @@ class BootStrap {
         def admuser = new User(username: 'admin', password: 'admin123', enabled: true)
         admuser.save()
         UserRole.create(admuser, admRole)
-//
-//        def usr0 = new Broker(code: "31", description: "بهمن", username: "user0", password: "test", enabled: true, brokerType: "DealerBroker").save()
-////        usr0.save()
-//        def userRole0 = UserRole.create(usr0, dbRole)
-////        userRole0.addToSubRoles(subRole2)
-////        userRole0.addToSubRoles(subRole1)
-////       --------------------------------
-//        def usr1 = new Broker(code: "24", description: "بانک کشاورزي", username: "user1", password: "test", enabled: true, brokerType: "BuyerBroker").save()
-////        usr1.save().sav
-//        def userRole1 = UserRole.create(usr1, bbRole)
-////        userRole1.addToSubRoles(subRole1)
-//
-//
-//        def usr2 = new Broker(code: "31", description: "بهمن", username: "user2", password: "test", enabled: true, brokerType: "DealerBroker").save()
-//        def userRole2 = UserRole.create(usr2, dbRole)
-////        userRole2.addToSubRoles(subRole2)
-////        userRole2.addToSubRoles(subRole1)
-//
-//        def usr4 = new Customer(code: "11140", description: "شرکت نوين شيمي سلفچگان", username: "user4", password: "test", enabled: true, mobileNo: '09125348230').save()
-//        def userRole4 = UserRole.create(usr4, custRole)
-//
-//        def usr5 = new Manufacturer(code: "01", description: "پالايشگاه تبريز", username: "user5", password: "test", enabled: true).save()
-//        def userRole5 = UserRole.create(usr5, mRole)
-//
-//        def usr6 = new Supplier(code: "359", description: "عرضه کننده", username: "user6", password: "test", enabled: true).save()
-//        def userRole6 = UserRole.create(usr6, sRole)
+
+        def usr0 = new Broker(code: "31", description: "بهمن", username: "user0", password: "test", enabled: true, brokerType: "DealerBroker").save()
+//        usr0.save()
+        def userRole0 = UserRole.create(usr0, dbRole)
+//        userRole0.addToSubRoles(subRole2)
+//        userRole0.addToSubRoles(subRole1)
+//       --------------------------------
+        def usr1 = new Broker(code: "24", description: "بانک کشاورزي", username: "user1", password: "test", enabled: true, brokerType: "BuyerBroker").save()
+//        usr1.save().sav
+        def userRole1 = UserRole.create(usr1, bbRole)
+//        userRole1.addToSubRoles(subRole1)
+
+
+        def usr2 = new Broker(code: "31", description: "بهمن", username: "user2", password: "test", enabled: true, brokerType: "DealerBroker").save()
+        def userRole2 = UserRole.create(usr2, dbRole)
+//        userRole2.addToSubRoles(subRole2)
+//        userRole2.addToSubRoles(subRole1)
+
+        def usr4 = new Customer(code: "11140", description: "شرکت نوين شيمي سلفچگان", username: "user4", password: "test", enabled: true, mobileNo: '09125348230').save()
+        def userRole4 = UserRole.create(usr4, custRole)
+
+        def usr5 = new Manufacturer(code: "01", description:"پالایشگاه تبریز", username: "user5", password: "test", enabled: true).save()
+        def userRole5 = UserRole.create(usr5, mRole)
+
+        def usr6 = new Supplier(code: "359", description: "عرضه کننده", username: "user6", password: "test", enabled: true).save()
+        def userRole6 = UserRole.create(usr6, sRole)
 //
 ////        def attachment = new Attachment(uploadDate:new Date('1391/09/22')
 ////                            ,description: "test1"
