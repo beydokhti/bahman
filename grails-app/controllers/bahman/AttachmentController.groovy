@@ -124,9 +124,15 @@ class AttachmentController {
         if (contract.save()) {
                 def customer=Customer.findByCode(contract.customerCode)
                 if (customer){
-                def msg = message(code: "sms.smsMsg1")  +contract.customerDesc+message(code: "sms.smsMsg2") +contract.contractNo+"/"+contract.contractPartNo+message(code: "sms.smsMsg3")
-                msg =msg+attachmentInstance.description+message(code: "sms.smsMsg4")
+                    def msg = message(code: "sms.smsMsg1")  +contract.customerDesc+message(code: "sms.smsMsg2") +contract.contractNo+"/"+contract.contractPartNo
+                    if (attachmentInstance.version==1){
+                        msg=msg+message(code: "sms.smsMsg3")
 
+                    } else
+                    {
+                        msg=msg+message(code: "sms.smsMsg5")
+                    }
+                    msg =msg+attachmentInstance.description+message(code: "sms.smsMsg4")
                 smsService.sendSms(msg,customer.mobileNo)
                     }
             if (params.attr == "Attachment")

@@ -40,7 +40,7 @@
                 <rg:hiddenReference field="supplier"></rg:hiddenReference>
                 <rg:hiddenReference field="manufacturer"></rg:hiddenReference>
                 <rg:hiddenReference field="finished"></rg:hiddenReference>
-                <rg:hiddenReference field="attachments"></rg:hiddenReference>
+                %{--<rg:hiddenReference field="attachments"></rg:hiddenReference>--}%
                 <rg:hiddenReference field="phases"></rg:hiddenReference>
             </rg:modify>
         </rg:fields>

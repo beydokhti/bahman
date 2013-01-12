@@ -29,7 +29,7 @@ class BrokerController {
         if (brokerInstance.brokerType.equals("DealerBroker"))
             role=Role.findByAuthority("DealerBroker")
         else if (brokerInstance.brokerType.equals("BuyerBroker"))
-            role=Role.findByAuthority("DealerBroker")
+            role=Role.findByAuthority("BuyerBroker")
         UserRole.create(brokerInstance,role)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'broker.label', default: 'Broker'), brokerInstance.id])

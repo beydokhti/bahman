@@ -101,53 +101,58 @@
         %{--</li>--}%
         %{--</ul>--}%
     </div>
+
     <div class="nav" role="navigation">
         <ul>
             %{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
-            <li><g:link class="list" action="index" controller="logout"><g:message code="default.logut.label" args="[entityName]" /></g:link></li>
+            <li><g:link class="list" action="index" controller="logout"><g:message code="default.logut.label"
+                                                                                   args="[entityName]"/></g:link></li>
             %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
         </ul>
     </div>
+
     <div class="span9">
         %{--<div class="row">--}%
         %{--<div class="span5">--}%
         <div style="height: 70px"></div>
 
-%{--<sec:ifAllGranted roles="${RoleHelper.DealerBroker}">--}%
-        <div style="height: 150px">
-            <a href="<g:createLink action="importExcel" controller="contract"/>">
-                <img src="${resource(dir: "images", file: "import.png")} ">
-                <g:message code="index.import.label" default="Import"/>
-            </a>
-        </div>
-    %{--</sec:ifAllGranted>--}%
+        <sec:ifAllGranted roles="DealerBroker">
+            <div style="height: 150px">
+                <a href="<g:createLink action="importExcel" controller="contract"/>">
+                    <img src="${resource(dir: "images", file: "import.png")} ">
+                    <g:message code="index.import.label" default="Import"/>
+                </a>
+            </div>
+        </sec:ifAllGranted>
+    %{--<sec:ifAllGranted roles="DealerBroker">--}%
         <div style="height: 150px">
             <a href="<g:createLink action="list" controller="contract"/>">
                 <img src="${resource(dir: "images", file: "pencil.png")} ">
                 <g:message code="index.list.label" default="Dashboard"/>
             </a>
         </div>
-        %{--</div>--}%
-
-        %{--<div class="span5">--}%
-        <div style="height: 70px"></div>
-
-        <div style="height: 150px">
-            <a href="<g:createLink action="report" controller="report"/>">
-                <img src="${resource(dir: "images", file: "report.png")} ">
-                <g:message code="index.report.label" default="Report"/>
-            </a>
-        </div>
-
-        <div style="height: 150px">
-            <a href="<g:createLink action="userAdmin" controller="userAdmin"/>">
-                <img src="${resource(dir: "images", file: "userAdmin.png")} ">
-                <g:message code="index.userAdmin.label" default="User Admin"/>
-            </a>
-        </div>
-
-        %{--</div>--}%
-        %{--</div>--}%
+    %{--</div>--}%
+    %{--</sec:ifAllGranted>--}%
+    %{--<div class="span5">--}%
+    %{--<div style="height: 70px"></div>--}%
+        %{--<sec:ifAllGranted roles="DealerBroker">--}%
+            %{--<div style="height: 150px">--}%
+                %{--<a href="<g:createLink action="report" controller="report"/>">--}%
+                    %{--<img src="${resource(dir: "images", file: "report.png")} ">--}%
+                    %{--<g:message code="index.report.label" default="Report"/>--}%
+                %{--</a>--}%
+            %{--</div>--}%
+        %{--</sec:ifAllGranted>--}%
+        <sec:ifAllGranted roles="Admin">
+            <div style="height: 150px">
+                <a href="<g:createLink action="userAdmin" controller="userAdmin"/>">
+                    <img src="${resource(dir: "images", file: "userAdmin.png")} ">
+                    <g:message code="index.userAdmin.label" default="User Admin"/>
+                </a>
+            </div>
+        </sec:ifAllGranted>
+    %{--</div>--}%
+    %{--</div>--}%
 
     </div>
 

@@ -15,38 +15,33 @@ class AmendmentController {
 
     def list() {
 
-            def princ = springSecurityService.getPrincipal()
-            if (princ instanceof GrailsUser) {
-                def user = User.findByUsername(princ.username)
-                if (user instanceof Broker ) {
-                    if (user.brokerType=="BuyerBroker" ){
-                        redirect(action: "buyerList", params: params)
-                    }
-                    else if (user.brokerType=="DealerBroker"){
-                        redirect(action: "dealerList", params:params)
-                    }
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                if (user.brokerType == "BuyerBroker") {
+                    redirect(action: "buyerList", params: params)
+                } else if (user.brokerType == "DealerBroker") {
+                    redirect(action: "dealerList", params: params)
                 }
-
-                else if (user instanceof Customer){
-                    redirect(action: "CustomerList", params: params)
-                }
-                else if(user instanceof Supplier){
-                    redirect(action: "SupplierList", params: params)
-                }
-                else if(user instanceof Manufacturer){
-                    redirect(action: "ManufacturerList", params: params)
-                }
+            } else if (user instanceof Customer) {
+                redirect(action: "CustomerList", params: params)
+            } else if (user instanceof Supplier) {
+                redirect(action: "SupplierList", params: params)
+            } else if (user instanceof Manufacturer) {
+                redirect(action: "ManufacturerList", params: params)
             }
         }
+    }
 
 
     def dealerList() {
-        def contractInstance= Contract.get(params.id)
+        def contractInstance = Contract.get(params.id)
         def princ = springSecurityService.getPrincipal()
 
         def user = User.findByUsername(princ.username)
 
-        [organization: user,contractInstance:contractInstance]
+        [organization: user, contractInstance: contractInstance]
 
     }
 
@@ -56,17 +51,58 @@ class AmendmentController {
 
     def save() {
         def amendmentInstance = new Amendment(params)
-        def conract=Contract.get(params.contractId)
-        amendmentInstance.amendmentDate=new Date()
-        amendmentInstance.contractNo= conract.contractNo
-        amendmentInstance.contractPartNo=conract.contractPartNo
+
+        def file = request.getFile("amendmentDocument")
+        try {
+            amendmentInstance.fileName=file.originalFilename
+            amendmentInstance.contentType=file.getContentType();
+        }
+        catch (Exception e){
+            amendmentInstance.fileName=""
+        }
+
+        def userType=""
+        def conract = Contract.get(3)
+
+        amendmentInstance.amendmentDate = new Date()
+        amendmentInstance.contractNo = conract.contractNo
+        amendmentInstance.contractPartNo = conract.contractPartNo
+        amendmentInstance.dealerBroker = "N"
+        amendmentInstance.buyerBroker = "N"
+        amendmentInstance.manufacturer = "N"
+        amendmentInstance.supplier = "N"
+        amendmentInstance.finished = "N"
+
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                if (user.brokerType == "BuyerBroker") {
+                    userType="BuyerBroker"
+                    amendmentInstance.buyerBroker="Y"
+                    amendmentInstance.dealerBroker = "Y"
+                } else if (user.brokerType == "DealerBroker") {
+                    userType="DealerBroker"
+                    amendmentInstance.dealerBroker = "Y"
+                    amendmentInstance.supplier = "Y"
+                }
+            } else if (user instanceof Supplier) {
+                amendmentInstance.supplier = "Y"
+                amendmentInstance.manufacturer = "Y"
+                userType="Supplier"
+            }
+        }
+
+        amendmentInstance.addToPhases  new Phase(phase: userType,comment: "", organization:null, startDate:new Date(),status:"Waiting" ).save()
         if (!amendmentInstance.save(flush: true)) {
             render(view: "create", model: [amendmentInstance: amendmentInstance])
             return
         }
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'amendment.label', default: 'Amendment'), amendmentInstance.id])
-        redirect(action: "show", id: amendmentInstance.id)
+        conract.addToAmendments(amendmentInstance)
+        conract.save()
+//        flash.message = message(code: 'default.created.message', args: [message(code: 'amendment.label', default: 'Amendment'), amendmentInstance.id])
+//        redirect(action: "show", id: amendmentInstance.id)
+        render 0
     }
 
     def show() {
