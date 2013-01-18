@@ -923,3 +923,7 @@ div.skinned-select select option {
 div.ui-tabs ul.ui-tabs-nav li{
     float: right;
 }
+
+.ui-jqgrid .ui-jqgrid-btable{
+    border-collapse: inherit;
+}
