@@ -11,7 +11,7 @@
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/excel-import-1.0.0/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/joda-time-1.4/grails-app/views" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/twitter-bootstrap-2.1.0/web-app" relative="/" />
-          <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.15/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.24/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -53,9 +53,9 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-1.7.1/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-1.7.1/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.15">
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.15/grails-app/i18n" isTestSource="false" />
-      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.15/grails-app/taglib" isTestSource="false" />
+    <content url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.24">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.24/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/jquery-ui-1.8.24/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/mongodb-1.0.0.GA" />
     <content url="file://$USER_HOME$/.grails/2.0.4/projects/bahman/plugins/resources-1.2-RC1">
