@@ -111,3 +111,5 @@ grails.plugins.springsecurity.interceptUrlMap = [
         '/favico.ico': ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/**': ['IS_AUTHENTICATED_REMEMBERED']
 ]
+
+rapidgrails.application.direction="rtl"
