@@ -32,19 +32,21 @@
     <rg:dialog id="amendment" title="Amendment Form">
         <rg:fields bean="${new bahman.Amendment()}">
             <rg:modify>
-                <rg:hiddenReference field="amendmentDate"></rg:hiddenReference>
-                <rg:hiddenReference field="contractNo"></rg:hiddenReference>
-                <rg:hiddenReference field="contractPartNo"></rg:hiddenReference>
-                <rg:hiddenReference field="dealerBroker"></rg:hiddenReference>
-                <rg:hiddenReference field="buyerBroker"></rg:hiddenReference>
-                <rg:hiddenReference field="supplier"></rg:hiddenReference>
-                <rg:hiddenReference field="manufacturer"></rg:hiddenReference>
-                <rg:hiddenReference field="finished"></rg:hiddenReference>
-                %{--<rg:hiddenReference field="attachments"></rg:hiddenReference>--}%
-                <rg:hiddenReference field="phases"></rg:hiddenReference>
+                <rg:ignoreField field="amendmentDate"/>
+                <rg:ignoreField field="contractNo"/>
+                <rg:ignoreField field="contractPartNo"/>
+                <rg:ignoreField field="dealerBroker"/>
+                <rg:ignoreField field="buyerBroker"/>
+                <rg:ignoreField field="supplier"/>
+                <rg:ignoreField field="manufacturer"/>
+                <rg:ignoreField field="finished"/>
+                <rg:ignoreField field="phases"/>
+                <rg:ignoreField field="fileName"/>
+                <rg:ignoreField field="contentType"/>
             </rg:modify>
+            <g:hiddenField name="contractId" value="${contractInstance?.id}"/>
         </rg:fields>
-        <rg:saveButton domainClass="${bahman.Amendment}" conroller="amendment" params="[method:'post',contractId:contractInstance.id]"/>
+        <rg:saveButton domainClass="${bahman.Amendment}" conroller="amendment" params="[method:'post']"/>
         <rg:cancelButton/>
     </rg:dialog>
     <input type="button" ng-click="openAmendmentCreateDialog()" value="create">

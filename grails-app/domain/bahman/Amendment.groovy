@@ -19,7 +19,8 @@ class Amendment {
 
     static constraints = {
         amendmentDate(nullable: false)
-        amendmentDocument (nullable: true,maxSize: 5000000)
+        fileName(nullable: true,maxSize: 256)
+        comment(nullable: true, maxSize: 4000)
         phases(nullable: true)
         contractNo(nullable: false,maxSize:50 )
         contractPartNo(nullable: false,maxSize:50 )
@@ -28,7 +29,7 @@ class Amendment {
         supplier(nullable: false,inList: ['N','Y'])
         manufacturer(nullable: false,inList: ['N','Y'])
         finished(nullable: false,inList: ['N','Y'])
-        fileName(nullable: true,maxSize: 256)
+        amendmentDocument (nullable: true,maxSize: 5000000)
         contentType(nullable: true,maxSize: 256)
     }
     transient def getLastPhase(){

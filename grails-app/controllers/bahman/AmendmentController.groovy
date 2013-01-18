@@ -62,7 +62,7 @@ class AmendmentController {
         }
 
         def userType=""
-        def conract = Contract.get(3)
+        def conract = Contract.get(params.contractId)
 
         amendmentInstance.amendmentDate = new Date()
         amendmentInstance.contractNo = conract.contractNo

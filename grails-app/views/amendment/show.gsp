@@ -35,7 +35,7 @@
 				<g:if test="${amendmentInstance?.amendmentDocument}">
 				<li class="fieldcontain">
 					<span id="amendmentDocument-label" class="property-label"><g:message code="amendment.amendmentDocument.label" default="Amendment Document" /></span>
-					
+
 				</li>
 				</g:if>
 			
