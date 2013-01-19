@@ -42,11 +42,6 @@
                 undefined, undefined, {width: 1000})
     }
 
-    %{--$("#deleteBtn").click( function(){--}%
-    %{--loadOverlayPrint('<g:createLink action="printImage" controller="attachment" params="[attachmentId:attachment?.id]"/>',--}%
-    %{--undefined,--}%
-    %{--undefined, undefined, {width:1000}--}%
-    %{--})--}%
 </script>
 
 <li class="span4" id="main_${attachment?.id}">

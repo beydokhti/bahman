@@ -36,9 +36,10 @@
         <rg:alias name='phases' value='m'/>
         <rg:eq name='m.status' value='Waiting' hidden="true"/>
         <rg:eq name='m.phase' value='BuyerBroker' hidden="true"/>
-        <rg:filterGrid grid="ContractGrid"/>
+        <rg:filterGrid grid="ContractGrid" label="search"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman.Contract}">
+    <rg:grid domainClass="${bahman.Contract}"
+             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -71,7 +72,7 @@
             $("#ContractRejectGrid").trigger("reloadGrid")
         }
     </g:javascript>
-    <input type="button" ng-click="openContractCreateDialog()" value="create">
+    <input type="button" ng-click="openContractCreateDialog()" value="<g:message code="create" />">
     <rg:criteria inline='true'>
         <rg:like name="contractNo"/>
         <rg:like name="contractPartNo"/>
@@ -82,9 +83,10 @@
         <rg:alias name='phases' value='m'/>
         <rg:eq name='m.status' value='Waiting' hidden="true"/>
         <rg:ne name='m.phase' value='BuyerBroker' hidden="true"/>
-        <rg:filterGrid grid="ContractAllGrid"/>
+        <rg:filterGrid grid="ContractAllGrid" label="search"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman.Contract}" idPostfix="All">
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="All"
+             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -103,11 +105,10 @@
         <rg:alias name='phases' value='m'/>
         %{--<rg:eq name='m.status' value='Waiting' hidden="true"/>--}%
         <rg:eq name='m.phase' value='Finished' hidden="true"/>
-        <rg:filterGrid grid="ContractFinishedGrid"/>
+        <rg:filterGrid grid="ContractFinishedGrid" label="search"/>
     </rg:criteria>
     <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="قرارداد های تحویل شده"
-             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"
-    >
+             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"    >
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>

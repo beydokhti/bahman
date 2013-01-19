@@ -14,32 +14,33 @@ class Amendment {
     String fileName
     String contentType
     byte[] amendmentDocument
-    static hasMany = [phases:Phase]
+    static hasMany = [phases: Phase]
 
 
     static constraints = {
         amendmentDate(nullable: false)
-        fileName(nullable: true,maxSize: 256)
-        comment(nullable: true, maxSize: 4000)
+        fileName(nullable: true, maxSize: 256)
         phases(nullable: true)
-        contractNo(nullable: false,maxSize:50 )
-        contractPartNo(nullable: false,maxSize:50 )
-        dealerBroker(nullable: false,inList: ['N','Y'])
-        buyerBroker(nullable: false,inList: ['N','Y'])
-        supplier(nullable: false,inList: ['N','Y'])
-        manufacturer(nullable: false,inList: ['N','Y'])
-        finished(nullable: false,inList: ['N','Y'])
-        amendmentDocument (nullable: true,maxSize: 5000000)
-        contentType(nullable: true,maxSize: 256)
+        contractNo(nullable: false, maxSize: 50)
+        contractPartNo(nullable: false, maxSize: 50)
+        dealerBroker(nullable: false, inList: ['N', 'Y'])
+        buyerBroker(nullable: false, inList: ['N', 'Y'])
+        supplier(nullable: false, inList: ['N', 'Y'])
+        manufacturer(nullable: false, inList: ['N', 'Y'])
+        finished(nullable: false, inList: ['N', 'Y'])
+        amendmentDocument(nullable: true, maxSize: 5000000)
+        comment(nullable: true, maxSize: 4000, widget: 'textarea')
+        contentType(nullable: true, maxSize: 256)
     }
-    transient def getLastPhase(){
-        if (manufacturer=="Y")
+
+    transient def getLastPhase() {
+        if (manufacturer == "Y")
             return "Manufacturer"
-        else if (supplier=="Y")
+        else if (supplier == "Y")
             return "Supplier"
-        else if (dealerBroker=="Y")
+        else if (dealerBroker == "Y")
             return "DealerBroker"
-        else if (buyerBroker=="Y")
+        else if (buyerBroker == "Y")
             return "BuyerBroker"
     }
 //    transient def getPrevStatus(){

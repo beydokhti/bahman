@@ -18,50 +18,42 @@ class AmendmentController {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
+            def amendmentType
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
-                    redirect(action: "buyerList", params: params)
+                    amendmentType = "buyerBroker"
                 } else if (user.brokerType == "DealerBroker") {
-                    redirect(action: "dealerList", params: params)
+                    amendmentType = "dealerBroker"
                 }
             } else if (user instanceof Customer) {
-                redirect(action: "CustomerList", params: params)
+                amendmentType = "finished"
             } else if (user instanceof Supplier) {
-                redirect(action: "SupplierList", params: params)
+                amendmentType = "supplier"
             } else if (user instanceof Manufacturer) {
-                redirect(action: "ManufacturerList", params: params)
+                amendmentType = "manufacturer"
             }
+
+            def contractInstance = Contract.get(params.id)
+
+            [organization: user, contractInstance: contractInstance, amendmentType: amendmentType]
+
         }
     }
 
-
-    def dealerList() {
-        def contractInstance = Contract.get(params.id)
-        def princ = springSecurityService.getPrincipal()
-
-        def user = User.findByUsername(princ.username)
-
-        [organization: user, contractInstance: contractInstance]
-
-    }
-
-    def create() {
-        [amendmentInstance: new Amendment(params)]
-    }
 
     def save() {
         def amendmentInstance = new Amendment(params)
 
         def file = request.getFile("amendmentDocument")
         try {
-            amendmentInstance.fileName=file.originalFilename
-            amendmentInstance.contentType=file.getContentType();
+            amendmentInstance.fileName = file.originalFilename
+            amendmentInstance.contentType = file.getContentType();
         }
-        catch (Exception e){
-            amendmentInstance.fileName=""
+        catch (Exception e) {
+            amendmentInstance.fileName = ""
         }
 
-        def userType=""
+        def userType = ""
         def conract = Contract.get(params.contractId)
 
         amendmentInstance.amendmentDate = new Date()
@@ -78,22 +70,22 @@ class AmendmentController {
             def user = User.findByUsername(princ.username)
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
-                    userType="BuyerBroker"
-                    amendmentInstance.buyerBroker="Y"
+                    userType = "BuyerBroker"
+                    amendmentInstance.buyerBroker = "Y"
                     amendmentInstance.dealerBroker = "Y"
                 } else if (user.brokerType == "DealerBroker") {
-                    userType="DealerBroker"
+                    userType = "DealerBroker"
                     amendmentInstance.dealerBroker = "Y"
                     amendmentInstance.supplier = "Y"
                 }
             } else if (user instanceof Supplier) {
                 amendmentInstance.supplier = "Y"
                 amendmentInstance.manufacturer = "Y"
-                userType="Supplier"
+                userType = "Supplier"
             }
         }
 
-        amendmentInstance.addToPhases  new Phase(phase: userType,comment: "", organization:null, startDate:new Date(),status:"Waiting" ).save()
+        amendmentInstance.addToPhases new Phase(phase: userType, comment: "", organization: null, startDate: new Date(), status: "Waiting").save()
         if (!amendmentInstance.save(flush: true)) {
             render(view: "create", model: [amendmentInstance: amendmentInstance])
             return
@@ -173,6 +165,15 @@ class AmendmentController {
         catch (DataIntegrityViolationException e) {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'amendment.label', default: 'Amendment'), params.id])
             redirect(action: "show", id: params.id)
+        }
+    }
+
+    def getDocument() {
+        def amendment = Amendment.get(params.id)
+        if (amendment){
+            response.contentType = amendment.contentType
+            response.outputStream << amendment.amendmentDocument
+            response.outputStream.flush()
         }
     }
 }

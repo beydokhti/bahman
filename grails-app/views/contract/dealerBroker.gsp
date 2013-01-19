@@ -10,8 +10,6 @@
 <div class="nav" role="navigation">
     <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        %{--<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>--}%
-        %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
     </ul>
 </div>
 <div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
@@ -28,9 +26,10 @@
         <rg:alias name='phases' value='m'/>
         <rg:eq name='m.status' value='Waiting'  hidden="true"/>
         <rg:eq name='m.phase' value='DealerBroker'  hidden="true"/>
-        <rg:filterGrid grid="ContractGrid" />
+        <rg:filterGrid grid="ContractGrid"  label="${message(code: "search")}"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman.Contract}"  caption="در انتظار تایید">
+    <rg:grid domainClass="${bahman.Contract}"  caption="در انتظار تایید"
+             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -51,9 +50,10 @@
         <rg:alias name='phases' value='m'/>
         <rg:ne name='m.status' value='Waiting' hidden="true"/>
         <rg:eq name='m.phase' value='DealerBroker'  hidden="true"/>
-        <rg:filterGrid grid="ContractRejectGrid"  hidden="true"/>
+        <rg:filterGrid grid="ContractRejectGrid" label="${message(code: "search")}"/>
     </rg:criteria>
-    <rg:grid domainClass="${bahman.Contract}" idPostfix="Reject" caption="مابقی قرارداد ها">
+    <rg:grid domainClass="${bahman.Contract}" idPostfix="Reject" caption="مابقی قرارداد ها"
+        columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -85,7 +85,7 @@
             $("#ContractRejectGrid").trigger("reloadGrid")
         }
     </g:javascript>
-    <input type="button" ng-click="openContractCreateDialog()" value="create">
+    <input type="button" ng-click="openContractCreateDialog()" value="<g:message code="create" />">
     %{--<input type="button" ng-click="openContractEditDialog()" value="edit">--}%
     <rg:criteria inline='true'>
         <rg:like name="contractNo" />
@@ -97,11 +97,10 @@
         <rg:alias name='phases' value='m'/>
         %{--<rg:ne name='m.status' value='Waiting' hidden="true"/>--}%
         <rg:eq name='m.phase' value='Finished'  hidden="true"/>
-        <rg:filterGrid grid="ContractFinishedGrid"  hidden="true"/>
+        <rg:filterGrid grid="ContractFinishedGrid" label="${message(code: "search")}"/>
     </rg:criteria>
     <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="قراردادهای تحویل شده"
-             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"
-    >
+             columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>

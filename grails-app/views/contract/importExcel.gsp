@@ -1,4 +1,4 @@
-<!doctype html>
+    <!doctype html>
 <html>
 <head>
     <meta name="layout" content="main">
@@ -30,8 +30,8 @@
     <g:message code="importexcel.file.label" default="Management System"/>
     <input type="file" name="file" id="file" style="display: none" onChange="Handlechange();"/>
     <input type="text" id="filename" readonly="true" style="margin-top: 19px ; width:300px"/>
-    <input type="button" value="Click to select file" id="fakeBrowse" onclick="HandleBrowseClick();">
-    <input class="save" type="submit" value="Upload"/>
+    <input type="button" value="<g:message code="click-to-browse" />" id="fakeBrowse" onclick="HandleBrowseClick();">
+    <input class="save" type="submit" value="<g:message code="send-file" />"/>
     </span>
     %{--<input type="file" id="browse" name="fileupload" style="display: none" onChange="Handlechange();"/>--}%
 

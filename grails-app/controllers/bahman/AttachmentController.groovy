@@ -22,19 +22,20 @@ class AttachmentController {
     def create() {
         [attachmentInstance: new Attachment(params)]
     }
-    def deleteAttachment(){
+
+    def deleteAttachment() {
 //        def contract=Contract.get(params.contractId)
-        def att=Attachment.get(params.id)
+        def att = Attachment.get(params.id)
 //        contract.removeFromAttachments(att)
 //        contract.save()
 //        att.delete()
-        if (att)
-        {
-            att.status="R"
+        if (att) {
+            att.status = "R"
             att.save()
         }
         render 0;
     }
+
     def save() {
         def attachmentInstance = new Attachment(params)
 //        def contentType = attachmentInstance.document.contentType
@@ -43,12 +44,12 @@ class AttachmentController {
 //        attachmentInstance.fileName=request.getFileNames()
         def file = request.getFile("document")
         try {
-            attachmentInstance.fileName=file.originalFilename
-            attachmentInstance.contentType=file.getContentType();
+            attachmentInstance.fileName = file.originalFilename
+            attachmentInstance.contentType = file.getContentType();
         }
-       catch (Exception e){
-           attachmentInstance.fileName=""
-       }
+        catch (Exception e) {
+            attachmentInstance.fileName = ""
+        }
 
         attachmentInstance.uploadDate = new Date()
         attachmentInstance.status = 'P'
@@ -67,22 +68,14 @@ class AttachmentController {
             return
         }
         def contract = Contract.get(params.contractId)
-//        if (params.attr == "SC")
-//            contract.settlementCertificate = attachmentInstance
-//        if (params.attr == "VA")
-//            contract.valueAddedTax = attachmentInstance
-//        if (params.attr == "AF")
-//            contract.applicationForm = attachmentInstance
-//        if (params.attr == "Attachment")
-            contract.addToAttachments(attachmentInstance)
+
+        contract.addToAttachments(attachmentInstance)
         if (contract.save()) {
             if (params.attr == "Attachment")
                 render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance])
             else
                 render attachmentInstance as JSON
-        }//attachmentInstance as JSON
-//        flash.message = message(code: 'default.created.message', args: [message(code: 'attachment.label', default: 'Attachment'), attachmentInstance.id])
-//        redirect(action: "show", id: attachmentInstance.id)
+        }
     }
 
 
@@ -90,10 +83,10 @@ class AttachmentController {
         def attachmentInstance = new Attachment(params)
         def file = request.getFile("document")
         try {
-            attachmentInstance.fileName=file.originalFilename
-            attachmentInstance.contentType=file.getContentType();
+            attachmentInstance.fileName = file.originalFilename
+            attachmentInstance.contentType = file.getContentType();
         }
-        catch (Exception e){
+        catch (Exception e) {
         }
 
         attachmentInstance.uploadDate = new Date()
@@ -109,34 +102,32 @@ class AttachmentController {
         }
 
         def contract = Contract.get(params.contractId)
-        Integer version=1
-        for (d in contract.drafts)
-        {
-            d.status='R'
+        Integer version = 1
+        for (d in contract.drafts) {
+            d.status = 'R'
             d.save()
-            version ++
+            version++
         }
-        attachmentInstance.version=version
+        attachmentInstance.version = version
         if (!attachmentInstance.save(flush: true)) {
             return
         }
         contract.addToDrafts(attachmentInstance)
         if (contract.save()) {
-                def customer=Customer.findByCode(contract.customerCode)
-                if (customer){
-                    def msg = message(code: "sms.smsMsg1")  +contract.customerDesc+message(code: "sms.smsMsg2") +contract.contractNo+"/"+contract.contractPartNo
-                    if (attachmentInstance.version==1){
-                        msg=msg+message(code: "sms.smsMsg3")
+            def customer = Customer.findByCode(contract.customerCode)
+            if (customer) {
+                def msg = message(code: "sms.smsMsg1") + contract.customerDesc + message(code: "sms.smsMsg2") + contract.contractNo + "/" + contract.contractPartNo
+                if (attachmentInstance.version == 1) {
+                    msg = msg + message(code: "sms.smsMsg3")
 
-                    } else
-                    {
-                        msg=msg+message(code: "sms.smsMsg5")
-                    }
-                    msg =msg+attachmentInstance.description+message(code: "sms.smsMsg4")
-                smsService.sendSms(msg,customer.mobileNo)
-                    }
+                } else {
+                    msg = msg + message(code: "sms.smsMsg5")
+                }
+                msg = msg + attachmentInstance.description + message(code: "sms.smsMsg4")
+                smsService.sendSms(msg, customer.mobileNo)
+            }
             if (params.attr == "Attachment")
-                render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance,type:'Draft'])
+                render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance, type: 'Draft'])
             else
                 render attachmentInstance as JSON
         }
@@ -257,10 +248,11 @@ class AttachmentController {
             redirect(action: "show", id: params.id)
         }
     }
-    def downloadAttachment(){
+
+    def downloadAttachment() {
         def attachment = Attachment.get(params.id)
         byte[] content = attachment.document
-        if (!attachment ) {
+        if (!attachment) {
             response.sendError(404, "Not Found \n")
             return
         }
@@ -270,12 +262,12 @@ class AttachmentController {
         response.outputStream.flush()
     }
 
-    def printImage(){
+    def printImage() {
         def attachment = Attachment.get(params.attachmentId)
         render(template: 'printImage', model: [attachment: attachment])
     }
 
-    def printView(){
+    def printView() {
         def attachment = Attachment.get(params.attachmentId)
         render(template: 'printImage', model: [attachment: attachment])
     }

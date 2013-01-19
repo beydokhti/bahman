@@ -32,6 +32,7 @@
     <r:layoutResources/>
     <jqui:resources theme="cobalt"></jqui:resources>
 
+    <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
     <g:javascript plugin="rapid-grails" src="utils.js"></g:javascript>
     <g:javascript plugin="rapid-grails" src="grid_utils.js"></g:javascript>
     <g:javascript plugin="rapid-grails" src="jquery.json-2.3.min.js"></g:javascript>
