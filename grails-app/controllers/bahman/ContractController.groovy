@@ -18,6 +18,7 @@ class ContractController {
     def index() {
         redirect(action: "list", params: params)
     }
+
     def delete() {
         def contractInstance = Contract.get(params.id)
         if (!contractInstance) {
@@ -35,17 +36,18 @@ class ContractController {
             redirect(action: "show", id: params.id)
         }
     }
-    def show = {
-        if (params.id){
-        def contract = Contract.findById( params.id )
-        def princ = springSecurityService.getPrincipal()
-        def code=""
-        def desc=""
 
-        if (princ instanceof GrailsUser && contract) {
-            def user = User.findByUsername(princ.username)
-            String userType=""
-            if (user instanceof Broker ) {
+    def show = {
+        if (params.id) {
+            def contract = Contract.findById(params.id)
+            def princ = springSecurityService.getPrincipal()
+            def code = ""
+            def desc = ""
+
+            if (princ instanceof GrailsUser && contract) {
+                def user = User.findByUsername(princ.username)
+                String userType = ""
+                if (user instanceof Broker) {
 //                def subRoleB = SubRole.findByRoleName("Dealer")
 //                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
 //                if (user.brokerType="Dealer")
@@ -57,55 +59,55 @@ class ContractController {
 //                    code = contract.dealerBrokerCode
 //                    userType="DealerBroker"
 //                }
-                userType=user.brokerType
-                if (user.brokerType=="BuyerBroker")
-                    code = contract.buyerBrokerCode
-                else
-                    code = contract.dealerBrokerCode
-            }
+                    userType = user.brokerType
+                    if (user.brokerType == "BuyerBroker")
+                        code = contract.buyerBrokerCode
+                    else
+                        code = contract.dealerBrokerCode
+                }
 
-            else if (user instanceof Customer){
-                code = contract.customerCode
-                userType="Customer"
-            }
-            else if(user instanceof Supplier){
-                code = contract.supplierCode
-                userType="Supplier"
-            }
-            else if(user instanceof Manufacturer){
-                desc = contract.manufacturerDesc
-                userType="Manufacturer"
-            }
+                else if (user instanceof Customer) {
+                    code = contract.customerCode
+                    userType = "Customer"
+                }
+                else if (user instanceof Supplier) {
+                    code = contract.supplierCode
+                    userType = "Supplier"
+                }
+                else if (user instanceof Manufacturer) {
+                    desc = contract.manufacturerDesc
+                    userType = "Manufacturer"
+                }
 //            def lp=contract.lastPhase
-            String limit=""
-            if(userType==contract.lastPhase)
-                limit="Allowed"
-            else
-                limit="Illegal"
+                String limit = ""
+                if (userType == contract.lastPhase)
+                    limit = "Allowed"
+                else
+                    limit = "Illegal"
 
-            String showAmendment="False"
-            String phaseStatus=Contract.findByPhaseStatus(contract,userType)
-            if (!phaseStatus.equals(""))
-                showAmendment="True"
-            if (user.code==code || user.description==desc){
-                return [ contractInstance : contract , userType:userType,limit:limit,showAmendment:showAmendment]
+                String showAmendment = "False"
+                String phaseStatus = Contract.findByPhaseStatus(contract, userType)
+                if (!phaseStatus.equals(""))
+                    showAmendment = "True"
+                if (user.code == code || user.description == desc) {
+                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment]
+                }
+
             }
-
-        }
         }
     }
 
     def showPhase = {
-        if (params.id){
-            def contract = Contract.findById( params.id )
+        if (params.id) {
+            def contract = Contract.findById(params.id)
             def princ = springSecurityService.getPrincipal()
-            def code=""
-            def desc=""
+            def code = ""
+            def desc = ""
 
             if (princ instanceof GrailsUser && contract) {
                 def user = User.findByUsername(princ.username)
 
-                if (user instanceof Broker ) {
+                if (user instanceof Broker) {
 //                    def subRoleB = SubRole.findByRoleName("Dealer")
 //                    def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
 //                    if (!dealer ){
@@ -114,55 +116,56 @@ class ContractController {
 //                    else if (dealer){
 //                        code = contract.dealerBrokerCode
 //                    }
-                    if (user.brokerType=="BuyerBroker" ){
+                    if (user.brokerType == "BuyerBroker") {
                         code = contract.buyerBrokerCode
                     }
-                    else if (user.brokerType=="DealerBroker"){
+                    else if (user.brokerType == "DealerBroker") {
                         code = contract.dealerBrokerCode
                     }
 
                 }
 
-                else if (user instanceof Customer){
+                else if (user instanceof Customer) {
                     code = contract.customerCode
                 }
-                else if(user instanceof Supplier){
+                else if (user instanceof Supplier) {
                     code = contract.supplierCode
                 }
-                else if(user instanceof Manufacturer){
+                else if (user instanceof Manufacturer) {
                     desc = contract.manufacturerDesc
                 }
-                if (user.code==code || user.description==desc){
-                    [ contractInstance : contract ]
+                if (user.code == code || user.description == desc) {
+                    [contractInstance: contract]
                 }
 
             }
         }
     }
+
     def list() {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
-            if (user instanceof Broker ) {
+            if (user instanceof Broker) {
 //                def subRoleB = SubRole.findByRoleName("Dealer")
 //                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
-                if (user.brokerType=="BuyerBroker" ){
+                if (user.brokerType == "BuyerBroker") {
                     redirect(action: "buyerBroker", params: params)
                 }
-               else if (user.brokerType=="DealerBroker"){
+                else if (user.brokerType == "DealerBroker") {
                     redirect(action: "dealerBroker", params: params)
                 }
             }
 
-        else if (user instanceof Customer){
-             redirect(action: "Customer", params: params)
-        }
-        else if(user instanceof Supplier){
-            redirect(action: "Supplier", params: params)
-        }
-        else if(user instanceof Manufacturer){
-            redirect(action: "Manufacturer", params: params)
-        }
+            else if (user instanceof Customer) {
+                redirect(action: "Customer", params: params)
+            }
+            else if (user instanceof Supplier) {
+                redirect(action: "Supplier", params: params)
+            }
+            else if (user instanceof Manufacturer) {
+                redirect(action: "Manufacturer", params: params)
+            }
         }
 
 //        params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -183,9 +186,10 @@ class ContractController {
 
         def user = User.findByUsername(princ.username)
 
-         [organization: user]
+        [organization: user]
 
     }
+
     def Customer() {
         def princ = springSecurityService.getPrincipal()
 
@@ -194,6 +198,7 @@ class ContractController {
         [customer: user]
 
     }
+
     def Supplier() {
         def princ = springSecurityService.getPrincipal()
 
@@ -202,40 +207,42 @@ class ContractController {
         [organization: user]
 
     }
+
     def Manufacturer() {
         def princ = springSecurityService.getPrincipal()
 
         def user = User.findByUsername(princ.username)
 
-         [organization: user]
+        [organization: user]
 
     }
+
     def save = {
         def princ = springSecurityService.getPrincipal()
 
         def contract = new Contract(params)
         if (!contract.importDate)
-            contract.importDate=new Date()
-        if(!contract.dealerBrokerCode){
+            contract.importDate = new Date()
+        if (!contract.dealerBrokerCode) {
             if (princ instanceof GrailsUser) {
                 def user = User.findByUsername(princ.username)
-                if (user instanceof Broker && user.brokerType=="DealerBroker"){
-                    contract.dealerBrokerCode =user.code
-                    contract.dealerBrokerDesc=user.description
+                if (user instanceof Broker && user.brokerType == "DealerBroker") {
+                    contract.dealerBrokerCode = user.code
+                    contract.dealerBrokerDesc = user.description
                 }
             }
         }
-        if(!contract.buyerBrokerCode){
+        if (!contract.buyerBrokerCode) {
             if (princ instanceof GrailsUser) {
                 def user = User.findByUsername(princ.username)
-                if (user instanceof Broker && user.brokerType=="BuyerBroker"){
-                    contract.buyerBrokerCode =user.code
-                    contract.buyerBrokerDesc=user.description
+                if (user instanceof Broker && user.brokerType == "BuyerBroker") {
+                    contract.buyerBrokerCode = user.code
+                    contract.buyerBrokerDesc = user.description
                 }
             }
         }
 
-        if(!contract.hasErrors() && contract.save()) {
+        if (!contract.hasErrors() && contract.save()) {
             flash.message = "TekEvent ${contract.id} created"
             phaseService.addDefaultPhases(contract)
         }
@@ -244,19 +251,20 @@ class ContractController {
 
 
     def edit = {
-        def contractInstance = Contract.findById( params.id )
-        if(contractInstance) {
-            return [ contractInstance : contractInstance ]
+        def contractInstance = Contract.findById(params.id)
+        if (contractInstance) {
+            return [contractInstance: contractInstance]
         }
     }
+
     def getImage() {
         if (params.id) {
             def attachment = Attachment.get(params.id)
             String ct = attachment.contentType.substring(0, attachment.contentType.indexOf('/')).toLowerCase()
-            if (ct=='image') {
-            response.contentType = 'image/png'
-            response.outputStream << attachment.document
-            response.outputStream.flush()
+            if (ct == 'image') {
+                response.contentType = 'image/png'
+                response.outputStream << attachment.document
+                response.outputStream.flush()
             }
 //            else if(attachment.contentType.toLowerCase()=="application/pdf"){
 //                def file= grailsAttributes.getApplicationContext().getResource("/images/pdf.png").getFile()
@@ -267,50 +275,50 @@ class ContractController {
         }
     }
 
-    def editAttachmentPhase={
+    def editAttachmentPhase = {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
 
-            def contractInstance=Contract.get(params.id)
-            if(!contractInstance){
+            def contractInstance = Contract.get(params.id)
+            if (!contractInstance) {
                 return
             }
-            def lastPhaseId =Contract.findByPhase(contractInstance)
-            def lastPhase=Phase.get(lastPhaseId)
+            def lastPhaseId = Contract.findByPhase(contractInstance)
+            def lastPhase = Phase.get(lastPhaseId)
             if (lastPhase && user)
-                [contractInstance: contractInstance,lastPhase:lastPhase,user:user]
+                [contractInstance: contractInstance, lastPhase: lastPhase, user: user]
         }
     }
 
-    def editAttachmentPhaseDraft={
+    def editAttachmentPhaseDraft = {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
 
-            def contractInstance=Contract.get(params.id)
-            if(!contractInstance){
+            def contractInstance = Contract.get(params.id)
+            if (!contractInstance) {
                 return
             }
-            def lastPhaseId =Contract.findByPhase(contractInstance)
-            def lastPhase=Phase.get(lastPhaseId)
+            def lastPhaseId = Contract.findByPhase(contractInstance)
+            def lastPhase = Phase.get(lastPhaseId)
             if (lastPhase && user)
-                [contractInstance: contractInstance,lastPhase:lastPhase,user:user]
+                [contractInstance: contractInstance, lastPhase: lastPhase, user: user]
         }
     }
 
-    def showAttachmentPhase={
-        def contractInstance=Contract.get(params.id)
-        if(!contractInstance){
+    def showAttachmentPhase = {
+        def contractInstance = Contract.get(params.id)
+        if (!contractInstance) {
             return
         }
         //def lll=contractInstance.phases?.find(it?.status=="W")
-        def lastPhaseId =Contract.findByPhase(contractInstance)
-        def lastPhase=Phase.get(lastPhaseId)
-        [contractInstance: contractInstance,lastPhase:lastPhase]
+        def lastPhaseId = Contract.findByPhase(contractInstance)
+        def lastPhase = Phase.get(lastPhaseId)
+        [contractInstance: contractInstance, lastPhase: lastPhase]
     }
 
-    def importExcel(){
+    def importExcel() {
 
     }
 
@@ -362,24 +370,26 @@ class ContractController {
         def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
         res.each {
             dateFields.each { field ->
-                def dateParts = it[field].split("/").collect {it as Integer}
-                JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
-                def gc = jc.toJavaUtilGregorianCalendar()
-                it[field] = 'date.struct'
-                it["${field}_year"] = gc.get(Calendar.YEAR) as String
-                it["${field}_month"] = gc.get(Calendar.MONTH) as String
-                it["${field}_day"] = gc.get(Calendar.DATE) as String
+                try {
+                    def fff = it[field]
+                    def dateParts = it[field].split("/").collect {it as Integer}
+                    JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
+                    def gc = jc.toJavaUtilGregorianCalendar()
+                    it[field] = 'date.struct'
+                    it["${field}_year"] = gc.get(Calendar.YEAR) as String
+                    it["${field}_month"] = gc.get(Calendar.MONTH) as String
+                    it["${field}_day"] = gc.get(Calendar.DATE) as String
+                } catch (x) {x.printStackTrace()}
             }
 
             Contract contract = new Contract(it)
             contract.importDate = new Date()
-            def oldContract = Contract.findByContractNoAndContractPartNo(contract.contractNo,contract.contractPartNo)
-            if (oldContract)
-            {
-                oldContract.settlementDate=contract.settlementDate
+            def oldContract = Contract.findByContractNoAndContractPartNo(contract.contractNo, contract.contractPartNo)
+            if (oldContract) {
+                oldContract.settlementDate = contract.settlementDate
                 oldContract.save()
             }
-            else{
+            else {
                 contract.save()
                 phaseService.addDefaultPhases(contract)
             }
@@ -389,15 +399,15 @@ class ContractController {
         redirect(action: "list")
     }
 
-    def showAttachmentPhaseDraft(){
-        def contractInstance=Contract.get(params.id)
-        if(!contractInstance){
+    def showAttachmentPhaseDraft() {
+        def contractInstance = Contract.get(params.id)
+        if (!contractInstance) {
             return
         }
         //def lll=contractInstance.phases?.find(it?.status=="W")
-        def lastPhaseId =Contract.findByPhase(contractInstance)
-        def lastPhase=Phase.get(lastPhaseId)
-        [contractInstance: contractInstance,lastPhase:lastPhase]
+        def lastPhaseId = Contract.findByPhase(contractInstance)
+        def lastPhase = Phase.get(lastPhaseId)
+        [contractInstance: contractInstance, lastPhase: lastPhase]
     }
 
     def update() {
