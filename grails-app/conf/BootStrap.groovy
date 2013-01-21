@@ -25,7 +25,7 @@ class BootStrap {
 
         def admuser =  User.findByUsername("admin")?:new User(username: 'admin', password: 'admin123', enabled: true).save()
 //        admuser.save()
-        UserRole.create(admuser, admRole)
+        def ur =UserRole.findByUser(admuser)?:UserRole.create(admuser, admRole)
 
 //        def usr0 =  User.findByUsername("user0")?:new Broker(code: "31", description: "بهمن", username: "user0", password: "test", enabled: true, brokerType: "DealerBroker").save()
 //        def userRole0 = UserRole.create(usr0, dbRole)
@@ -48,9 +48,9 @@ class BootStrap {
         def userRole12 = UserRole.findByUser(bahman2)?:UserRole.create(bahman2, bbRole)
         def customer1 = Customer.findByUsername("azarbam")?:new Customer(code: "1251", description: "شرکت آذربام عایق کار", username: "azarbam", password: "test", enabled: true, mobileNo: '09125348230').save()
         def userRole13 = UserRole.findByUser(customer1)?:UserRole.create(customer1, custRole)
-        def tolid =  Manufacturer.findByUsername("tolid")?:new Manufacturer(code: "01", description:"پالایشگاه تبریز", username: "tolid", password: "test", enabled: true).save()
+        def tolid =  Manufacturer.findByUsername("tolidi")?:new Manufacturer(code: "359", description:"پالایشگاه تبریز", username: "tolidi", password: "test", enabled: true).save()
         def userRole14 = UserRole.findByUser(tolid)?:UserRole.create(tolid, mRole)
-        def bazargani = Supplier.findByUsername("bazargani")?:new Supplier(code: "359", description: "عرضه کننده", username: "bazargani", password: "test", enabled: true).save()
+        def bazargani = Supplier.findByUsername("bazargani")?:new Supplier(code: "359", description: "پالایشگاه تبریز", username: "bazargani", password: "test", enabled: true).save()
         def userRole15 =UserRole.findByUser(bazargani)?: UserRole.create(bazargani, sRole)
     }
 

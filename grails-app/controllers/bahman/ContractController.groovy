@@ -42,7 +42,7 @@ class ContractController {
             def contract = Contract.findById(params.id)
             def princ = springSecurityService.getPrincipal()
             def code = ""
-            def desc = ""
+//            def desc = ""
 
             if (princ instanceof GrailsUser && contract) {
                 def user = User.findByUsername(princ.username)
@@ -75,7 +75,8 @@ class ContractController {
                     userType = "Supplier"
                 }
                 else if (user instanceof Manufacturer) {
-                    desc = contract.manufacturerDesc
+//                    desc = contract.manufacturerDesc
+                    code = contract.supplierCode
                     userType = "Manufacturer"
                 }
 //            def lp=contract.lastPhase
@@ -89,7 +90,8 @@ class ContractController {
                 String phaseStatus = Contract.findByPhaseStatus(contract, userType)
                 if (!phaseStatus.equals(""))
                     showAmendment = "True"
-                if (user.code == code || user.description == desc) {
+//                if (user.code == code || user.description == desc) {
+                if (user.code == code ) {
                     return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment]
                 }
 
@@ -132,6 +134,7 @@ class ContractController {
                     code = contract.supplierCode
                 }
                 else if (user instanceof Manufacturer) {
+                    code = contract.supplierCode
                     desc = contract.manufacturerDesc
                 }
                 if (user.code == code || user.description == desc) {
