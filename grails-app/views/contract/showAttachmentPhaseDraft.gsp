@@ -136,9 +136,9 @@
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
             <g:each in="${contractInstance?.drafts}" var="draft">
-            <g:if test="${draft.status!='R'}">
+            %{--<g:if test="${draft.status!='R'}">--}%
                 <g:render template="showAttachment" model="[attachment:draft,type:'Draft']"/>
-            </g:if>
+            %{--</g:if>--}%
             </g:each>
         </ul>
     </div>
