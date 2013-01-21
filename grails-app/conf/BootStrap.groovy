@@ -196,6 +196,17 @@ class BootStrap {
 //        amendment.addToPhases(phase2)
 //        amendment.save()
 //        contract3.addToAmendments(amendment)
+
+        def bahman1 = new Broker(code: "31", description: "کارشناس فروش", username: "bahman1", password: "test", enabled: true, brokerType: "DealerBroker").save()
+        def userRole11 = UserRole.create(bahman1, dbRole)
+        def bahman2 = new Broker(code: "31", description: "کارشناس خرید", username: "bahman2", password: "test", enabled: true, brokerType: "BuyerBroker").save()
+        def userRole12 = UserRole.create(bahman2, bbRole)
+        def customer1 = new Customer(code: "1251", description: "شرکت آذربام عایق کار", username: "azarbam", password: "test", enabled: true, mobileNo: '09125348230').save()
+        def userRole13 = UserRole.create(customer1, custRole)
+        def tolid = new Manufacturer(code: "01", description:"پالایشگاه تبریز", username: "tolid", password: "test", enabled: true).save()
+        def userRole14 = UserRole.create(tolid, mRole)
+        def bazargani = new Supplier(code: "359", description: "عرضه کننده", username: "bazargani", password: "test", enabled: true).save()
+        def userRole15 = UserRole.create(bazargani, sRole)
     }
 
 

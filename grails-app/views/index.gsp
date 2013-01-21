@@ -124,7 +124,7 @@
                 </a>
             </div>
         </sec:ifAllGranted>
-    %{--<sec:ifAllGranted roles="DealerBroker">--}%
+    <sec:ifAllGranted roles="DealerBroker,Manufacturer,Supplier,BuyerBroker,Customer">
         <div style="height: 150px">
             <a href="<g:createLink action="list" controller="contract"/>">
                 <img src="${resource(dir: "images", file: "pencil.png")} ">
@@ -132,7 +132,7 @@
             </a>
         </div>
     %{--</div>--}%
-    %{--</sec:ifAllGranted>--}%
+    </sec:ifAllGranted>
     %{--<div class="span5">--}%
     %{--<div style="height: 70px"></div>--}%
         %{--<sec:ifAllGranted roles="DealerBroker">--}%
@@ -145,7 +145,7 @@
         %{--</sec:ifAllGranted>--}%
         <sec:ifAllGranted roles="Admin">
             <div style="height: 150px">
-                <a href="<g:createLink action="userAdmin" controller="userAdmin"/>">
+                <a href="<g:createLink action="useradmin" controller="userAdmin"/>">
                     <img src="${resource(dir: "images", file: "userAdmin.png")} ">
                     <g:message code="index.userAdmin.label" default="User Admin"/>
                 </a>
