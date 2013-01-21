@@ -190,7 +190,7 @@ class ContractController {
 
     }
 
-    def Customer() {
+    def customer() {
         def princ = springSecurityService.getPrincipal()
 
         def user = User.findByUsername(princ.username)
@@ -199,7 +199,7 @@ class ContractController {
 
     }
 
-    def Supplier() {
+    def supplier() {
         def princ = springSecurityService.getPrincipal()
 
         def user = User.findByUsername(princ.username)
@@ -208,7 +208,7 @@ class ContractController {
 
     }
 
-    def Manufacturer() {
+    def manufacturer() {
         def princ = springSecurityService.getPrincipal()
 
         def user = User.findByUsername(princ.username)
