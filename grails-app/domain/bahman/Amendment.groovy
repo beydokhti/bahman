@@ -23,11 +23,11 @@ class Amendment {
         phases(nullable: true)
         contractNo(nullable: false, maxSize: 50)
         contractPartNo(nullable: false, maxSize: 50)
-        dealerBroker(nullable: false, inList: ['N', 'Y'])
-        buyerBroker(nullable: false, inList: ['N', 'Y'])
-        supplier(nullable: false, inList: ['N', 'Y'])
-        manufacturer(nullable: false, inList: ['N', 'Y'])
-        finished(nullable: false, inList: ['N', 'Y'])
+        dealerBroker(nullable:true, inList: ['N', 'Y'])
+        buyerBroker(nullable: true, inList: ['N', 'Y'])
+        supplier(nullable: true, inList: ['N', 'Y'])
+        manufacturer(nullable: true, inList: ['N', 'Y'])
+        finished(nullable: true, inList: ['N', 'Y'])
         amendmentDocument(nullable: true, maxSize: 5000000)
         comment(nullable: true, maxSize: 4000, widget: 'textarea')
         contentType(nullable: true, maxSize: 256)
@@ -43,30 +43,4 @@ class Amendment {
         else if (buyerBroker == "Y")
             return "BuyerBroker"
     }
-//    transient def getPrevStatus(){
-//        def today=new Date()
-//        def phaseCount=0
-//        if (this.phases){
-//            String oldPhase="Pass"
-//            String lastStatus=""
-//            for (p in this?.phases?.sort{it.id})
-//            {
-//                if (p.status=='Waiting')
-//                {
-//                    phaseCount++
-//                    break
-//                }
-//                else
-//                    oldPhase=p.status
-//            }
-//            if (oldPhase=="Pass")
-////                if (settlementDeadline<today && phaseCount<2){
-////                    return "Expired"
-////                }else{
-//                    return "New"
-////                }
-//            else if (oldPhase=="Reject")
-//                return "Failed"
-//        }
-//    }
 }

@@ -379,7 +379,10 @@ fieldset,
     border-radius: 3px;
     margin-bottom: 10px;
 }
-
+.field-all {
+    background: red;
+    border-radius: 3px;
+}
 .field-value{
     background: #DFDDDD;
 

@@ -14,7 +14,6 @@
     <r:require modules="bootstrap"/>
     <g:set var="entityName" value="${message(code: 'attachment.label', default: 'attachment')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
-    %{--<g:javascript src="publicUtility.js"></g:javascript>--}%
     <script type="text/javascript">
         var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
             if (!params)

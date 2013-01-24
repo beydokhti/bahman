@@ -15,27 +15,36 @@ class AmendmentController {
 
     def list() {
 
+        def contractInstance = Contract.get(params.id)
+
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
             def amendmentType
+            def userType
+            String createAmendment ="False"
+
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
-                    amendmentType = "buyerBroker"
+                    userType = "BuyerBroker"
                 } else if (user.brokerType == "DealerBroker") {
-                    amendmentType = "dealerBroker"
+                    userType = "DealerBroker"
                 }
+
+                String contractPhaseStatus = Contract.findByPhaseStatus(contractInstance, userType)
+                if (contractPhaseStatus=="Pass")
+                    createAmendment ="True"
             } else if (user instanceof Customer) {
-                amendmentType = "finished"
+                userType = "Finished"
             } else if (user instanceof Supplier) {
-                amendmentType = "supplier"
+                userType = "Supplier"
             } else if (user instanceof Manufacturer) {
-                amendmentType = "manufacturer"
+                userType = "Manufacturer"
             }
 
-            def contractInstance = Contract.get(params.id)
 
-            [organization: user, contractInstance: contractInstance, amendmentType: amendmentType]
+
+            [organization: user, contractInstance: contractInstance, userType: userType,createAmendment:createAmendment]
 
         }
     }
@@ -43,7 +52,6 @@ class AmendmentController {
 
     def save() {
         def amendmentInstance = new Amendment(params)
-
         def file = request.getFile("amendmentDocument")
         try {
             amendmentInstance.fileName = file.originalFilename
@@ -59,11 +67,6 @@ class AmendmentController {
         amendmentInstance.amendmentDate = new Date()
         amendmentInstance.contractNo = conract.contractNo
         amendmentInstance.contractPartNo = conract.contractPartNo
-        amendmentInstance.dealerBroker = "N"
-        amendmentInstance.buyerBroker = "N"
-        amendmentInstance.manufacturer = "N"
-        amendmentInstance.supplier = "N"
-        amendmentInstance.finished = "N"
 
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
@@ -71,21 +74,18 @@ class AmendmentController {
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
                     userType = "BuyerBroker"
-                    amendmentInstance.buyerBroker = "Y"
-                    amendmentInstance.dealerBroker = "Y"
                 } else if (user.brokerType == "DealerBroker") {
                     userType = "DealerBroker"
-                    amendmentInstance.dealerBroker = "Y"
-                    amendmentInstance.supplier = "Y"
                 }
             } else if (user instanceof Supplier) {
-                amendmentInstance.supplier = "Y"
-                amendmentInstance.manufacturer = "Y"
                 userType = "Supplier"
             }
         }
 
-        amendmentInstance.addToPhases new Phase(phase: userType, comment: "", organization: null, startDate: new Date(), status: "Waiting").save()
+        def userLevel=Phase.findByPhaseName(userType)
+
+        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel), comment: "ارسال اصلاحیه", organization: null, startDate: new Date(), status: "Pass").save()
+        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel+1), comment: "", organization: null, startDate: new Date(), status: "Waiting").save()
         if (!amendmentInstance.save(flush: true)) {
             render(view: "create", model: [amendmentInstance: amendmentInstance])
             return
@@ -172,6 +172,7 @@ class AmendmentController {
         def amendment = Amendment.get(params.id)
         if (amendment){
             response.contentType = amendment.contentType
+            response.addHeader ("Content-disposition","attachment; filename=\""+amendment.fileName+"\"");
             response.outputStream << amendment.amendmentDocument
             response.outputStream.flush()
         }

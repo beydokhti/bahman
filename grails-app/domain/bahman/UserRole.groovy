@@ -8,7 +8,7 @@ class UserRole implements Serializable {
 
 	User user
 	Role role
-//    static hasMany = [subRoles:SubRole]
+
 
 	boolean equals(other) {
 		if (!(other instanceof UserRole)) {

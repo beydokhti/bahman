@@ -32,14 +32,10 @@ class Contract {
     String contractID
     Date releaseDate
     Date importDate
-//    Attachment settlementCertificate
-//    Attachment valueAddedTax
-//    Attachment applicationForm
     static hasMany = [attachments:Attachment,
             phases:Phase,
             drafts:Attachment,
             amendments:Amendment]
-//    static transients = ['prevStatus','lastPhase']
 
     static constraints = {
         prevStatus()
@@ -74,9 +70,6 @@ class Contract {
         contractID (nullable:false,maxSize: 50)
         releaseDate (nullable:false)
         importDate (nullable:false)
-//        settlementCertificate(nullable:true)
-//        valueAddedTax(nullable:true)
-//        applicationForm(nullable:true)
         drafts (nullable: true)
         attachments (nullable: true)
         phases(nullable: true)
@@ -92,12 +85,13 @@ class Contract {
     }
 
     static def findByPhaseStatus (Contract contract,String phase){
-        for (p in contract.phases)
+        def phaseTemp =""
+        for (p in contract.phases.sort())
         {
             if (p.phase==phase)
-                return p.status
+                phaseTemp= p.status
         }
-        return ""
+        return phaseTemp
     }
 
     transient def getLastPhase(){

@@ -33,9 +33,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/taglib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/test/unit" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/utils" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/grails-app/domain" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../RapidGrails/test/integration" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -16,17 +16,7 @@
     </ul>
 </div>
 <div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
-    %{--<rg:grid domainClass="${bahman.Contract}">--}%
-    %{--<rg:criteria>--}%
-    %{--<rg:eq name="buyerBrokerCode" value="${organization.code}"/>--}%
-    %{--</rg:criteria>--}%
-    %{--</rg:grid>--}%
-    %{--<rg:dialog id="contract" title="Contract Form">--}%
-    %{--<rg:fields bean="${new bahman.Contract()}"></rg:fields>--}%
-    %{--<rg:saveButton domainClass="${bahman.Contract}"/>--}%
-    %{--<rg:cancelButton/>--}%
-    %{--</rg:dialog>--}%
-    <rg:criteria inline='true'>
+      <rg:criteria inline='true'>
         <rg:like name="contractNo"/>
         <rg:like name="contractPartNo"/>
         %{--<rg:like name="buyerBrokerDesc"/>--}%
@@ -39,7 +29,8 @@
         <rg:filterGrid grid="ContractGrid" label="search"/>
     </rg:criteria>
     <rg:grid domainClass="${bahman.Contract}"
-             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
+             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"
+    caption="در انتظار تایید">
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -53,9 +44,6 @@
             <rg:modify>
                 <rg:hiddenReference field="phases"></rg:hiddenReference>
                 <rg:hiddenReference field="attachments"></rg:hiddenReference>
-            %{--<rg:hiddenReference field="applicationForm"></rg:hiddenReference>--}%
-            %{--<rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>--}%
-            %{--<rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>--}%
                 <rg:hiddenReference field="importDate"></rg:hiddenReference>
                 <rg:hiddenReference field="drafts"></rg:hiddenReference>
                 <rg:hiddenReference filed="buyerBrokerCode"></rg:hiddenReference>
@@ -76,7 +64,6 @@
     <rg:criteria inline='true'>
         <rg:like name="contractNo"/>
         <rg:like name="contractPartNo"/>
-        %{--<rg:like name="buyerBrokerDesc"/>--}%
         <rg:like name="dealerBrokerDesc"/>
         <rg:like name="customerDesc"/>
         <rg:eq name="buyerBrokerCode" value="${organization?.code}" hidden="true"/>
@@ -86,7 +73,8 @@
         <rg:filterGrid grid="ContractAllGrid" label="search"/>
     </rg:criteria>
     <rg:grid domainClass="${bahman.Contract}" idPostfix="All"
-             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]">
+             columns="[[name:'prevStatus',expression:'g.message([code: obj.prevStatus])'],[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc'],[name:'customerDesc']]"
+    caption="مابقی قراردادها">
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
@@ -98,12 +86,10 @@
     <rg:criteria inline='true'>
         <rg:like name="contractNo"/>
         <rg:like name="contractPartNo"/>
-    %{--<rg:like name="buyerBrokerDesc"/>--}%
         <rg:like name="dealerBrokerDesc"/>
         <rg:like name="customerDesc"/>
         <rg:eq name="buyerBrokerCode" value="${organization?.code}" hidden="true"/>
         <rg:alias name='phases' value='m'/>
-        %{--<rg:eq name='m.status' value='Waiting' hidden="true"/>--}%
         <rg:eq name='m.phase' value='Finished' hidden="true"/>
         <rg:filterGrid grid="ContractFinishedGrid" label="search"/>
     </rg:criteria>
@@ -112,7 +98,6 @@
         <rg:criteria>
             <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
-            %{--<rg:eq name='m.status' value='Waiting'/>--}%
             <rg:eq name='m.phase' value='Finished'/>
         </rg:criteria>
     </rg:grid>

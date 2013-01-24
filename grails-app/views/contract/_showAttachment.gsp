@@ -83,8 +83,6 @@
         <p id="desc_${attachment?.id}">${attachment?.description}</p>
 
         <p>
-            %{--<a class="btn btn-primary" href="#" onclick="doDeleteAttachment(${attachment?.id})"><g:message code="delete" /></a>--}%
-            %{--<a class="btn" href="#" onclick="doDownloadAttachment(${attachment?.id})"><g:message code="download" /></a>--}%
             <a class="btn" href="<g:createLink action="downloadAttachment" controller="attachment"
                                                params="[id: attachment?.id]"/>"><g:message code="Download"/></a>
             <a class="btn" href="<g:createLink action="showAttachmentDetails" controller="attachment"

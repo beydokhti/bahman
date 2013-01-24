@@ -13,14 +13,10 @@
     </ul>
 </div>
 <div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
-    %{--<div >--}%
-        %{--<g:message code="contract.new.label" default="" />--}%
-    %{--</div>--}%
     <rg:criteria inline='true'>
         <rg:like name="contractNo" />
         <rg:like name="contractPartNo" />
         <rg:like name="buyerBrokerDesc" />
-        %{--<rg:like name="dealerBrokerDesc" />--}%
         <rg:like name="customerDesc" />
         <rg:eq name="dealerBrokerCode" value="${organization?.code}" hidden="true"/>
         <rg:alias name='phases' value='m'/>
@@ -66,9 +62,6 @@
             <rg:modify>
                 <rg:hiddenReference field="phases"></rg:hiddenReference>
                 <rg:hiddenReference field="attachments"></rg:hiddenReference>
-            %{--<rg:hiddenReference field="applicationForm"></rg:hiddenReference>--}%
-            %{--<rg:hiddenReference field="valueAddedTax"></rg:hiddenReference>--}%
-            %{--<rg:hiddenReference field="settlementCertificate"></rg:hiddenReference>--}%
                 <rg:hiddenReference field="importDate"></rg:hiddenReference>
                 <rg:hiddenReference field="drafts"></rg:hiddenReference>
                 <rg:hiddenReference filed="dealerBrokerCode"></rg:hiddenReference>
@@ -86,16 +79,13 @@
         }
     </g:javascript>
     <input type="button" ng-click="openContractCreateDialog()" value="<g:message code="create" />">
-    %{--<input type="button" ng-click="openContractEditDialog()" value="edit">--}%
     <rg:criteria inline='true'>
         <rg:like name="contractNo" />
         <rg:like name="contractPartNo" />
         <rg:like name="buyerBrokerDesc" />
-    %{--<rg:like name="dealerBrokerDesc" />--}%
         <rg:like name="customerDesc" />
         <rg:eq name="dealerBrokerCode" value="${organization?.code}"  hidden="true"/>
         <rg:alias name='phases' value='m'/>
-        %{--<rg:ne name='m.status' value='Waiting' hidden="true"/>--}%
         <rg:eq name='m.phase' value='Finished'  hidden="true"/>
         <rg:filterGrid grid="ContractFinishedGrid" label="${message(code: "search")}"/>
     </rg:criteria>
@@ -104,7 +94,6 @@
         <rg:criteria>
             <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
             <rg:alias name='phases' value='m'/>
-            %{--<rg:eq name='m.status' value='Waiting'/>--}%
             <rg:eq name='m.phase' value='Finished'/>
         </rg:criteria>
     </rg:grid>

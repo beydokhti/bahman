@@ -3,12 +3,14 @@ package bahman
 import grails.converters.JSON
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class AttachmentController {
     def springSecurityService
     def smsService
 
-    static allowedMethods = [update: "POST", delete: "POST"]
+    static allowedMethods = [update: "POST", delete: "POST",save: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -24,11 +26,8 @@ class AttachmentController {
     }
 
     def deleteAttachment() {
-//        def contract=Contract.get(params.contractId)
+
         def att = Attachment.get(params.id)
-//        contract.removeFromAttachments(att)
-//        contract.save()
-//        att.delete()
         if (att) {
             att.status = "R"
             att.save()
@@ -37,18 +36,21 @@ class AttachmentController {
     }
 
     def save() {
+
         def attachmentInstance = new Attachment(params)
-//        def contentType = attachmentInstance.document.contentType
-//        def fileName = attachmentInstance.document.originalFilename
-//        def size = attachmentInstance.document.size
-//        attachmentInstance.fileName=request.getFileNames()
+//        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest)request;
+//        CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("document");
         def file = request.getFile("document")
+//        if (!file){
+//            file = request?.FILES['filename']
+//        }
         try {
             attachmentInstance.fileName = file.originalFilename
             attachmentInstance.contentType = file.getContentType();
         }
         catch (Exception e) {
-            attachmentInstance.fileName = ""
+//            attachmentInstance.fileName = ""
+
         }
 
         attachmentInstance.uploadDate = new Date()
@@ -64,7 +66,6 @@ class AttachmentController {
         }
 
         if (!attachmentInstance.save(flush: true)) {
-//            render(view: "create", model: [attachmentInstance: attachmentInstance])
             return
         }
         def contract = Contract.get(params.contractId)
@@ -257,7 +258,8 @@ class AttachmentController {
             return
         }
         response.setHeader("Content-disposition", "attachment; filename = ${attachment.fileName}");//render(contentType: "${attachment.contentType}", text:"mtb");
-        response.contentType = "application/octet-stream"
+//        response.contentType = "application/octet-stream"
+        response.contentType = attachment.contentType
         response.outputStream << content
         response.outputStream.flush()
     }

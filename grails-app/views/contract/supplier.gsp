@@ -15,7 +15,7 @@
         %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
     </ul>
 </div>
-<div id="list-contract" ng-controller="contractController" class="content scaffold-list" role="main">
+<div id="list-contract" class="content scaffold-list" role="main">
     %{--<rg:grid domainClass="${bahman.Contract}">--}%
     %{--<rg:criteria>--}%
     %{--<rg:eq name="supplierCode" value="${organization.code}"/>--}%

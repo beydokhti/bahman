@@ -85,10 +85,10 @@ class ContractController {
                     limit = "Allowed"
                 else
                     limit = "Illegal"
-
+//
                 String showAmendment = "False"
-                String phaseStatus = Contract.findByPhaseStatus(contract, userType)
-                if (!phaseStatus.equals(""))
+//                String phaseStatus = Contract.findByPhaseStatus(contract, userType)
+//                if (phaseStatus.equals("Pass"))
                     showAmendment = "True"
 //                if (user.code == code || user.description == desc) {
                 if (user.code == code ) {

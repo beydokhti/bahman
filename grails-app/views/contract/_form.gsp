@@ -186,14 +186,6 @@
 	<g:textField name="buyerBrokerCode" value="${contractInstance?.buyerBrokerCode}"/>
 </div>
 
-%{--<div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'dealerBrokerCode', 'error')} ">--}%
-	%{--<label for="dealerBrokerCode">--}%
-		%{--<g:message code="contract.dealerBrokerCode.label" default="Dealer Broker Code" />--}%
-		%{----}%
-	%{--</label>--}%
-	%{--<g:textField name="dealerBrokerCode" value="${contractInstance?.dealerBrokerCode}"/>--}%
-%{--</div>--}%
-
 <div class="fieldcontain ${hasErrors(bean: contractInstance, field: 'customerCode', 'error')} ">
 	<label for="customerCode">
 		<g:message code="contract.customerCode.label" default="Customer Code" />

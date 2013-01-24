@@ -26,7 +26,7 @@
         <rg:cancelButton/>
     </rg:dialog>
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
-    %{--<input name>contract--}%
+
     <table>
         <tr>
             <td class="detail-td-attach">
