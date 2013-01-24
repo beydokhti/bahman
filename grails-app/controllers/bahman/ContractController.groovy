@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.grails.plugins.excelimport.ExpectedPropertyType
 import org.springframework.dao.DataIntegrityViolationException
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 
 
 class ContractController {
@@ -89,9 +90,9 @@ class ContractController {
                 String showAmendment = "False"
 //                String phaseStatus = Contract.findByPhaseStatus(contract, userType)
 //                if (phaseStatus.equals("Pass"))
-                    showAmendment = "True"
+                showAmendment = "True"
 //                if (user.code == code || user.description == desc) {
-                if (user.code == code ) {
+                if (user.code == code) {
                     return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment]
                 }
 
@@ -327,7 +328,14 @@ class ContractController {
 
     def upload() {
         def file = request.getFile('file')
-        def fileIs = new ByteArrayInputStream(file.bytes)
+        Workbook sb
+        try {
+            def fileIs = new ByteArrayInputStream(file.bytes)
+            sb = new XSSFWorkbook(fileIs)
+        } catch (x) {
+            def fileIs = new ByteArrayInputStream(file.bytes)
+            sb = new HSSFWorkbook(fileIs)
+        }
         Map CONFIG_COLUMN_MAP = [
                 sheet: 'Sheet1',
                 startRow: 1,
@@ -368,7 +376,7 @@ class ContractController {
         CONFIG_COLUMN_MAP.columnMap.each {key, value ->
             propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
         }
-        Workbook sb = new XSSFWorkbook(fileIs)
+
         def dateFields = ["contractDate", "allotmentDate", "settlementDeadline", "deliveryDate", "settlementDate", "releaseDate"]
         def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
         res.each {

@@ -26,7 +26,7 @@
             }).done(function (response) {
                         var r = $("#ajax-form" + remoteAddress.hashCode());
                         if (!r.length)
-                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' action='" + saveAddress + "'></form>")
+                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' method='post' action='" + saveAddress + "'></form>")
                         r.html("")
 
                         r.dialog({
@@ -37,17 +37,18 @@
                                 'ذخیره':function () {
                                     if (params && params.beforeSubmit)
                                         params.beforeSubmit();
-                                    r.ajaxSubmit({
-                                        url:saveAddress,
-                                        type:"post",
-                                        success:function (resp) {
-                                            if (params && params.afterSave)
-                                                params.afterSave(resp)
-                                            if (saveCallback) {
-                                                saveCallback(resp)
-                                            }
-                                        }
-                                    })
+//                                    r.ajaxSubmit({
+//                                        url:saveAddress,
+//                                        type:"post",
+//                                        success:function (resp) {
+//                                            if (params && params.afterSave)
+//                                                params.afterSave(resp)
+//                                            if (saveCallback) {
+//                                                saveCallback(resp)
+//                                            }
+//                                        }
+//                                    })
+                                    r.submit()
                                     $(this).dialog("close");
                                 },
                                 "انصراف":function () {
@@ -87,7 +88,7 @@
         function doAddAttachment(){
 
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                    '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment']"/>',
+                    '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'editAttachmentPhase',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))
                     }, undefined, {width:400})

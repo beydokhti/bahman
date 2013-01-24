@@ -1,7 +1,7 @@
 <%@ page import="bahman.Attachment" %>
 
 
-<g:form enctype="multipart/form-data">
+%{--<g:form enctype="multipart/form-data">--}%
     <div class="fieldcontain ${hasErrors(bean: attachmentInstance, field: 'description', 'error')} ">
         <label for="description">
             <g:message code="attachment.description.label" default="Description"/>
@@ -17,7 +17,7 @@
         </label>
         <input type="file" id="document" name="document"/>
     </div>
-</g:form>
+%{--</g:form>--}%
 
 %{--<div class="fieldcontain ${hasErrors(bean: attachmentInstance, field: 'status', 'error')} ">--}%
 %{--<label for="status">--}%

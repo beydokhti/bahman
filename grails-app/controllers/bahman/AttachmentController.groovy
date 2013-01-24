@@ -10,7 +10,7 @@ class AttachmentController {
     def springSecurityService
     def smsService
 
-    static allowedMethods = [update: "POST", delete: "POST",save: "POST"]
+    static allowedMethods = [update: "POST", delete: "POST"]
 
     def index() {
         redirect(action: "list", params: params)
@@ -72,11 +72,12 @@ class AttachmentController {
 
         contract.addToAttachments(attachmentInstance)
         if (contract.save()) {
-            if (params.attr == "Attachment")
+            /*if (params.attr == "Attachment")
                 render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance])
             else
-                render attachmentInstance as JSON
+                render attachmentInstance as JSON\*/
         }
+        redirect(controller: params.rcontroller, action: params.raction, id: params.redirectId)
     }
 
 
