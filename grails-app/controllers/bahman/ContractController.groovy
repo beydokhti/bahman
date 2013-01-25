@@ -260,6 +260,24 @@ class ContractController {
             return [contractInstance: contractInstance]
         }
     }
+    def getImageAmendment(){
+        if (params.id) {
+            def amendment = Amendment.get(params.id)
+            String ct = amendment.contentType.substring(0, amendment.contentType.indexOf('/')).toLowerCase()
+            if (ct == 'image') {
+                response.contentType = 'image/png'
+                response.outputStream << amendment.amendmentDocument
+                response.outputStream.flush()
+            }
+//            else if(attachment.contentType.toLowerCase()=="application/pdf"){
+//                def file= grailsAttributes.getApplicationContext().getResource("/images/pdf.png").getFile()
+//                response.contentType = 'image/png'
+//                response.outputStream << file
+//                response.outputStream.flush()
+//            }
+        }
+
+    }
 
     def getImage() {
         if (params.id) {

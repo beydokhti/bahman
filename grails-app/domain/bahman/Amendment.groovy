@@ -48,11 +48,12 @@ class Amendment {
             return "BuyerBroker"
     }
 
-   static def findStarter(Amendment amendment){
+   static def findStarter(Amendment amendment ){
        if(amendment.phases){
-//           for (p in amendment.phases.sort()){
-                return amendment.phase[1]
-//           }
+           for (p in amendment.phases.sort()){
+               return p.phase
+               break
+           }
 
        }
        else{

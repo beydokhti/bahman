@@ -206,4 +206,43 @@ class AmendmentController {
             response.outputStream.flush()
         }
     }
+    def downloadAmendment() {
+        def amendment = Amendment.get(params.id)
+        byte[] content = amendment.amendmentDocument
+        if (!amendment) {
+            response.sendError(404, "Not Found \n")
+            return
+        }
+        response.setHeader("Content-disposition", "amendment; filename = ${amendment.fileName}");//render(contentType: "${amendment.contentType}", text:"mtb");
+//        response.contentType = "application/octet-stream"
+        response.contentType = amendment.contentType
+        response.outputStream << content
+        response.outputStream.flush()
+    }
+
+    def printImage() {
+        def amendment = Amendment.get(params.amendmentId)
+        render(template: 'printImage', model: [amendment: amendment])
+    }
+
+    def printView() {
+        def amendment = Amendment.get(params.amendmentId)
+        render(template: 'printImage', model: [amendment: amendment])
+    }
+    def showAmendmentDetails() {
+        def amendmentInstance = Amendment.get(params.id)
+
+        if (!amendmentInstance)
+            amendmentInstance = new Amendment()
+
+        render(view: "showDetails", model: [amendmentInstance: amendmentInstance])
+    }
+    def getImage() {
+        if (params.id) {
+            def amendmentInstance = Amendment.get(params.id)
+            response.contentType = 'image/png'
+            response.outputStream << amendmentInstance.amendmentDocument
+            response.outputStream.flush()
+        }
+    }
 }

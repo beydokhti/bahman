@@ -51,6 +51,7 @@
                     <rg:ignoreField field="phases"/>
                     <rg:ignoreField field="fileName"/>
                     <rg:ignoreField field="contentType"/>
+                    <rg:ignoreField field="status"/>
                 </rg:modify>
                 <g:hiddenField name="contractId" value="${contractInstance?.id}"/>
             </rg:fields>

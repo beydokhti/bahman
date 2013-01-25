@@ -169,14 +169,9 @@
     </div>
     <div class="row-fluid">
         <ul class="thumbnails" id="amendment-container">
-            <g:each in="${contractInstance?.attachments}" var="attachment">
-                <g:if test="${attachment.status!='R'}">
-                    <g:if test="${attachment.responsible.code==user.code}">
-                        <g:render template="viewAttachment" model="[attachment:attachment]"/>
-                    </g:if>
-                    <g:else>
-                        <g:render template="showAttachment" model="[attachment:attachment]"/>
-                    </g:else>
+            <g:each in="${contractInstance?.amendments}" var="amendment">
+                <g:if test="${amendment.status=='Visible'}">
+                        <g:render template="showAmendment" model="[amendment:amendment]"/>
                 </g:if>
             </g:each>
         </ul>
