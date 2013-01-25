@@ -1,5 +1,7 @@
 package bahman
 
+import fi.joensuu.joyds1.calendar.chinese.MoonPhase
+
 class Amendment {
 
     Date amendmentDate
@@ -13,6 +15,7 @@ class Amendment {
     String finished
     String fileName
     String contentType
+    String status
     byte[] amendmentDocument
     static hasMany = [phases: Phase]
 
@@ -31,6 +34,7 @@ class Amendment {
         amendmentDocument(nullable: true, maxSize: 5000000)
         comment(nullable: true, maxSize: 4000, widget: 'textarea')
         contentType(nullable: true, maxSize: 256)
+        status(nullable: true,maxSize: 10,inList: ['Visible','Invisible'])
     }
 
     transient def getLastPhase() {
@@ -42,5 +46,29 @@ class Amendment {
             return "DealerBroker"
         else if (buyerBroker == "Y")
             return "BuyerBroker"
+    }
+
+   static def findStarter(Amendment amendment){
+       if(amendment.phases){
+//           for (p in amendment.phases.sort()){
+                return amendment.phase[1]
+//           }
+
+       }
+       else{
+           return ""
+       }
+    }
+
+    static def findSubmit(Amendment amendment, String userType){
+        def phase="-1"
+        if(amendment.phases){
+            for (p in amendment.phases){
+                if (p.status=="Waiting" && userType==p.phase){
+                    phase=p.id
+                }
+            }
+        }
+        return phase
     }
 }

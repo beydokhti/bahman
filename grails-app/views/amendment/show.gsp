@@ -5,6 +5,77 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'contract.label', default: 'Contract')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
+    <script type="text/javascript">
+        var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
+            if (!params)
+                params = {}
+            $.ajaxSettings.traditional = true;
+            $.ajax({
+                type:"GET",
+                url:remoteAddress
+            }).done(function (response) {
+                        var r = $("#ajax-form" + remoteAddress.hashCode());
+                        if (!r.length)
+                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' method='post' action='" + saveAddress + "'></form>")
+                        r.html("")
+
+                        r.dialog({
+                            modal:true,
+                            width:params.width,
+                            resizable:false,
+                            buttons:{
+                                'ذخیره':function () {
+                                    if (params && params.beforeSubmit)
+                                        params.beforeSubmit();
+//                                    r.ajaxSubmit({
+//                                        url:saveAddress,
+//                                        type:"post",
+//                                        success:function (resp) {
+//                                            if (params && params.afterSave)
+//                                                params.afterSave(resp)
+//                                            if (saveCallback) {
+//                                                saveCallback(resp)
+//                                            }
+//                                        }
+//                                    })
+                                    r.submit()
+                                    $(this).dialog("close");
+                                },
+                                "انصراف":function () {
+                                    $(this).dialog("close");
+                                }
+                            },
+                            close:function () {
+                                r.html("")
+                            }
+                        })
+                        if (params && params.width) {
+                            r.dialog("option", "width", params.width)
+                            r.dialog("option", "position", "top")
+                        }
+
+                        r.append(response);
+                        if (loadCallback)
+                            loadCallback(response);
+                    });
+        }
+
+        function doSubmit() {
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
+                    '<g:createLink action="saveAmendmentPhase" controller="phase" params="[amendmentId:amendmentInstance?.id,phaseId:phaseId,status:'Pass']"/>',
+                    function () {
+                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: amendmentInstance?.id]"/>"
+                    }, undefined, {width:400})
+        }
+
+        function doReject() {
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
+                    '<g:createLink action="saveAmendmentPhase" controller="phase" params="[amendmentId:amendmentInstance?.id,phaseId:phaseId,status:'Reject']"/>',
+                    function () {
+                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: amendmentInstance?.id]"/>"
+                    }, undefined, {width:400})
+        }
+    </script>
 </head>
 
 <body>
@@ -49,9 +120,10 @@
         <div class="row">
             <div class="span2"><div id="amendmentDocument-label" class="field-label"><g:message
                     code="amendment.amendmentDocument.label" default="Amendment Document"/></div></div>
-            <a href="<g:createLink action="getDocument" params="[id:amendmentInstance?.id]"/>" target="_blank">
-                <g:if test="${amendmentInstance?.contentType?.contains("/") && amendmentInstance?.contentType[0..amendmentInstance?.contentType?.indexOf("/")-1] == 'image'}">
-                    <img src="<g:createLink action="getDocument" params="[id:amendmentInstance?.id]"/>" style="max-width: 100px;">
+            <a href="<g:createLink action="getDocument" params="[id: amendmentInstance?.id]"/>" target="_blank">
+                <g:if test="${amendmentInstance?.contentType?.contains("/") && amendmentInstance?.contentType[0..amendmentInstance?.contentType?.indexOf("/") - 1] == 'image'}">
+                    <img src="<g:createLink action="getDocument" params="[id: amendmentInstance?.id]"/>"
+                         style="max-width: 100px;">
                 </g:if>
                 <g:else>
                     ${amendmentInstance?.fileName}
@@ -60,14 +132,64 @@
         </div>
     </div>
 
+    <div style="height: 100px"></div>
+
+    <div class="row">
+        <div class="row">
+
+            <div class="span2"><div class="phase-td-head"><g:message code="phase.phase.label" default="Phase"/></div>
+            </div>
+
+            <div class="span2"><div class="phase-td-head"><g:message code="phase.status.label" default="Status"/></div>
+            </div>
+
+            <div class="span2"><div class="phase-td-head"><g:message code="phase.comment.label"
+                                                                     default="Comment"/></div></div>
+
+            <div class="span2"><div class="phase-td-head"><g:message code="phase.startdate.label"
+                                                                     default="Start Date"/></div></div>
+
+            <div class="span2"><div class="phase-td-head"><g:message code="phase.enddate.label"
+                                                                     default="End Date"/></div></div>
+
+            <div class="span1"></div>
+        </div>
+        <g:each in="${amendmentInstance?.phases?.sort { it.id }}" var="p">
+            <div class="row">
+                <div class="span1"></div>
+
+                <div class="span2"><span class="property-value-small">${p.phaseName}</span></div>
+
+                <div class="span2"><span class="property-value-small">${p.statusName}</span></div>
+
+                <div class="span2"><span class="property-value-small">${p.comment}&nbsp</span></div>
+
+                <div class="span2"><span class="property-value-small"><rg:formatJalaliDate
+                        date="${p.startDate}"/></span>
+                </div>
+
+                <div class="span2"><span class="property-value-small"><rg:formatJalaliDate date="${p.endDate}"/></span>
+                </div>
+
+                <div class="span1"></div>
+            </div>
+        </g:each>
+    </div>
+
     <g:form>
+
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${amendmentInstance?.id}"/>
-            <g:link class="edit" action="edit" id="${amendmentInstance?.id}"><g:message code="default.button.edit.label"
-                                                                                        default="Edit"/></g:link>
-            <g:actionSubmit class="delete" action="delete"
-                            value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                            onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+
+            <g:if test="${showDelete == 'True'}">
+                <g:actionSubmit class="delete" action="delete"
+                                value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
+            </g:if>
+            <g:if test="${phaseId!='-1'}">
+                <input class="btn" type="button" onclick="doSubmit()" value="Submit">
+                <input class="btn" type="button" onclick="doReject()" value="Reject">
+             </g:if>
         </fieldset>
     </g:form>
 </div>

@@ -167,6 +167,20 @@
             </g:each>
         </ul>
     </div>
+    <div class="row-fluid">
+        <ul class="thumbnails" id="amendment-container">
+            <g:each in="${contractInstance?.attachments}" var="attachment">
+                <g:if test="${attachment.status!='R'}">
+                    <g:if test="${attachment.responsible.code==user.code}">
+                        <g:render template="viewAttachment" model="[attachment:attachment]"/>
+                    </g:if>
+                    <g:else>
+                        <g:render template="showAttachment" model="[attachment:attachment]"/>
+                    </g:else>
+                </g:if>
+            </g:each>
+        </ul>
+    </div>
 
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
@@ -178,7 +192,6 @@
         </ul>
     </div>
     <div style="text-align:center ">
-
         <input class="btn" type="button" onclick="doAddAttachment()" value="Add Attachment">
         <input class="btn" type="button" onclick="doSubmit()" value="Submit">
         <g:if test="${lastPhase.phase!='BuyerBroker'}">

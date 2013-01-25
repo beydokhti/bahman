@@ -22,7 +22,7 @@ class AmendmentController {
             def user = User.findByUsername(princ.username)
             def amendmentType
             def userType
-            String createAmendment ="False"
+            String createAmendment = "False"
 
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
@@ -32,8 +32,8 @@ class AmendmentController {
                 }
 
                 String contractPhaseStatus = Contract.findByPhaseStatus(contractInstance, userType)
-                if (contractPhaseStatus=="Pass")
-                    createAmendment ="True"
+                if (contractPhaseStatus == "Pass")
+                    createAmendment = "True"
             } else if (user instanceof Customer) {
                 userType = "Finished"
             } else if (user instanceof Supplier) {
@@ -44,7 +44,7 @@ class AmendmentController {
 
 
 
-            [organization: user, contractInstance: contractInstance, userType: userType,createAmendment:createAmendment]
+            [organization: user, contractInstance: contractInstance, userType: userType, createAmendment: createAmendment]
 
         }
     }
@@ -65,6 +65,7 @@ class AmendmentController {
         def conract = Contract.get(params.contractId)
 
         amendmentInstance.amendmentDate = new Date()
+        amendmentInstance.status="Invisible"
         amendmentInstance.contractNo = conract.contractNo
         amendmentInstance.contractPartNo = conract.contractPartNo
 
@@ -82,10 +83,10 @@ class AmendmentController {
             }
         }
 
-        def userLevel=Phase.findByPhaseName(userType)
+        def userLevel = Phase.findByPhaseName(userType)
 
-        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel), comment: "ارسال اصلاحیه", organization: null, startDate: new Date(), status: "Pass").save()
-        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel+1), comment: "", organization: null, startDate: new Date(), status: "Waiting").save()
+        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel), comment: "ارسال اصلاحیه", organization: null, startDate: new Date(), status: "Pass", endDate: new Date()).save()
+        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel + 1), comment: "", organization: null, startDate: new Date(), status: "Waiting").save()
         if (!amendmentInstance.save(flush: true)) {
             render(view: "create", model: [amendmentInstance: amendmentInstance])
             return
@@ -98,14 +99,42 @@ class AmendmentController {
     }
 
     def show() {
+
         def amendmentInstance = Amendment.get(params.id)
+
         if (!amendmentInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'amendment.label', default: 'Amendment'), params.id])
             redirect(action: "list")
             return
         }
+        def showDelete = "False"
+        def phaseId="-1"
+        try {
+            def userType = ""
+            def princ = springSecurityService.getPrincipal()
+            if (princ instanceof GrailsUser) {
+                def user = User.findByUsername(princ.username)
+                if (user instanceof Broker) {
+                    if (user.brokerType == "BuyerBroker") {
+                        userType = "BuyerBroker"
+                    } else if (user.brokerType == "DealerBroker") {
+                        userType = "DealerBroker"
+                    }
+                } else if (user instanceof Supplier) {
+                    userType = "Supplier"
+                }
+            }
+            def starter = Amendment.findStarter(amendmentInstance)
+            if (starter.equals(userType))
+                showDelete = "True"
 
-        [amendmentInstance: amendmentInstance]
+            phaseId = Amendment.findSubmit(amendmentInstance ,userType)
+
+
+        } catch (Exception e) {
+
+        }
+        [amendmentInstance: amendmentInstance, showDelete: showDelete,phaseId:phaseId]
     }
 
     def edit() {
@@ -170,9 +199,9 @@ class AmendmentController {
 
     def getDocument() {
         def amendment = Amendment.get(params.id)
-        if (amendment){
+        if (amendment) {
             response.contentType = amendment.contentType
-            response.addHeader ("Content-disposition","attachment; filename=\""+amendment.fileName+"\"");
+            response.addHeader("Content-disposition", "attachment; filename=\"" + amendment.fileName + "\"");
             response.outputStream << amendment.amendmentDocument
             response.outputStream.flush()
         }

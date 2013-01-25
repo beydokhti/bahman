@@ -21,55 +21,108 @@ class PhaseController {
         [phaseInstance: new Phase(params)]
     }
 
+    def saveAmendmentPhase() {
+        def amendment = Amendment.get(params.amendmentId)
+        def prevPhase = Phase.get(params.phaseId)
+        def phaseInstance = new Phase(params)
+        prevPhase.status = params.status
+        prevPhase.endDate = new Date()
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            if (user instanceof Broker || user instanceof Supplier || user instanceof Manufacturer) {
+                prevPhase.organization = user
+            }
+        }
+        prevPhase.comment = phaseInstance.comment
+        phaseInstance.startDate = new Date()
+        phaseInstance.comment = ""
+
+        def contract = Contract.findByContractNoAndContractPartNo(amendment.contractNo, amendment.contractPartNo)
+        if (contract) {
+            if (contract.lastPhase == prevPhase.phase && params.status == 'Pass') {
+                amendment.status = "Visible"
+                phaseInstance.phase = "Finished"
+            } else {
+                if (prevPhase.phase == "BuyerBroker" && params.status == "Pass") {
+                    phaseInstance.phase = "DealerBroker"
+                }
+                if (prevPhase.phase == "DealerBroker" && params.status == "Pass") {
+                    phaseInstance.phase = "Supplier"
+                } else if (prevPhase.phase == "Supplier" && params.status == "Pass") {
+                    phaseInstance.phase = "Manufacturer"
+                } else if (prevPhase.phase == "Manufacturer" && params.status == "Pass") {
+                    phaseInstance.phase = "Finished"
+                } else if (prevPhase.phase == "Manufacturer" && params.status == "Reject") {
+                    phaseInstance.phase = "Supplier"
+                } else if (prevPhase.phase == "Supplier" && params.status == "Reject") {
+                    phaseInstance.phase = "DealerBroker"
+                } else if (prevPhase.phase == "DealerBroker" && params.status == "Reject") {
+                    phaseInstance.phase = "BuyerBroker"
+                }
+            }
+            if (phaseInstance.phase == "Finished") {
+                phaseInstance.status = "Pass"
+            } else {
+                phaseInstance.status = "Waiting"
+            }
+
+            if (!phaseInstance.save(flush: true)) {
+                return
+            }
+            prevPhase.save()
+            phaseInstance.save()
+            amendment.addToPhases(phaseInstance)
+            if (amendment.save()) {
+                render phaseInstance.id
+                redirect(controller: "amendment", action: "list", params: [id: contract.id])
+            }
+
+        }
+    }
+
     def save() {
         def prevPhase = Phase.get(params.phaseId)
-        prevPhase.status=params.status
-        prevPhase.endDate= new Date()
+        prevPhase.status = params.status
+        prevPhase.endDate = new Date()
         def phaseInstance = new Phase(params)
 
-        phaseInstance.startDate=new Date()
-        if (prevPhase.phase=="BuyerBroker" && params.status=="Pass")  {
-            phaseInstance.phase="DealerBroker"
-         }
-        if (prevPhase.phase=="DealerBroker" && params.status=="Pass")  {
-            phaseInstance.phase="Supplier"
+        phaseInstance.startDate = new Date()
+        if (prevPhase.phase == "BuyerBroker" && params.status == "Pass") {
+            phaseInstance.phase = "DealerBroker"
         }
-        else if(prevPhase.phase=="Supplier" && params.status=="Pass") {
-            phaseInstance.phase="Manufacturer"
-        }
-        else if(prevPhase.phase=="Manufacturer" && params.status=="Pass") {
-            phaseInstance.phase="Finished"
-        }
-        else if(prevPhase.phase=="Manufacturer" && params.status=="Reject") {
-            phaseInstance.phase="Supplier"
-        }
-        else if(prevPhase.phase=="Supplier" && params.status=="Reject") {
-            phaseInstance.phase="DealerBroker"
-        }
-        else if(prevPhase.phase=="DealerBroker" && params.status=="Reject") {
-            phaseInstance.phase="BuyerBroker"
+        if (prevPhase.phase == "DealerBroker" && params.status == "Pass") {
+            phaseInstance.phase = "Supplier"
+        } else if (prevPhase.phase == "Supplier" && params.status == "Pass") {
+            phaseInstance.phase = "Manufacturer"
+        } else if (prevPhase.phase == "Manufacturer" && params.status == "Pass") {
+            phaseInstance.phase = "Finished"
+        } else if (prevPhase.phase == "Manufacturer" && params.status == "Reject") {
+            phaseInstance.phase = "Supplier"
+        } else if (prevPhase.phase == "Supplier" && params.status == "Reject") {
+            phaseInstance.phase = "DealerBroker"
+        } else if (prevPhase.phase == "DealerBroker" && params.status == "Reject") {
+            phaseInstance.phase = "BuyerBroker"
         }
 //        else if(prevPhase.phase=="BuyerBroker" && params.status=="Reject") {
 //            phaseInstance.phase="DealerBroker"
 //        }
-        if (phaseInstance.phase=="Finished"){
-            phaseInstance.status="Pass"
-        }else{
-            phaseInstance.status="Waiting"
+        if (phaseInstance.phase == "Finished") {
+            phaseInstance.status = "Pass"
+        } else {
+            phaseInstance.status = "Waiting"
         }
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
-            def org
-            if (user instanceof Broker || user instanceof Supplier ||user instanceof Manufacturer ){
-                phaseInstance.organization=user
+            if (user instanceof Broker || user instanceof Supplier || user instanceof Manufacturer) {
+                prevPhase.organization = user
             }
 
         }
-        prevPhase.organization=phaseInstance.organization
-        phaseInstance.organization=null
-        prevPhase.comment=phaseInstance.comment
-        phaseInstance.comment=""
+//        prevPhase.organization = phaseInstance.organization
+        prevPhase.comment = phaseInstance.comment
+        phaseInstance.comment = ""
         prevPhase.save()
         if (!phaseInstance.save(flush: true)) {
 //            render(view: "create", model: [phaseInstance: phaseInstance])
@@ -77,11 +130,11 @@ class PhaseController {
         }
         def contract = Contract.get(params.contractId)
         contract.addToPhases(phaseInstance)
-        if (contract.save()){
-//            render phaseInstance.id
-//            redirect( controller: "contract",action: "showPhase", params: [id: contract.id])
+        if (contract.save()) {
+            render phaseInstance.id
+            redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
         }
-        render 0
+//        render 0
     }
 
     def show() {
@@ -154,6 +207,7 @@ class PhaseController {
             redirect(action: "show", id: params.id)
         }
     }
+
     def form() {
         def phaseInstance = new Phase()
         render(template: 'form', model: [phaseInstance: phaseInstance])
