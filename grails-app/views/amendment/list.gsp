@@ -24,7 +24,7 @@
     <rg:grid domainClass="${bahman.Amendment}"
              caption="${message(code: "amendment-list")}"
              maxColumns="5"
-             columns="[[name: 'amendmentDate'], [name: 'fileName'], [name: 'phases', expression: 'obj.phases?.sort{it.startDate}?.last()?.phase'], [name: 'contractNo'], [name: 'contractPartNo']]">
+             columns="[[name: 'amendmentDate'], [name: 'fileName'], [name: 'phases', expression: 'obj.phases?.sort{it.startDate}?.last()?.phase'],[name: 'status', expression: 'obj.phases?.sort{it.startDate}?.last()?.status'], [name: 'contractNo'], [name: 'contractPartNo']]">
         <rg:criteria>
             <rg:eq name="contractNo" value="${contractInstance.contractNo}"/>
             <rg:eq name="contractPartNo" value="${contractInstance.contractPartNo}"/>

@@ -61,6 +61,7 @@ class PhaseController {
                 if (contract.lastPhase == prevPhase.phase && params.status == 'Pass') {
                     amendment.status = "Visible"
                     phaseInstance.phase = "Finished"
+                    phaseInstance.status = params.status
                 } else {
                     if (prevPhase.phase == "BuyerBroker" && params.status == "Pass") {
                         phaseInstance.phase = "DealerBroker"
@@ -71,16 +72,19 @@ class PhaseController {
                         phaseInstance.phase = "Manufacturer"
                     } else if (prevPhase.phase == "Manufacturer" && params.status == "Pass") {
                         phaseInstance.phase = "Finished"
-                    } else if (prevPhase.phase == "Manufacturer" && params.status == "Reject") {
-                        phaseInstance.phase = "Supplier"
-                    } else if (prevPhase.phase == "Supplier" && params.status == "Reject") {
-                        phaseInstance.phase = "DealerBroker"
-                    } else if (prevPhase.phase == "DealerBroker" && params.status == "Reject") {
-                        phaseInstance.phase = "BuyerBroker"
+//                    } else if (prevPhase.phase == "Manufacturer" && params.status == "Reject") {
+//                        phaseInstance.phase = "Supplier"
+//                    } else if (prevPhase.phase == "Supplier" && params.status == "Reject") {
+//                        phaseInstance.phase = "DealerBroker"
+//                    } else if (prevPhase.phase == "DealerBroker" && params.status == "Reject") {
+//                        phaseInstance.phase = "BuyerBroker"
+//                    }
+                    }else if(params.status == "Reject") {
+                        phaseInstance.phase = "Finished"
                     }
                 }
                 if (phaseInstance.phase == "Finished") {
-                    phaseInstance.status = "Pass"
+                    phaseInstance.status = params.status
                 } else {
                     phaseInstance.status = "Waiting"
                 }
