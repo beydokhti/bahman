@@ -180,7 +180,15 @@
                 </ul>
             </div>
         %{--</div>--}%
-
+    <div class="row-fluid">
+        <ul class="thumbnails" id="amendment-container">
+            <g:each in="${contractInstance?.amendments}" var="amendment">
+                <g:if test="${amendment.status=='Visible'}">
+                    <g:render template="showAmendment" model="[amendment:amendment]"/>
+                </g:if>
+            </g:each>
+        </ul>
+    </div>
         %{--<div class="span6">--}%
             <div class="row-fluid">
                 <ul class="thumbnails" id="draft-container">
