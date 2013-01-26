@@ -8,11 +8,11 @@ class Amendment {
     String comment
     String contractNo
     String contractPartNo
-    String dealerBroker
-    String buyerBroker
-    String supplier
-    String manufacturer
-    String finished
+//    String dealerBroker
+//    String buyerBroker
+//    String supplier
+//    String manufacturer
+//    String finished
     String fileName
     String contentType
     String status
@@ -26,11 +26,11 @@ class Amendment {
         phases(nullable: true)
         contractNo(nullable: false, maxSize: 50)
         contractPartNo(nullable: false, maxSize: 50)
-        dealerBroker(nullable:true, inList: ['N', 'Y'])
-        buyerBroker(nullable: true, inList: ['N', 'Y'])
-        supplier(nullable: true, inList: ['N', 'Y'])
-        manufacturer(nullable: true, inList: ['N', 'Y'])
-        finished(nullable: true, inList: ['N', 'Y'])
+//        dealerBroker(nullable:true, inList: ['N', 'Y'])
+//        buyerBroker(nullable: true, inList: ['N', 'Y'])
+//        supplier(nullable: true, inList: ['N', 'Y'])
+//        manufacturer(nullable: true, inList: ['N', 'Y'])
+//        finished(nullable: true, inList: ['N', 'Y'])
         amendmentDocument(nullable: true, maxSize: 5000000)
         comment(nullable: true, maxSize: 4000, widget: 'textarea')
         contentType(nullable: true, maxSize: 256)
