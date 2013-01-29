@@ -67,6 +67,7 @@
         </g:else>
         <div class="caption">
             <p id="desc_${attachment?.id}">${attachment?.description}</p>
+            <p id="date_${attachment?.id}"><rg:formatJalaliDate date="${attachment?.uploadDate}"/></p>
 
             <p>
                 <a class="btn btn-primary" href="#" onclick="doDeleteAttachment(${attachment?.id})"><g:message

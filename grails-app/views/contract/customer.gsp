@@ -23,7 +23,7 @@
         <rg:filterGrid grid="ContractGrid" />
     </rg:criteria>
     <rg:grid domainClass="${bahman.Contract}"
-    columns="[[name:'contractNo'],[name:'contractPartNo'],[name:'buyerBrokerDesc'],[name:'dealerBrokerDesc']]"
+             columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
     >
         <rg:criteria>
             <rg:eq name="customerCode" value="${customer?.code}"/>

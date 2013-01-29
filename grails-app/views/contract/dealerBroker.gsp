@@ -6,39 +6,11 @@
     <g:set var="entityName" value="${message(code: 'contract.label', default: 'Contract')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
 <script type="text/javascript">
-    $('.nav li a').click(function(e) {
-        var $this = $(this);
-        if (!$this.hasClass('active')) {
-            $this.addClass('active');
-        }
-        var $content
-        if ($this.name=="rAm"){
-            $content=$("#rA")
-        }
-        if ($this.name=="rBm"){
-            $content=$("#rB")
-        }
-        if ($this.name=="rCm"){
-            $content=$("#rC")
-        }
-        if (!$content.hasClass('active')) {
-            $content.addClass('active');
-        }
-        e.preventDefault();
-    });
-
-//    $(document).ready(function() {
-//        var $content=$("#rB")
-//        if ($content.hasClass('active')) {
-//            $content.removeClass('active');
-//              $content.addClass('displayNone')
-//        }
-//        $content=$("#rC")
-//        if ($content.hasClass('active')) {
-//            $content.removeClass('active');
-//        }
-//    });
+    $(function(){
+        $(".tab-pane").removeClass("active").first().addClass("active")
+    })
 </script>
+</head>
 <body>
 <div class="nav" role="navigation">
     <ul>
@@ -50,14 +22,17 @@
 
     <div class="tabbable tabs-right">
         <ul class="nav nav-tabs">
-            <li class="active" name="rAm">
-                <a data-toggle="tab" href="#rA">Section 1</a>
+            <li class="active" >
+                <a data-toggle="tab" href="#rA"><g:message code="contract.confirm.label" default="در انتظار تایید"></g:message> </a>
             </li>
-            <li class="" name="rBm">
-                <a data-toggle="tab" href="#rB">Section 2</a>
+            <li class="">
+                <a data-toggle="tab" href="#rB"><g:message code="contract.others.label" default="مابقی "></g:message></a>
             </li>
-            <li class="" name="rCm">
-                <a data-toggle="tab" href="#rC">Section 3</a>
+            <li class="">
+                <a data-toggle="tab" href="#rC"><g:message code="contract.finished.label" default=" تحویل شده"></g:message></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#rD"><g:message code="contract.amendment.label" default="اصلاحیه"></g:message></a>
             </li>
         </ul>
 
@@ -75,7 +50,7 @@
                     <rg:eq name='m.phase' value='DealerBroker' hidden="true"/>
                     <rg:filterGrid grid="ContractGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
-                <rg:grid domainClass="${bahman.Contract}" caption="در انتظار تایید"
+                <rg:grid domainClass="${bahman.Contract}"
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
@@ -96,8 +71,8 @@
                     <rg:like name="customerDesc"/>
                     <rg:eq name="dealerBrokerCode" value="${organization?.code}" hidden="true"/>
                     <rg:alias name='phases' value='m'/>
-                    <rg:ne name='m.status' value='Waiting' hidden="true"/>
-                    <rg:eq name='m.phase' value='DealerBroker' hidden="true"/>
+                    <rg:eq name='m.status' value='Waiting' hidden="true"/>
+                    <rg:ne name='m.phase' value='DealerBroker' hidden="true"/>
                     <rg:filterGrid grid="ContractRejectGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Reject" caption="مابقی قرارداد ها"
@@ -155,7 +130,32 @@
                     </rg:criteria>
                 </rg:grid>
 
+
             </div>
+
+            <div id="rD" class="tab-pane active">
+                <rg:criteria inline='true'>
+                    <rg:like name="contractNo"/>
+                    <rg:like name="contractPartNo"/>
+                    <rg:like name="buyerBrokerDesc"/>
+                    <rg:like name="customerDesc"/>
+                    <rg:eq name="dealerBrokerCode" value="${organization?.code}" hidden="true"/>
+                    <rg:isNotEmpty name="amendments"></rg:isNotEmpty>
+                    %{--<rg:isNotEmpty name="amendments"/>--}%
+                    <rg:filterGrid grid="ContractAmendmentGrid" label="${message(code: "search")}"/>
+                </rg:criteria>
+                <rg:grid domainClass="${bahman.Contract}" idPostfix="Amendment" caption="قراردادهای تحویل شده"
+                         columns="[[name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
+                    <rg:criteria>
+                        <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
+                        <rg:isNotEmpty name="amendments"></rg:isNotEmpty>
+                        %{--<rg:alias name='phases' value='m'/>--}%
+                        %{--<rg:eq name='m.phase' value='Finished'/>--}%
+                    </rg:criteria>
+                </rg:grid>
+
+            </div>
+
         </div>
     </div>
 
