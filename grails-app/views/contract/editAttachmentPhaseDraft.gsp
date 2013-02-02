@@ -37,7 +37,7 @@
                                 'ذخیره':function () {
                                     if (params && params.beforeSubmit)
                                         params.beforeSubmit();
-                                    if((params.confirm=='Y' && confirm("<g:message code="are-you-sure" />"))||params.confirm=='N' ){
+                                    if((params.confirm=='Y' && confirm("<g:message code="are-you-sure-sms" />"))||params.confirm=='N' ){
                                     r.ajaxSubmit({
                                         url:saveAddress,
                                         type:"post",
@@ -119,11 +119,11 @@
 </head>
 
 <body>
-<div class="nav" role="navigation">
-    <ul>
-        <li><g:link action="show" controller="contract" contractInstance="${contractInstance}"><g:message code="default.show.label"/></g:link></li>
-    </ul>
-</div>
+%{--<div class="nav" role="navigation">--}%
+    %{--<ul>--}%
+        %{--<li><g:link action="show" controller="contract" contractInstance="${contractInstance}"><g:message code="default.show.label"/></g:link></li>--}%
+    %{--</ul>--}%
+%{--</div>--}%
 <div id="list-attachment" ng-controller="attachmentController" class="content scaffold-list" role="main">
     <rg:dialog id="attachment" title="Attachment Form">
 
@@ -133,36 +133,54 @@
     </rg:dialog>
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
     %{--<input name>contract--}%
-    <table>
-        <tr>
-            <td class="detail-td-attach">
-                <div class="detail-property-list">
+    <div class="row">
+        <div class="span4">
+            <div class="detail-property-list">
 
-                    <div class="detailcontain">
-                        <span id="contractNo-label" class="property-label-small"><g:message
-                                code="contract.contractNo.label" default="Contract No"/></span>
+                <div class="detailcontain">
+                    <span id="contractNo-label" class="property-label-small"><g:message
+                            code="contract.contractNo.label" default="Contract No"/></span>
 
-                        <span class="property-value-small" aria-labelledby="contractNo-label"><g:fieldValue
-                                bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
-                                                                                              field="contractPartNo"/></span>
-                    </div>
+                    <span class="property-value-small" aria-labelledby="contractNo-label"><g:fieldValue
+                            bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
+                                                                                          field="contractPartNo"/></span>
                 </div>
-            </td>
+            </div>
 
-            <td class="detail-td">
-                <div class="detail-property-list">
+        </div>
 
-                    <div class="detailcontain">
-                        <span id="customerDesc-label" class="property-label-small"><g:message
-                                code="contract.customerDesc.label" default="Customer Desc"/></span>
+        <div class="span4">
+            <div class="detail-property-list">
 
-                        <span class="property-value-small" aria-labelledby="customerDesc-label"><g:fieldValue
-                                bean="${contractInstance}" field="customerDesc"/></span>
-                    </div>
+                <div class="detailcontain">
+                    <span id="customerDesc-label" class="property-label-small"><g:message
+                            code="contract.customerDesc.label" default="Customer Desc"/></span>
+
+                    <span class="property-value-small" aria-labelledby="customerDesc-label"><g:fieldValue
+                            bean="${contractInstance}" field="customerDesc"/></span>
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+
+        </div>
+
+        <div class="span4">
+            <div class="detail-property-list">
+
+                <div class="detailcontain">
+                    <span id="draft-label" class="property-label-small"><g:message
+                            code="contract.draft.label" default="Draft"/></span>
+
+                    <g:each in="${contractInstance?.drafts}" var="drafts">
+                        <g:if test="${drafts?.status != 'R'}">
+                            <span class="property-value-small"
+                                  aria-labelledby="customerDesc-label">${drafts?.description}</span>
+                        </g:if>
+                    </g:each>
+                </div>
+            </div>
+
+        </div>
+    </div>
     %{--<div class="row">--}%
         %{--<div class="span6">--}%
             <div class="row-fluid">

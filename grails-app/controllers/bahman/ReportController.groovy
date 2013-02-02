@@ -7,7 +7,8 @@ class ReportController {
     }
 
     def contract() {
-        def contractInstance=new Contract()
-        [contractInstance:contractInstance]
+    }
+
+    def product() {
     }
 }

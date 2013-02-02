@@ -29,6 +29,13 @@
                 <g:message code="report.search.label" default="Search Contract"/>
             </a>
         </div>
+        <div style="height: 150px">
+            <a href="<g:createLink action="product" controller="report"/>">
+                <img src="${resource(dir: "images", file: "search.png")} ">
+                <g:message code="report.product.label" default="Search Contract"/>
+            </a>
+        </div>
+
     </div>
 </div>
 </body>
