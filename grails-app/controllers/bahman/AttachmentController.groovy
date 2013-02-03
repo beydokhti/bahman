@@ -128,10 +128,11 @@ class AttachmentController {
                 msg = msg + attachmentInstance.description + message(code: "sms.smsMsg4")
                 smsService.sendSms(msg, customer.mobileNo)
             }
-            if (params.attr == "Attachment")
-                render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance, type: 'Draft'])
-            else
-                render attachmentInstance as JSON
+//            if (params.attr == "Attachment")
+//                render(template: "../contract/viewAttachment", model: [attachment: attachmentInstance, type: 'Draft'])
+//            else
+//                render attachmentInstance as JSON
+            redirect(controller: params.rcontroller, action: params.raction, id: params.redirectId)
         }
 
     }

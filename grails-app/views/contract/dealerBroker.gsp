@@ -26,13 +26,16 @@
                 <a data-toggle="tab" href="#rA"><g:message code="contract.confirm.label" default="در انتظار تایید"></g:message> </a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#rB"><g:message code="contract.others.label" default="مابقی "></g:message></a>
+                <a data-toggle="tab" href="#rB"><g:message code="contract.others.label" default="در حال انجام"></g:message></a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#rC"><g:message code="contract.finished.label" default=" تحویل شده"></g:message></a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#rD"><g:message code="contract.amendment.label" default="اصلاحیه"></g:message></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#rE"><g:message code="contract.sent.label" default="ارسالی"></g:message></a>
             </li>
         </ul>
 
@@ -50,7 +53,7 @@
                     <rg:eq name='m.phase' value='DealerBroker' hidden="true"/>
                     <rg:filterGrid grid="ContractGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
-                <rg:grid domainClass="${bahman.Contract}"
+                <rg:grid domainClass="${bahman.Contract}"  caption="در انتظار تایید"
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
@@ -75,7 +78,7 @@
                     <rg:ne name='m.phase' value='DealerBroker' hidden="true"/>
                     <rg:filterGrid grid="ContractRejectGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
-                <rg:grid domainClass="${bahman.Contract}" idPostfix="Reject" caption="مابقی قرارداد ها"
+                <rg:grid domainClass="${bahman.Contract}" idPostfix="Reject" caption="در حال انجام"
                          columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
@@ -121,7 +124,7 @@
                     <rg:eq name='m.phase' value='Finished' hidden="true"/>
                     <rg:filterGrid grid="ContractFinishedGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
-                <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="قراردادهای تحویل شده"
+                <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="تحویل شده"
                          columns="[[name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
@@ -144,7 +147,7 @@
                     %{--<rg:isNotEmpty name="amendments"/>--}%
                     <rg:filterGrid grid="ContractAmendmentGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
-                <rg:grid domainClass="${bahman.Contract}" idPostfix="Amendment" caption="قراردادهای تحویل شده"
+                <rg:grid domainClass="${bahman.Contract}" idPostfix="Amendment" caption="اصلاحیه"
                          columns="[[name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
@@ -155,6 +158,32 @@
                 </rg:grid>
 
             </div>
+
+            <div id="rE" class="tab-pane active" >
+
+                <rg:criteria inline='true'>
+                    <rg:like name="contractNo"/>
+                    <rg:like name="contractPartNo"/>
+                    <rg:like name="buyerBrokerDesc"/>
+                    <rg:like name="customerDesc"/>
+                    <rg:eq name="dealerBrokerCode" value="${organization?.code}" hidden="true"/>
+                    <rg:alias name='phases' value='m'/>
+                    <rg:eq name='m.status' value='Pass' hidden="true"/>
+                    <rg:eq name='m.phase' value='DealerBroker' hidden="true"/>
+                    <rg:filterGrid grid="ContractSentGrid" label="${message(code: "search")}"/>
+                </rg:criteria>
+                <rg:grid domainClass="${bahman.Contract}" idPostfix="Sent" caption="ارسالی"
+                         columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
+                    <rg:criteria>
+                        <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
+                        <rg:alias name='phases' value='m'/>
+                        <rg:eq name='m.status' value='Pass'/>
+                        <rg:eq name='m.phase' value='DealerBroker'/>
+                    </rg:criteria>
+                </rg:grid>
+
+            </div>
+
 
         </div>
     </div>

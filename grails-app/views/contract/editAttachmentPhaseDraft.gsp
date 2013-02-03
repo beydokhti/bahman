@@ -26,7 +26,7 @@
             }).done(function (response) {
                         var r = $("#ajax-form" + remoteAddress.hashCode());
                         if (!r.length)
-                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' action='" + saveAddress + "'></form>")
+                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' method='post' action='" + saveAddress + "'></form>")
                         r.html("")
 
                         r.dialog({
@@ -37,19 +37,18 @@
                                 'ذخیره':function () {
                                     if (params && params.beforeSubmit)
                                         params.beforeSubmit();
-                                    if((params.confirm=='Y' && confirm("<g:message code="are-you-sure-sms" />"))||params.confirm=='N' ){
-                                    r.ajaxSubmit({
-                                        url:saveAddress,
-                                        type:"post",
-                                        success:function (resp) {
-                                            if (params && params.afterSave)
-                                                params.afterSave(resp)
-                                            if (saveCallback) {
-                                                saveCallback(resp)
-                                            }
-                                        }
-                                    })
-                                    }
+//                                    r.ajaxSubmit({
+//                                        url:saveAddress,
+//                                        type:"post",
+//                                        success:function (resp) {
+//                                            if (params && params.afterSave)
+//                                                params.afterSave(resp)
+//                                            if (saveCallback) {
+//                                                saveCallback(resp)
+//                                            }
+//                                        }
+//                                    })
+                                    r.submit()
                                     $(this).dialog("close");
                                 },
                                 "انصراف":function () {
@@ -70,12 +69,13 @@
                             loadCallback(response);
                     });
         }
+
         function doSubmit() {
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
                     '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Pass']"/>',
                     function () {
                         window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance?.id]"/>"
-                    }, undefined, {width:400,confirm:'N'})
+                    }, undefined, {width:400})
         }
 
         function doReject() {
@@ -83,23 +83,15 @@
                     '<g:createLink action="save" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Reject']"/>',
                     function () {
                         window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance?.id]"/>"
-                    }, undefined, {width:400,confirm:'N'})
+                    }, undefined, {width:400})
         }
         function doAddAttachment(){
 
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                    '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment']"/>',
+                    '<g:createLink action="save" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'editAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))
-                    }, undefined, {width:400,confirm:'N'})
-        }
-        function doAddDraft(){
-
-            loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                    '<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment']"/>',
-                    function (res) {
-                        $("#attachment-container").append($(res))
-                    }, undefined, {width:400,confirm:'Y'})
+                    }, undefined, {width:400})
         }
         function doDeleteAttachment(id){
             if(confirm("<g:message code="are-you-sure" />")){
@@ -110,10 +102,19 @@
                         contractId:${contractInstance?.id}
                     }
                 }).success(function(data){
-                    $("#main_"+id).remove()
-                })
+                            $("#main_"+id).remove()
+                        })
             }
         }
+        function doAddDraft(){
+
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
+                    '<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'editAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
+                    function (res) {
+                        $("#attachment-container").append($(res))
+                    }, undefined, {width:400,confirm:'Y'})
+        }
+
 
 </script>
 </head>
@@ -226,10 +227,10 @@
     %{--</div>--}%
     <div style="text-align:center ">
 
-        <input class="btn" type="button" onclick="doAddAttachment()" value="Add Attachment">
-        <input class="btn" type="button" onclick="doAddDraft()" value="Add Draft">
-        <input class="btn" type="button" onclick="doSubmit()" value="Submit">
-        <input class="btn" type="button" onclick="doReject()" value="Reject">
+        <input class="btn" type="button" onclick="doAddAttachment()" value="${message(code:'button.add.Attachment', default:'Add Attachment' )}">
+        <input class="btn" type="button" onclick="doAddDraft()" value="${message(code:'button.add.draft', default:'Add Draft' )}">
+        <input class="btn" type="button" onclick="doSubmit()" value="${message(code:'button.submit', default:'Submit')}">
+        <input class="btn" type="button" onclick="doReject()" value="${message(code:'button.reject', default:'Reject')}">
     </div>
 
 </div>

@@ -206,10 +206,10 @@
         </ul>
     </div>
     <div style="text-align:center ">
-        <input class="btn" type="button" onclick="doAddAttachment()" value="Add Attachment">
-        <input class="btn" type="button" onclick="doSubmit()" value="Submit">
+        <input class="btn" type="button" onclick="doAddAttachment()" value="${message(code:'button.add.Attachment', default:'Add Attachment' )}">
+        <input class="btn" type="button" onclick="doSubmit()" value="${message(code:'button.submit', default:'Submit')}">
         <g:if test="${lastPhase.phase!='BuyerBroker'}">
-            <input class="btn" type="button" onclick="doReject()" value="Reject">
+            <input class="btn" type="button" onclick="doReject()" value="${message(code:'button.reject', default:'Reject')}">
         </g:if>
     </div>
 

@@ -50,6 +50,9 @@
                 <a data-toggle="tab" href="#rD"><g:message code="contract.amendment.label"
                                                            default="اصلاحیه"></g:message></a>
             </li>
+            <li class="">
+                <a data-toggle="tab" href="#rE"><g:message code="contract.sent.label" default="ارسالی"></g:message></a>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -67,7 +70,8 @@
                     <rg:eq name='m.phase' value='Supplier' hidden="true"/>
                     <rg:filterGrid grid="ContractGrid"/>
                 </rg:criteria>
-                <rg:grid domainClass="${bahman.Contract}" columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
+                <rg:grid domainClass="${bahman.Contract}" caption="در انتظار تایید"
+                         columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
                     <rg:criteria>
                         <rg:eq name="supplierCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -163,6 +167,30 @@
                 </rg:grid>
             </div>
 
+            <div id="rE" class="tab-pane active" >
+
+                <rg:criteria inline='true'>
+                    <rg:like name="contractNo"/>
+                    <rg:like name="contractPartNo"/>
+                    <rg:like name="buyerBrokerDesc"/>
+                    <rg:like name="customerDesc"/>
+                    <rg:eq name="supplierCode" value="${organization?.code}" hidden="true"/>
+                    <rg:alias name='phases' value='m'/>
+                    <rg:eq name='m.status' value='Pass' hidden="true"/>
+                    <rg:eq name='m.phase' value='Supplier' hidden="true"/>
+                    <rg:filterGrid grid="ContractSentGrid" label="${message(code: "search")}"/>
+                </rg:criteria>
+                <rg:grid domainClass="${bahman.Contract}" idPostfix="Sent" caption="ارسالی"
+                         columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
+                    <rg:criteria>
+                        <rg:eq name="supplierCode" value="${organization?.code}"/>
+                        <rg:alias name='phases' value='m'/>
+                        <rg:eq name='m.status' value='Pass'/>
+                        <rg:eq name='m.phase' value='Supplier'/>
+                    </rg:criteria>
+                </rg:grid>
+
+            </div>
         </div>
     </div>
 </body>
