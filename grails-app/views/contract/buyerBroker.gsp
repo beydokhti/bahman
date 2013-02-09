@@ -62,7 +62,9 @@
                     <rg:filterGrid grid="ContractGrid" label="search"/>
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}"  caption="در انتظار تایید"
-                         columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]"
+                         columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
+                                 [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
+                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]"
                          >
                     <rg:criteria>
                         <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
@@ -110,7 +112,14 @@
                     <rg:filterGrid grid="ContractAllGrid" label="search"/>
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="All"
-                         columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]"
+                         columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'],
+                                 [name: 'contractNo'],
+                                 [name: 'contractPartNo'],
+                                 [name: 'buyerBrokerDesc'],
+                                 [name: 'dealerBrokerDesc'],
+                                 [name: 'customerDesc'],
+                                 [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
+                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]"
                          >
                     <rg:criteria>
                         <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
@@ -133,7 +142,9 @@
                     <rg:filterGrid grid="ContractFinishedGrid" label="search"/>
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished"
-                         columns="[[name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
+                         columns="[[name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'],
+                                 [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
+                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
                     <rg:criteria>
                         <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -155,7 +166,11 @@
                     <rg:filterGrid grid="ContractAmendmentGrid" label="search"/>
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Amendment"
-                         columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]"
+                         columns="[[name: 'prevStatus', expression: 'g.message([code: obj.prevStatus])'],
+                                 [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'],
+                                 [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
+                                 [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
+                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]"
                          >
                     <rg:criteria>
                         <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
@@ -181,7 +196,11 @@
                     <rg:filterGrid grid="ContractSentGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Sent" caption="ارسالی"
-                         columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc']]">
+                         columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'],
+                                 [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'],
+                                 [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
+                                 [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
+                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
                     <rg:criteria>
                         <rg:eq name="buyerBrokerCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>

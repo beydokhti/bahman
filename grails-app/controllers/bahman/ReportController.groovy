@@ -11,4 +11,13 @@ class ReportController {
 
     def product() {
     }
+
+    def searchAll(){
+//        def reportParams =[:]
+        [reportParams:params]
+    }
+
+    def showSearchAllReport(){
+        redirect(action: "searchAll", params: params)
+    }
 }

@@ -65,9 +65,9 @@ class BootStrap {
 
         def contract1 = new Contract(contractNo: "1391193129",
                 contractPartNo: "1",
-                contractDate: new Date('1391/09/22'),
-                allotmentDate: new Date('1391/09/22'),
-                settlementDeadline: new Date('1391/09/27'),
+                contractDate: new Date(),
+                allotmentDate: new Date(),
+                settlementDeadline: new Date(),
                 settlementType: "نقدي",
                 dealerBrokerDesc: "بهمن",
                 buyerBrokerDesc: "بانک کشاورزي",
@@ -77,7 +77,7 @@ class BootStrap {
                 totalShipments: "30",
                 price: "2570",
                 contractType: "نقدي",
-                deliveryDate: new Date('1391/09/27'),
+                deliveryDate: new Date(),
                 manufacturerDesc: "پالايشگاه تبريز",
                 deliveryPlace: "انبار کارخانه",
                 productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
@@ -90,10 +90,10 @@ class BootStrap {
                 customerCode: "11140",
                 supplierCode: "359",
                 boursePrice: "2570",
-                settlementDate: new Date('1391/09/29'),
+                settlementDate: new Date(),
                 contractID: "102419312900164",
-                releaseDate: new Date('1391/09/22'),
-                importDate: new Date('1391/09/22'),
+                releaseDate: new Date(),
+                importDate: new Date(),
 //                settlementCertificate:attachment
         ).save()
 
@@ -102,9 +102,9 @@ class BootStrap {
         contract1.save()
         def contract2 = new Contract(contractNo: "1391193129",
                 contractPartNo: "2",
-                contractDate: new Date('1391/09/22'),
-                allotmentDate: new Date('1391/09/22'),
-                settlementDeadline: new Date('1391/09/27'),
+                contractDate: new Date(),
+                allotmentDate: new Date(),
+                settlementDeadline: new Date(),
                 settlementType: "نقدي",
                 dealerBrokerDesc: "بهمن",
                 buyerBrokerDesc: "بانک کشاورزي",
@@ -114,7 +114,7 @@ class BootStrap {
                 totalShipments: "30",
                 price: "2570",
                 contractType: "نقدي",
-                deliveryDate: new Date('1391/09/27'),
+                deliveryDate: new Date(),
                 manufacturerDesc: "پالايشگاه تبريز",
                 deliveryPlace: "انبار کارخانه",
                 productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
@@ -127,10 +127,10 @@ class BootStrap {
                 customerCode: "11140",
                 supplierCode: "359",
                 boursePrice: "2570",
-                settlementDate: new Date('1391/09/29'),
+                settlementDate: new Date(),
                 contractID: "102419312900164",
-                releaseDate: new Date('1391/09/22'),
-                importDate: new Date('1391/09/22'),
+                releaseDate: new Date(),
+                importDate: new Date(),
 //                settlementCertificate:attachment
         ).save()
 
@@ -140,9 +140,9 @@ class BootStrap {
 
         def contract3 = new Contract(contractNo: "1391193129",
                 contractPartNo: "3",
-                contractDate: new Date('1391/09/22'),
-                allotmentDate: new Date('1391/09/22'),
-                settlementDeadline: new Date('1391/09/27'),
+                contractDate: new Date(),
+                allotmentDate: new Date(),
+                settlementDeadline: new Date(),
                 settlementType: "نقدي",
                 dealerBrokerDesc: "بهمن",
                 buyerBrokerDesc: "بانک کشاورزي",
@@ -152,7 +152,7 @@ class BootStrap {
                 totalShipments: "30",
                 price: "2570",
                 contractType: "نقدي",
-                deliveryDate: new Date('1391/09/27'),
+                deliveryDate: new Date(),
                 manufacturerDesc: "پالايشگاه تبريز",
                 deliveryPlace: "انبار کارخانه",
                 productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
@@ -165,10 +165,10 @@ class BootStrap {
                 customerCode: "11140",
                 supplierCode: "359",
                 boursePrice: "2570",
-                settlementDate: new Date('1391/09/29'),
+                settlementDate: new Date(),
                 contractID: "102419312900164",
-                releaseDate: new Date('1391/09/22'),
-                importDate: new Date('1391/09/22'),
+                releaseDate: new Date(),
+                importDate: new Date(),
 //                settlementCertificate:attachment
         ).save()
 
@@ -179,9 +179,9 @@ class BootStrap {
 
         def contract4 = new Contract(contractNo: "1391193129",
                 contractPartNo: "4",
-                contractDate: new Date('1391/09/22'),
-                allotmentDate: new Date('1391/09/22'),
-                settlementDeadline: new Date('1391/09/27'),
+                contractDate: new Date(),
+                allotmentDate: new Date(),
+                settlementDeadline: new Date(),
                 settlementType: "نقدي",
                 dealerBrokerDesc: "بهمن",
                 buyerBrokerDesc: "بانک کشاورزي",
@@ -191,7 +191,7 @@ class BootStrap {
                 totalShipments: "30",
                 price: "2570",
                 contractType: "نقدي",
-                deliveryDate: new Date('1391/09/27'),
+                deliveryDate: new Date(),
                 manufacturerDesc: "پالايشگاه تبريز",
                 deliveryPlace: "انبار کارخانه",
                 productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
@@ -204,10 +204,10 @@ class BootStrap {
                 customerCode: "11140",
                 supplierCode: "359",
                 boursePrice: "2570",
-                settlementDate: new Date('1391/09/29'),
+                settlementDate: new Date(),
                 contractID: "102419312900164",
-                releaseDate: new Date('1391/09/22'),
-                importDate: new Date('1391/09/22'),
+                releaseDate: new Date(),
+                importDate: new Date(),
 //                settlementCertificate:attachment
         ).save()
 

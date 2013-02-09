@@ -23,19 +23,25 @@
     <div class="span9">
         <div style="height: 70px"> </div>
 
-        <div style="height: 150px">
-            <a href="<g:createLink action="contract" controller="report"/>">
-                <img src="${resource(dir: "images", file: "search.png")} ">
-                <g:message code="report.search.label" default="Search Contract"/>
-            </a>
-        </div>
-        <div style="height: 150px">
-            <a href="<g:createLink action="product" controller="report"/>">
-                <img src="${resource(dir: "images", file: "search.png")} ">
-                <g:message code="report.product.label" default="Search Contract"/>
-            </a>
-        </div>
+        %{--<div style="height: 150px">--}%
+            %{--<a href="<g:createLink action="contract" controller="report"/>">--}%
+                %{--<img src="${resource(dir: "images", file: "search.png")} ">--}%
+                %{--<g:message code="report.search.label" default="Search Contract"/>--}%
+            %{--</a>--}%
+        %{--</div>--}%
+        %{--<div style="height: 150px">--}%
+            %{--<a href="<g:createLink action="product" controller="report"/>">--}%
+                %{--<img src="${resource(dir: "images", file: "search.png")} ">--}%
+                %{--<g:message code="report.product.label" default="Search Contract"/>--}%
+            %{--</a>--}%
+        %{--</div>--}%
 
+        <div style="height: 150px">
+            <a href="<g:createLink action="searchAll" controller="report"/>">
+                <img src="${resource(dir: "images", file: "search.png")} ">
+                <g:message code="report.searchAll.label" default="Search "/>
+            </a>
+        </div>
     </div>
 </div>
 </body>
