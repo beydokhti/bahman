@@ -53,14 +53,14 @@ class BootStrap {
         def bazargani = Supplier.findByUsername("bazargani")?:new Supplier(code: "359", description: "پالایشگاه تبریز", username: "bazargani", password: "test", enabled: true).save()
         def userRole15 =UserRole.findByUser(bazargani)?: UserRole.create(bazargani, sRole)
 
-        def phase1 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date('2012/12/22'), endDate: new Date('2012/09/23'), status: "Pass").save()
-        def phase2 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date('2012/09/23'), status: "Waiting").save()
-        def phase3 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date('2012/09/22'), status: "Waiting").save()
-        def phase4 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date('2012/09/22'), endDate: new Date('2012/09/23'), status: "Pass").save()
-        def phase5 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date('2012/09/23'), endDate: new Date('2012/09/24'), status: "Pass").save()
-        def phase6 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date('2012/09/24'), status: "Waiting").save()
-        def phase7 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date('2012/09/24'), status: "Pass").save()
-        def phase8 = new Phase(phase: "Manufacturer", comment: "test2", organization: bazargani, startDate: new Date('2012/09/24'), status: "Waiting").save()
+        def phase2 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), status: "Waiting").save()
+        def phase1 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
+        def phase3 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), status: "Waiting").save()
+        def phase4 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
+        def phase5 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), endDate: new Date(), status: "Pass").save()
+        def phase6 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
+        def phase7 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Pass").save()
+        def phase8 = new Phase(phase: "Manufacturer", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
 
 
         def contract1 = new Contract(contractNo: "1391193129",
