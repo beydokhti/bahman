@@ -52,183 +52,183 @@ class BootStrap {
         def userRole14 = UserRole.findByUser(tolid)?:UserRole.create(tolid, mRole)
         def bazargani = Supplier.findByUsername("bazargani")?:new Supplier(code: "359", description: "پالایشگاه تبریز", username: "bazargani", password: "test", enabled: true).save()
         def userRole15 =UserRole.findByUser(bazargani)?: UserRole.create(bazargani, sRole)
-
-        def phase2 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), status: "Waiting").save()
-        def phase1 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
-        def phase3 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), status: "Waiting").save()
-        def phase4 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
-        def phase5 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), endDate: new Date(), status: "Pass").save()
-        def phase6 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
-        def phase7 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Pass").save()
-        def phase8 = new Phase(phase: "Manufacturer", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
-
-
-        def contract1 = new Contract(contractNo: "1391193129",
-                contractPartNo: "1",
-                contractDate: new Date(),
-                allotmentDate: new Date(),
-                settlementDeadline: new Date(),
-                settlementType: "نقدي",
-                dealerBrokerDesc: "بهمن",
-                buyerBrokerDesc: "بانک کشاورزي",
-                customerDesc: "شرکت نوين شيمي سلفچگان",
-                productSymbol: "TORC-LUSUB-00",
-                productDesc: "گوگرد کلوخه",
-                totalShipments: "30",
-                price: "2570",
-                contractType: "نقدي",
-                deliveryDate: new Date(),
-                manufacturerDesc: "پالايشگاه تبريز",
-                deliveryPlace: "انبار کارخانه",
-                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
-                productGroup: "گوگرد",
-                productSubGroup: "گوگرد",
-                weight: "1000",
-                quantity: "30000",
-                buyerBrokerCode: "31",
-                dealerBrokerCode: "31",
-                customerCode: "11140",
-                supplierCode: "359",
-                boursePrice: "2570",
-                settlementDate: new Date(),
-                contractID: "102419312900164",
-                releaseDate: new Date(),
-                importDate: new Date(),
-//                settlementCertificate:attachment
-        ).save()
-
-        contract1.addToPhases(phase1)
-        contract1.addToPhases(phase2)
-        contract1.save()
-        def contract2 = new Contract(contractNo: "1391193129",
-                contractPartNo: "2",
-                contractDate: new Date(),
-                allotmentDate: new Date(),
-                settlementDeadline: new Date(),
-                settlementType: "نقدي",
-                dealerBrokerDesc: "بهمن",
-                buyerBrokerDesc: "بانک کشاورزي",
-                customerDesc: "شرکت نوين شيمي سلفچگان",
-                productSymbol: "TORC-LUSUB-00",
-                productDesc: "گوگرد کلوخه",
-                totalShipments: "30",
-                price: "2570",
-                contractType: "نقدي",
-                deliveryDate: new Date(),
-                manufacturerDesc: "پالايشگاه تبريز",
-                deliveryPlace: "انبار کارخانه",
-                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
-                productGroup: "گوگرد",
-                productSubGroup: "گوگرد",
-                weight: "1000",
-                quantity: "30000",
-                buyerBrokerCode: "31",
-                dealerBrokerCode: "31",
-                customerCode: "11140",
-                supplierCode: "359",
-                boursePrice: "2570",
-                settlementDate: new Date(),
-                contractID: "102419312900164",
-                releaseDate: new Date(),
-                importDate: new Date(),
-//                settlementCertificate:attachment
-        ).save()
-
-        contract2.addToPhases(phase3)
-        contract2.save()
-
-
-        def contract3 = new Contract(contractNo: "1391193129",
-                contractPartNo: "3",
-                contractDate: new Date(),
-                allotmentDate: new Date(),
-                settlementDeadline: new Date(),
-                settlementType: "نقدي",
-                dealerBrokerDesc: "بهمن",
-                buyerBrokerDesc: "بانک کشاورزي",
-                customerDesc: "شرکت نوين شيمي سلفچگان",
-                productSymbol: "TORC-LUSUB-00",
-                productDesc: "گوگرد کلوخه",
-                totalShipments: "30",
-                price: "2570",
-                contractType: "نقدي",
-                deliveryDate: new Date(),
-                manufacturerDesc: "پالايشگاه تبريز",
-                deliveryPlace: "انبار کارخانه",
-                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
-                productGroup: "گوگرد",
-                productSubGroup: "گوگرد",
-                weight: "1000",
-                quantity: "30000",
-                buyerBrokerCode: "31",
-                dealerBrokerCode: "31",
-                customerCode: "11140",
-                supplierCode: "359",
-                boursePrice: "2570",
-                settlementDate: new Date(),
-                contractID: "102419312900164",
-                releaseDate: new Date(),
-                importDate: new Date(),
-//                settlementCertificate:attachment
-        ).save()
-
-        contract3.addToPhases(phase4)
-        contract3.addToPhases(phase5)
-        contract3.addToPhases(phase6)
-        contract3.save()
-
-        def contract4 = new Contract(contractNo: "1391193129",
-                contractPartNo: "4",
-                contractDate: new Date(),
-                allotmentDate: new Date(),
-                settlementDeadline: new Date(),
-                settlementType: "نقدي",
-                dealerBrokerDesc: "بهمن",
-                buyerBrokerDesc: "بانک کشاورزي",
-                customerDesc: "شرکت نوين شيمي سلفچگان",
-                productSymbol: "TORC-LUSUB-00",
-                productDesc: "گوگرد کلوخه",
-                totalShipments: "30",
-                price: "2570",
-                contractType: "نقدي",
-                deliveryDate: new Date(),
-                manufacturerDesc: "پالايشگاه تبريز",
-                deliveryPlace: "انبار کارخانه",
-                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
-                productGroup: "گوگرد",
-                productSubGroup: "گوگرد",
-                weight: "1000",
-                quantity: "30000",
-                buyerBrokerCode: "31",
-                dealerBrokerCode: "31",
-                customerCode: "11140",
-                supplierCode: "359",
-                boursePrice: "2570",
-                settlementDate: new Date(),
-                contractID: "102419312900164",
-                releaseDate: new Date(),
-                importDate: new Date(),
-//                settlementCertificate:attachment
-        ).save()
-
-        contract4.addToPhases(phase4)
-        contract4.addToPhases(phase5)
-        contract4.addToPhases(phase7)
-        contract4.addToPhases(phase8)
-        contract4.save()
-
-        def draft =new Attachment(description: "123456789",uploadDate:new Date(),responsible:bazargani).save()
-        contract4.addToDrafts(draft).save()
-
-        def amendment = new Amendment(amendmentDate: new Date(),
-                contractPartNo: contract2.contractPartNo,
-                contractNo: contract2.contractNo,
-                comment: "Test")
-        amendment.addToPhases(phase2)
-        amendment.save()
-        contract2.addToAmendments(amendment)
-
-
+//
+//        def phase2 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), status: "Waiting").save()
+//        def phase1 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
+//        def phase3 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), status: "Waiting").save()
+//        def phase4 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
+//        def phase5 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), endDate: new Date(), status: "Pass").save()
+//        def phase6 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
+//        def phase7 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Pass").save()
+//        def phase8 = new Phase(phase: "Manufacturer", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
+//
+//
+//        def contract1 = new Contract(contractNo: "1391193129",
+//                contractPartNo: "1",
+//                contractDate: new Date(),
+//                allotmentDate: new Date(),
+//                settlementDeadline: new Date(),
+//                settlementType: "نقدي",
+//                dealerBrokerDesc: "بهمن",
+//                buyerBrokerDesc: "بانک کشاورزي",
+//                customerDesc: "شرکت نوين شيمي سلفچگان",
+//                productSymbol: "TORC-LUSUB-00",
+//                productDesc: "گوگرد کلوخه",
+//                totalShipments: "30",
+//                price: "2570",
+//                contractType: "نقدي",
+//                deliveryDate: new Date(),
+//                manufacturerDesc: "پالايشگاه تبريز",
+//                deliveryPlace: "انبار کارخانه",
+//                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
+//                productGroup: "گوگرد",
+//                productSubGroup: "گوگرد",
+//                weight: "1000",
+//                quantity: "30000",
+//                buyerBrokerCode: "31",
+//                dealerBrokerCode: "31",
+//                customerCode: "11140",
+//                supplierCode: "359",
+//                boursePrice: "2570",
+//                settlementDate: new Date(),
+//                contractID: "102419312900164",
+//                releaseDate: new Date(),
+//                importDate: new Date(),
+////                settlementCertificate:attachment
+//        ).save()
+//
+//        contract1.addToPhases(phase1)
+//        contract1.addToPhases(phase2)
+//        contract1.save()
+//        def contract2 = new Contract(contractNo: "1391193129",
+//                contractPartNo: "2",
+//                contractDate: new Date(),
+//                allotmentDate: new Date(),
+//                settlementDeadline: new Date(),
+//                settlementType: "نقدي",
+//                dealerBrokerDesc: "بهمن",
+//                buyerBrokerDesc: "بانک کشاورزي",
+//                customerDesc: "شرکت نوين شيمي سلفچگان",
+//                productSymbol: "TORC-LUSUB-00",
+//                productDesc: "گوگرد کلوخه",
+//                totalShipments: "30",
+//                price: "2570",
+//                contractType: "نقدي",
+//                deliveryDate: new Date(),
+//                manufacturerDesc: "پالايشگاه تبريز",
+//                deliveryPlace: "انبار کارخانه",
+//                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
+//                productGroup: "گوگرد",
+//                productSubGroup: "گوگرد",
+//                weight: "1000",
+//                quantity: "30000",
+//                buyerBrokerCode: "31",
+//                dealerBrokerCode: "31",
+//                customerCode: "11140",
+//                supplierCode: "359",
+//                boursePrice: "2570",
+//                settlementDate: new Date(),
+//                contractID: "102419312900164",
+//                releaseDate: new Date(),
+//                importDate: new Date(),
+////                settlementCertificate:attachment
+//        ).save()
+//
+//        contract2.addToPhases(phase3)
+//        contract2.save()
+//
+//
+//        def contract3 = new Contract(contractNo: "1391193129",
+//                contractPartNo: "3",
+//                contractDate: new Date(),
+//                allotmentDate: new Date(),
+//                settlementDeadline: new Date(),
+//                settlementType: "نقدي",
+//                dealerBrokerDesc: "بهمن",
+//                buyerBrokerDesc: "بانک کشاورزي",
+//                customerDesc: "شرکت نوين شيمي سلفچگان",
+//                productSymbol: "TORC-LUSUB-00",
+//                productDesc: "گوگرد کلوخه",
+//                totalShipments: "30",
+//                price: "2570",
+//                contractType: "نقدي",
+//                deliveryDate: new Date(),
+//                manufacturerDesc: "پالايشگاه تبريز",
+//                deliveryPlace: "انبار کارخانه",
+//                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
+//                productGroup: "گوگرد",
+//                productSubGroup: "گوگرد",
+//                weight: "1000",
+//                quantity: "30000",
+//                buyerBrokerCode: "31",
+//                dealerBrokerCode: "31",
+//                customerCode: "11140",
+//                supplierCode: "359",
+//                boursePrice: "2570",
+//                settlementDate: new Date(),
+//                contractID: "102419312900164",
+//                releaseDate: new Date(),
+//                importDate: new Date(),
+////                settlementCertificate:attachment
+//        ).save()
+//
+//        contract3.addToPhases(phase4)
+//        contract3.addToPhases(phase5)
+//        contract3.addToPhases(phase6)
+//        contract3.save()
+//
+//        def contract4 = new Contract(contractNo: "1391193129",
+//                contractPartNo: "4",
+//                contractDate: new Date(),
+//                allotmentDate: new Date(),
+//                settlementDeadline: new Date(),
+//                settlementType: "نقدي",
+//                dealerBrokerDesc: "بهمن",
+//                buyerBrokerDesc: "بانک کشاورزي",
+//                customerDesc: "شرکت نوين شيمي سلفچگان",
+//                productSymbol: "TORC-LUSUB-00",
+//                productDesc: "گوگرد کلوخه",
+//                totalShipments: "30",
+//                price: "2570",
+//                contractType: "نقدي",
+//                deliveryDate: new Date(),
+//                manufacturerDesc: "پالايشگاه تبريز",
+//                deliveryPlace: "انبار کارخانه",
+//                productMainGroup: "پتروشيمي و فرآورده هاي نفتي",
+//                productGroup: "گوگرد",
+//                productSubGroup: "گوگرد",
+//                weight: "1000",
+//                quantity: "30000",
+//                buyerBrokerCode: "31",
+//                dealerBrokerCode: "31",
+//                customerCode: "11140",
+//                supplierCode: "359",
+//                boursePrice: "2570",
+//                settlementDate: new Date(),
+//                contractID: "102419312900164",
+//                releaseDate: new Date(),
+//                importDate: new Date(),
+////                settlementCertificate:attachment
+//        ).save()
+//
+//        contract4.addToPhases(phase4)
+//        contract4.addToPhases(phase5)
+//        contract4.addToPhases(phase7)
+//        contract4.addToPhases(phase8)
+//        contract4.save()
+//
+//        def draft =new Attachment(description: "123456789",uploadDate:new Date(),responsible:bazargani).save()
+//        contract4.addToDrafts(draft).save()
+//
+//        def amendment = new Amendment(amendmentDate: new Date(),
+//                contractPartNo: contract2.contractPartNo,
+//                contractNo: contract2.contractNo,
+//                comment: "Test")
+//        amendment.addToPhases(phase2)
+//        amendment.save()
+//        contract2.addToAmendments(amendment)
+//
+//
     }
 
 
