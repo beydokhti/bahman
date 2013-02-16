@@ -19,9 +19,9 @@
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
     </ul>
 </div>
-<%@ page import="bahman.Contract" %>
+<%@ page import="bahman.report.ContractReport" %>
 
-<g:form action="showSearchAllReport" controller="report">
+<g:form action="showContractPhaseReport" controller="contractReport">
     <div class="row">
 
         <div class="fieldcontain">
@@ -85,6 +85,7 @@
         </div>
     </div>
 
+
     <div class="row">
         <div class="fieldcontain">
             <div class="span2">
@@ -129,29 +130,34 @@
     <div class="row">
         <div class="fieldcontain">
             <div class="span2">
-                <g:message code="contract.supplierCode.label" default="Supplier Code"/>
+    <g:message code="contract.supplierCode.label" default="Supplier Code"/>
 
-            </div>
+    </div>
 
-            <div class="span3">
-                <g:textField name="supplierCodeFrom"/>
-            </div>
+    <div class="span3">
+        <g:textField name="supplierCodeFrom"/>
+    </div>
 
-            <div class="span1">
-                <g:message code="report.to.label" style="text-align: center"/>
-            </div>
+    <div class="span1">
+        <g:message code="report.to.label" style="text-align: center"/>
+    </div>
 
-            <div class="span3">
-                <g:textField name="supplierCodeTo"/>
-            </div>
-        </div>
+    <div class="span3">
+        <g:textField name="supplierCodeTo"/>
+    </div>
     </div>
     <g:submitButton name="showReport" class="show" value="${message(code: 'report.show.label', default: 'Show')}"/>
-%{--<g:submitButton name="exportExcel" class="show" value="${message(code: 'report.export.excel.label', default: 'Export Excel')}" />--}%
+    <g:actionSubmit value="${message(code: 'report.export.excel.label', default: 'Show')}" action="xls"/>
+    %{--<input type="button" onclick="xls()" value="excel"/>--}%
 </g:form>
-<rg:grid domainClass="${bahman.Contract}" maxColumns="30" showFirstColumn="false" footerRow="true" showAllRows="true"
+<script type="text/javascript">
+    function xls() {
+
+    }
+</script>
+<rg:grid domainClass="${bahman.report.ContractReport}" maxColumns="11" showFirstColumn="false" footerRow="true" showAllRows="true"
          width="2000px"
-         source="${[service: "searchAllReport", method: "report",
+         source="${[service: "contractPhaseReport", method: "report",
                  params: [contractNoFrom: "${reportParams.contractNoFrom}", contractNoTo: "${reportParams.contractNoTo}",
                          contractPartNoFrom: "${reportParams.contractPartNoFrom}", contractPartNoTo: "${reportParams.contractPartNoTo}",
                          contractDateFrom: "${reportParams.contractDateFrom}", contractDateTo: "${reportParams.contractDateTo}",

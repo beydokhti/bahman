@@ -346,6 +346,8 @@ class ContractController {
 
     def upload() {
         def file = request.getFile('file')
+        def custRole = Role.findByAuthority( "Customer")
+        def customer1
         Workbook sb
         try {
             def fileIs = new ByteArrayInputStream(file.bytes)
@@ -417,10 +419,24 @@ class ContractController {
             if (oldContract) {
                 oldContract.settlementDate = contract.settlementDate
                 oldContract.save()
+
             }
             else {
                 contract.save()
                 phaseService.addDefaultPhases(contract)
+                try {
+                    customer1=null
+                    customer1=Customer.findByCode(contract.customerCode)?:new Customer(code: contract.customerCode,
+                            description: contract.customerDesc,
+                            username:"user"+contract.customerCode,
+                            password: "pass" +contract.customerCode,
+                            enabled: false).save()
+                    if (!customer1.equals(null)){
+                        UserRole.findByUser(customer1)?:UserRole.create(customer1, custRole)
+                    }
+
+                }   catch (Exception e){}
+
             }
 
         }

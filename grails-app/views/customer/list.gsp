@@ -64,10 +64,15 @@
 			%{--</div>--}%
 		%{--</div>--}%
     <div id="list-customer" ng-controller="customerController" class="content scaffold-list" role="main">
-        <rg:grid domainClass="${bahman.Customer}" caption="لیست کارگزاران">
-            %{--<rg:criteria>--}%
-                %{--<rg:eq name="customerCode" value="${"asdasd"}"/>--}%
-            %{--</rg:criteria>--}%
+        <rg:criteria inline='true'>
+            <rg:like name="username" />
+            <rg:like name="code"/>
+            <rg:like name="description"/>
+            <rg:like name="mobileNo"/>
+            <rg:filterGrid grid="CustomerGrid" />
+        </rg:criteria>
+
+        <rg:grid domainClass="${bahman.Customer}" caption="لیست مشتری">
         </rg:grid>
 
         <rg:dialog id="customer" title="Customer Form">
@@ -76,8 +81,6 @@
             <rg:cancelButton/>
         </rg:dialog>
         <input type="button" ng-click="openCustomerCreateDialog()" value="create">
-        %{--<input type="button" ng-click="openCustomerEditDialog()" value="edit" >--}%
-
 
     </div>
 

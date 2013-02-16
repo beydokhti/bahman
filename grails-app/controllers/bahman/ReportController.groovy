@@ -6,14 +6,24 @@ class ReportController {
 
     }
 
-    def contract() {
+    def contractPhase() {
+        [reportParams:params]
     }
 
+    def showContractPhaseReport() {
+        redirect(action: "contractPhase", params: params)
+    }
+
+
     def product() {
+        [reportParams:params]
+    }
+
+    def showProductReport(){
+        redirect(action: "product", params: params)
     }
 
     def searchAll(){
-//        def reportParams =[:]
         [reportParams:params]
     }
 
