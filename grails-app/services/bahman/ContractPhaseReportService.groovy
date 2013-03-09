@@ -87,14 +87,17 @@ class ContractPhaseReportService {
     }
 
     private def formatDate(date) {
-        if (date) {
-            def cal = Calendar.getInstance()
-            cal.setTime(date)
+        try {
+            if (date) {
+                def cal = Calendar.getInstance()
+                cal.setTime(date)
 
-            def jc = new JalaliCalendar(cal)
+                def jc = new JalaliCalendar(cal)
 
-            return String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay())
-        }
+                return String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay())
+            }
+        } catch (e) {}
         return ""
+
     }
 }
