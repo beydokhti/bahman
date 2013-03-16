@@ -13,14 +13,16 @@
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rapidgrails.css')}" type="text/css">
+    <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rapidgrails.css')}"
+          type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'css3.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'reset.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'theme.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'msgGrowl.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'rg-rtl.css')}" type="text/css">
-    <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'jquery-ui-rtl.css')}" type="text/css">
+    <link rel="stylesheet" href="${resource(plugin: 'rapid-grails', dir: 'css', file: 'jquery-ui-rtl.css')}"
+          type="text/css">
     <r:require modules="bootstrap"/>
     <ckeditor:resources/>
     %{--<g:javascript library="prototype" />--}%
@@ -58,13 +60,14 @@
     <g:javascript src="superfish/supersubs.js"/>
 
     <g:javascript>
-        jQuery(function() {
+        jQuery(function () {
             jQuery('ul.sf-menu').supersubs({maxWidth: 27, extraWidth: 1}).superfish();
         });
     </g:javascript>
 
     <link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'common.css')}"/>
-    <link rel="stylesheet" type="text/css" href="${resource(dir: 'css/themes', file: (setting?setting.siteColor:'blue') + '.css')}"/>
+    <link rel="stylesheet" type="text/css"
+          href="${resource(dir: 'css/themes', file: (setting ? setting.siteColor : 'blue') + '.css')}"/>
 
     <g:layoutHead/>
 </head>
@@ -72,17 +75,61 @@
 <body dir="rtl">
 
 <div id="bokeh">
-    <div class="container">
+    <div class="container"> <div style="position: fixed;margin-right: 900px;margin-top: 25px ;color: #ffffff">
+        <g:message code="index.username.label" default="UserName"/>&nbsp;<sec:loggedInUserInfo field="username"/>&nbsp;<g:message code="index.usernamet.label" default="UserName"/>
+    </div>
         <div id="header" role="banner">
             <h1 id="logo">Application Title</h1>
         </div>
-        <div id="content" >
+
+        <sec:ifAnyGranted roles="DealerBroker,Manufacturer,Supplier,BuyerBroker,Customer">
+            <div class="nav" role="navigation">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
+                    </div>
+
+                    <div class="span2">
+                        <g:link action="list" controller="contract">
+                            <g:message code="index.list.label" default="Dashboard"/>
+                        </g:link>
+                    </div>
+                    <sec:ifAllGranted roles="Customer">
+                        <div class="span2">
+                            <g:link controller="customer" action="changePassword"><g:message
+                                    code="customer.change.password.label"></g:message></g:link>
+                        </div>
+                    </sec:ifAllGranted>
+
+
+                    <sec:ifAllGranted roles="DealerBroker">
+                        <div class="span2">
+                            <g:link action="importExcel" controller="contract">
+                                <g:message code="index.import.label" default="Import"/></g:link>
+                        </div>
+
+                        <div class="span2">
+                            <g:link action="report" controller="report">
+                                <g:message code="index.report.label" default="Report"/></g:link>
+                        </div>
+
+                    </sec:ifAllGranted>
+                    <div class="span2">
+                        <g:link class="list" action="index" controller="logout"><g:message code="default.logut.label"
+                                                                                           args="[entityName]"/></g:link>
+                    </div>
+
+                    %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+                </div>
+            </div>
+
+        </sec:ifAnyGranted>
+        <div id="content">
             <g:layoutBody/>
         </div>
 
     </div>
 </div>
-
 
 <div id="footer" role="contentinfo">
     <g:message code="application.name" default="Management System"/> | <g:message code="application.copyRight"
@@ -98,25 +145,25 @@
 
     function msgSuccess(text) {
         $.msgGrowl({
-            type:'success', 'text':text, position:'bottom-left'
+            type: 'success', 'text': text, position: 'bottom-left'
         });
     }
 
     function msgInfo(text) {
         $.msgGrowl({
-            type:'info', 'text':text, position:'bottom-left'
+            type: 'info', 'text': text, position: 'bottom-left'
         });
     }
 
     function msgWarning(text) {
         $.msgGrowl({
-            type:'warning', 'text':text, position:'bottom-left'
+            type: 'warning', 'text': text, position: 'bottom-left'
         });
     }
 
     function msgError(text) {
         $.msgGrowl({
-            type:'error', 'text':text, position:'bottom-left'
+            type: 'error', 'text': text, position: 'bottom-left'
         });
     }
 </script>

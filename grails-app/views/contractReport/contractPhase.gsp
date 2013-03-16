@@ -14,11 +14,6 @@
 </head>
 
 <body>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-    </ul>
-</div>
 <%@ page import="bahman.report.ContractReport" %>
 
 <g:form action="showContractPhaseReport" controller="contractReport">

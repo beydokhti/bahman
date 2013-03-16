@@ -79,11 +79,6 @@
 </head>
 
 <body>
-<div class="nav" role="navigation">
-    <ul>
-        <li><g:link action="list" controller="contract"><g:message code="default.button.list.label"/></g:link></li>
-    </ul>
-</div>
 <a href="#show-contract" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
                                                                %{--default="Skip to content&hellip;"/></a>
 

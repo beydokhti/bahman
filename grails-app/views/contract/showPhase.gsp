@@ -8,11 +8,6 @@
     <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
-<div class="nav" role="navigation">
-    <ul>
-        <li><g:link action="list" controller="contract" ><g:message code="default.button.list.label"/></g:link></li>
-    </ul>
-</div>
 <a href="#show-contract" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 <div id="show-contract" class="content scaffold-show" role="main">
 <g:if test="${flash.message}">

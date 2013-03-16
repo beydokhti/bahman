@@ -102,18 +102,18 @@
         %{--</ul>--}%
     </div>
 
-    <div class="nav" role="navigation">
-        <ul>
+    %{--<div class="nav" role="navigation">--}%
+        %{--<ul>--}%
             %{--<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>--}%
-            <li><g:link class="list" action="index" controller="logout"><g:message code="default.logut.label"
-                                                                                   args="[entityName]"/></g:link></li>
-            <sec:ifAllGranted roles="Customer">
-                <g:link controller="customer" action="changePassword"><g:message
-                        code="customer.change.password.label"></g:message></g:link>
-            </sec:ifAllGranted>
+            %{--<li><g:link class="list" action="index" controller="logout"><g:message code="default.logut.label"--}%
+                                                                                   %{--args="[entityName]"/></g:link></li>--}%
+            %{--<sec:ifAllGranted roles="Customer">--}%
+                %{--<g:link controller="customer" action="changePassword"><g:message--}%
+                        %{--code="customer.change.password.label"></g:message></g:link>--}%
+            %{--</sec:ifAllGranted>--}%
             %{--<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
-        </ul>
-    </div>
+        %{--</ul>--}%
+    %{--</div>--}%
 
     <div class="span9">
         %{--<div class="row">--}%
@@ -135,18 +135,15 @@
                     <g:message code="index.list.label" default="Dashboard"/>
                 </a>
             </div>
-        %{--</div>--}%
+            <div style="height: 150px">
+                <a href="<g:createLink action="report" controller="report"/>">
+                    <img src="${resource(dir: "images", file: "report.png")} ">
+                    <g:message code="index.report.label" default="Report"/>
+                </a>
+            </div>
         </sec:ifAnyGranted>
         <div class="span5">
         %{--<div style="height: 70px"></div>--}%
-            <sec:ifAllGranted roles="DealerBroker">
-                <div style="height: 150px">
-                    <a href="<g:createLink action="report" controller="report"/>">
-                        <img src="${resource(dir: "images", file: "report.png")} ">
-                        <g:message code="index.report.label" default="Report"/>
-                    </a>
-                </div>
-            </sec:ifAllGranted>
             <sec:ifAllGranted roles="Admin">
                 <div style="height: 150px">
                     <a href="<g:createLink action="useradmin" controller="userAdmin"/>">

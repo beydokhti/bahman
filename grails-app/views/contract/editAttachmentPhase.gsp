@@ -111,11 +111,6 @@
 </head>
 
 <body>
-%{--<div class="nav" role="navigation">--}%
-    %{--<ul>--}%
-         %{--<li><g:link action="show" controller="contract" contractInstance="${contractInstance}"><g:message code="default.show.label"/></g:link></li>--}%
-    %{--</ul>--}%
-%{--</div>--}%
 <div id="list-attachment" ng-controller="attachmentController" class="content scaffold-list" role="main">
     <rg:dialog id="attachment" title="Attachment Form">
 
