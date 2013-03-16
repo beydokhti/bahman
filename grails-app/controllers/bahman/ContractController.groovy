@@ -428,7 +428,7 @@ class ContractController {
                     customer1=null
                     customer1=Customer.findByCode(contract.customerCode)?:new Customer(code: contract.customerCode,
                             description: contract.customerDesc,
-                            username:"user"+contract.customerCode,
+                            username:"client"+contract.customerCode,
                             password: "pass" +contract.customerCode,
                             enabled: false).save()
                     if (!customer1.equals(null)){
