@@ -75,45 +75,48 @@
 <body dir="rtl">
 
 <div id="bokeh">
-    <div class="container"> <div style="position: fixed;margin-right: 900px;margin-top: 25px ;color: #ffffff">
-        <g:message code="index.username.label" default="UserName"/>&nbsp;<sec:loggedInUserInfo field="username"/>&nbsp;<g:message code="index.usernamet.label" default="UserName"/>
+    <div class="container"><div style="position: fixed;margin-right: 900px;margin-top: 25px ;color: #ffffff">
+        <g:message code="index.username.label" default="UserName"/>&nbsp;<sec:loggedInUserInfo
+                field="username"/>&nbsp;<g:message code="index.usernamet.label" default="UserName"/>
     </div>
+
         <div id="header" role="banner">
             <h1 id="logo">Application Title</h1>
         </div>
 
-        <sec:ifAnyGranted roles="DealerBroker,Manufacturer,Supplier,BuyerBroker,Customer">
+        <sec:ifAnyGranted roles="DealerBroker,Manufacturer,Supplier,BuyerBroker,Customer,Admin">
             <div class="nav" role="navigation">
                 <div class="row-fluid">
                     <div class="span2">
                         <a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
                     </div>
-
-                    <div class="span2">
-                        <g:link action="list" controller="contract">
-                            <g:message code="index.list.label" default="Dashboard"/>
-                        </g:link>
-                    </div>
-                    <sec:ifAllGranted roles="Customer">
+                    <sec:ifAnyGranted roles="DealerBroker,Manufacturer,Supplier,BuyerBroker,Customer">
                         <div class="span2">
-                            <g:link controller="customer" action="changePassword"><g:message
-                                    code="customer.change.password.label"></g:message></g:link>
+                            <g:link action="list" controller="contract">
+                                <g:message code="index.list.label" default="Dashboard"/>
+                            </g:link>
                         </div>
-                    </sec:ifAllGranted>
+                        <sec:ifAllGranted roles="Customer">
+                            <div class="span2">
+                                <g:link controller="customer" action="changePassword"><g:message
+                                        code="customer.change.password.label"></g:message></g:link>
+                            </div>
+                        </sec:ifAllGranted>
 
 
-                    <sec:ifAllGranted roles="DealerBroker">
-                        <div class="span2">
-                            <g:link action="importExcel" controller="contract">
-                                <g:message code="index.import.label" default="Import"/></g:link>
-                        </div>
+                        <sec:ifAllGranted roles="DealerBroker">
+                            <div class="span2">
+                                <g:link action="importExcel" controller="contract">
+                                    <g:message code="index.import.label" default="Import"/></g:link>
+                            </div>
 
-                        <div class="span2">
-                            <g:link action="report" controller="report">
-                                <g:message code="index.report.label" default="Report"/></g:link>
-                        </div>
+                            <div class="span2">
+                                <g:link action="report" controller="report">
+                                    <g:message code="index.report.label" default="Report"/></g:link>
+                            </div>
 
-                    </sec:ifAllGranted>
+                        </sec:ifAllGranted>
+                    </sec:ifAnyGranted>
                     <div class="span2">
                         <g:link class="list" action="index" controller="logout"><g:message code="default.logut.label"
                                                                                            args="[entityName]"/></g:link>
