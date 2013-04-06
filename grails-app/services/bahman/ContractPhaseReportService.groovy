@@ -3,11 +3,12 @@ package bahman
 
 import bahman.report.ContractReport
 import fi.joensuu.joyds1.calendar.JalaliCalendar
+import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 
 import java.text.SimpleDateFormat
 
 class ContractPhaseReportService {
-
+    def springSecurityService
     def report(params) {
         def results= queryReport(params)
         def userdata = [:]
@@ -27,6 +28,9 @@ class ContractPhaseReportService {
         if (params.contractDateTo)
             contractDateTo = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
                     .parse(params.contractDateTo)
+        /////////////
+        def princ = springSecurityService.getPrincipal()
+        //////////////
 
         def results = c.list {
             and {
@@ -42,6 +46,26 @@ class ContractPhaseReportService {
                     between("customerCode", params.customerCodeFrom, params.customerCodeTo)
                 if (params.supplierCodeFrom && params.supplierCodeTo)
                     between("supplierCode", params.supplierCodeFrom, params.supplierCodeTo)
+                if (princ instanceof GrailsUser) {
+                    def user = User.findByUsername(princ.username)
+                    if (user instanceof Broker) {
+                        if (user.brokerType == "BuyerBroker") {
+                            eq("buyerBrokerCode",user.code)
+                        }
+                        else if (user.brokerType == "DealerBroker") {
+                            eq( "dealerBrokerCode",user.code)
+                        }
+                    }
+                    else if (user instanceof Customer) {
+                        eq( "customerCode",user.code)
+                    }
+                    else if (user instanceof Supplier ) {
+                        eq( "supplierCode",user.code)
+                    }
+                    else if (user instanceof Manufacturer) {
+                        eq( "supplierCode",user.code)
+                    }
+                }
             }
         }
 
@@ -86,12 +110,19 @@ class ContractPhaseReportService {
         }
         return list
     }
-    private def formatDate(date){
-        def cal = Calendar.getInstance()
-        cal.setTime(date)
+    private def formatDate(date) {
+        try {
+            if (date) {
+                def cal = Calendar.getInstance()
+                cal.setTime(date)
 
-        def jc = new JalaliCalendar(cal)
+                def jc = new JalaliCalendar(cal)
 
-        return String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay())
+                return String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay())
+            }
+        } catch (e) {}
+        return ""
+
     }
 }
+
