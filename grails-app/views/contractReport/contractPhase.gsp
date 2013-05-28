@@ -80,6 +80,26 @@
         %{--</div>--}%
     </div>
 
+    <div class="row">
+        %{--<div class="fieldcontain">--}%
+        <div class="span2">
+            <g:message code="contract.importDate.label" default="Contract Date"/>
+
+        </div>
+
+        <div class="span3">
+            <rg:datePicker name="importDateFrom" precision="day"/>
+        </div>
+
+        <div class="span1">
+            <g:message code="report.to.label" style="text-align: center"/>
+        </div>
+
+        <div class="span3">
+            <rg:datePicker name="importDateTo" precision="day"/>
+        </div>
+        %{--</div>--}%
+    </div>
 
     <div class="row">
         %{--<div class="fieldcontain">--}%
@@ -180,7 +200,8 @@
                          buyerBrokerCodeFrom: "${reportParams.buyerBrokerCodeFrom}", buyerBrokerCodeTo: "${reportParams.buyerBrokerCodeTo}",
                          customerCodeFrom:"${reportParams.customerCodeFrom}",customerCodeTo:"${reportParams.customerCodeTo}",
                          supplierCodeFrom:"${reportParams.supplierCodeFrom}",supplierCodeTo:"${reportParams.supplierCodeTo}",
-                         productSymbol:"${reportParams.productSymbol}",customerDesc:"${reportParams.customerDesc}"]]}"/>
+                         productSymbol:"${reportParams.productSymbol}",customerDesc:"${reportParams.customerDesc}",
+                         importDateFrom:"${reportParams.importDateFrom}",importDateTo:"${reportParams.importDateTo}"]]}"/>
 
 </body>
 </html>

@@ -22,6 +22,8 @@ class ContractPhaseReportService {
         def list = []
         Date contractDateFrom
         Date contractDateTo
+
+
         try {
             if (params.contractDateFrom)
                 contractDateFrom = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
@@ -30,6 +32,18 @@ class ContractPhaseReportService {
             if (params.contractDateTo)
                 contractDateTo = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
                         .parse(params.contractDateTo)
+        } catch (Exception e) {}
+
+        Date importDateFrom
+        Date importDateTo
+        try {
+            if (params.importDateFrom)
+                importDateFrom = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
+                        .parse(params.importDateFrom)
+
+            if (params.importDateTo)
+                importDateTo = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
+                        .parse(params.importDateTo)
         } catch (Exception e) {}
         /////////////
         def princ = springSecurityService.getPrincipal()
@@ -44,6 +58,8 @@ class ContractPhaseReportService {
                     between("contractPartNo", params.contractPartNoFrom, params.contractPartNoTo)
                 if (contractDateFrom && contractDateTo)
                     between("contractDate", contractDateFrom, contractDateTo)
+                if (importDateFrom && importDateTo)
+                    between("importDate", contractDateFrom, contractDateTo)
                 if (params.buyerBrokerCodeFrom && params.buyerBrokerCodeTo)
                     between("buyerBrokerCode", params.buyerBrokerCodeFrom, params.buyerBrokerCodeTo)
                 if (params.customerCodeFrom && params.customerCodeTo)

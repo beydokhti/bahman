@@ -89,13 +89,14 @@ class ContractController {
                 showAmendment = "True"
                 def customer = Customer.findByCode(contract.customerCode)
 
-                Number addedTax = Math.round(contract.price.toInteger()*contract.totalShipments.toInteger() * 0.06)
-                Number fees = Math.round(contract.price.toInteger() *contract.totalShipments.toInteger()* 0.00278)
-                Number contractValue=Math.round(contract.price.toInteger() *contract.totalShipments.toInteger())
+                Number addedTax = Math.round(contract.price.toInteger()*contract.quantity.toInteger() * 0.06)
+                Number fees = Math.round(contract.price.toInteger() *contract.quantity.toInteger()* 0.00278)
+                Number contractValue=contract.price.toInteger() *contract.quantity.toInteger()
+                Number shareSeller=contractValue- fees
 
 //                if (user.code == code || user.description == desc) {
                 if (user.code == code) {
-                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue]
+                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue,shareSeller:shareSeller]
                 }
 
             }
@@ -346,10 +347,17 @@ class ContractController {
         try {
             def fileIs = new ByteArrayInputStream(file.bytes)
             sb = new XSSFWorkbook(fileIs)
+            System.out.println("step1")
         } catch (x) {
-            def fileIs = new ByteArrayInputStream(file.bytes)
-            sb = new HSSFWorkbook(fileIs)
+            try {
+                def fileIs = new ByteArrayInputStream(file.bytes)
+                sb = new HSSFWorkbook(fileIs)
+                System.out.println("step2")
+            }catch (Exception e){
+                System.out.println(e.getMessage())
+            }
         }
+            System.out.println("step3")
         Map CONFIG_COLUMN_MAP = [
                 sheet: 'Sheet1',
                 startRow: 1,
@@ -391,6 +399,7 @@ class ContractController {
             propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
         }
 
+            System.out.println("step4")
         def dateFields = ["contractDate", "allotmentDate", "settlementDeadline", "deliveryDate", "settlementDate", "releaseDate"]
         def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
         res.each {
@@ -402,8 +411,12 @@ class ContractController {
                     def gc = jc.toJavaUtilGregorianCalendar()
                     it[field] = 'date.struct'
                     it["${field}_year"] = gc.get(Calendar.YEAR) as String
-                    it["${field}_month"] = gc.get(Calendar.MONTH) as String
+                    def dy = it["${field}_year"]
+                    it["${field}_month"] = gc.get(Calendar.MONTH)+1 as String
+                    def dm = it["${field}_month"] +1
                     it["${field}_day"] = gc.get(Calendar.DATE) as String
+                    def dd = it["${field}_day"]
+                    def dd2 = it["${field}_day"]
                 } catch (x) { x.printStackTrace() }
             }
 
@@ -486,9 +499,9 @@ class ContractController {
 
         def customer = Customer.findByCode(contract.customerCode)
 
-        Number addedTax = Math.round(contract.price.toInteger()*contract.totalShipments.toInteger() * 0.06)
-        Number fees = Math.round(contract.price.toInteger() *contract.totalShipments.toInteger()* 0.00278)
-        Number contractValue=Math.round(contract.price.toInteger() *contract.totalShipments.toInteger())
+        Number addedTax = Math.round(contract.price.toInteger()*contract.quantity.toInteger() * 0.06)
+        Number fees = Math.round(contract.price.toInteger() *contract.quantity.toInteger()* 0.00278)
+        Number contractValue=Math.round(contract.price.toInteger() *contract.quantity.toInteger())
 
 //            render(template: 'printContract', model: [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees])
         return [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue]

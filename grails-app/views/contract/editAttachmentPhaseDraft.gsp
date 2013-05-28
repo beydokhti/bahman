@@ -117,11 +117,6 @@
                         $("#attachment-container").append($(res))
                     }, undefined, {width: 400, confirm: 'Y'})
         }
-        function doAddFreight() {
-            loadOverlayAttachmentPhase('<g:createLink action="freightForm" controller="contract" params="[contractId:contractInstance?.id]"/>',
-                    '<g:createLink action="saveFreight" controller="contract" params="[contractId:contractInstance?.id]"/>',
-                    undefined, undefined, {width: 400, switch: 'ajaxSubmit'})
-        }
 
     </script>
 </head>
@@ -247,8 +242,6 @@
                value="${message(code: 'button.add.Attachment', default: 'Add Attachment')}">
         <input class="btn" type="button" onclick="doAddDraft()"
                value="${message(code: 'button.add.draft', default: 'Add Draft')}">
-        <input class="btn" type="button" onclick="doAddFreight()"
-               value="${message(code: 'button.add.Freight', default: 'Add Freight')}">
         <input class="btn" type="button" onclick="doSubmit()"
                value="${message(code: 'button.submit', default: 'Submit')}">
         <input class="btn" type="button" onclick="doReject()"

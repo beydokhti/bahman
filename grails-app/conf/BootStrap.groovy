@@ -42,16 +42,16 @@ class BootStrap {
 //
 //        def usr6 = new Supplier(code: "359", description: "عرضه کننده", username: "user6", password: "test", enabled: true).save()
 //        def userRole6 = UserRole.create(usr6, sRole)
-        def bahman1 = Broker.findByUsername("novin1")?:new Broker(code: "54", description: "کارشناس فروش", username: "novin1", password: "test", enabled: true, brokerType: "DealerBroker").save()
-        def userRole11 =UserRole.findByUser(bahman1)?: UserRole.create(bahman1, dbRole)
-        def bahman2 = Broker.findByUsername("novin2")?:new Broker(code: "29", description: "کارشناس خرید", username: "novin2", password: "test", enabled: true, brokerType: "BuyerBroker").save()
-        def userRole12 = UserRole.findByUser(bahman2)?:UserRole.create(bahman2, bbRole)
-        def customer1 = Customer.findByUsername("azarbam")?:new Customer(code: "1251", description: "شرکت آذربام عایق کار", username: "azarbam", password: "test", enabled: true, mobileNo: '09125348230').save()
-        def userRole13 = UserRole.findByUser(customer1)?:UserRole.create(customer1, custRole)
-        def tolid =  Manufacturer.findByUsername("tolidi")?:new Manufacturer(code: "359", description:"پالایشگاه تبریز", username: "tolidi", password: "test", enabled: true).save()
-        def userRole14 = UserRole.findByUser(tolid)?:UserRole.create(tolid, mRole)
-        def bazargani = Supplier.findByUsername("bazargani")?:new Supplier(code: "359", description: "پالایشگاه تبریز", username: "bazargani", password: "test", enabled: true).save()
-        def userRole15 =UserRole.findByUser(bazargani)?: UserRole.create(bazargani, sRole)
+//        def bahman1 = Broker.findByUsername("novin1")?:new Broker(code: "54", description: "کارشناس فروش", username: "novin1", password: "test", enabled: true, brokerType: "DealerBroker").save()
+//        def userRole11 =UserRole.findByUser(bahman1)?: UserRole.create(bahman1, dbRole)
+//        def bahman2 = Broker.findByUsername("novin2")?:new Broker(code: "29", description: "کارشناس خرید", username: "novin2", password: "test", enabled: true, brokerType: "BuyerBroker").save()
+//        def userRole12 = UserRole.findByUser(bahman2)?:UserRole.create(bahman2, bbRole)
+//        def customer1 = Customer.findByUsername("azarbam")?:new Customer(code: "1251", description: "شرکت آذربام عایق کار", username: "azarbam", password: "test", enabled: true, mobileNo: '09125348230').save()
+//        def userRole13 = UserRole.findByUser(customer1)?:UserRole.create(customer1, custRole)
+//        def tolid =  Manufacturer.findByUsername("tolidi")?:new Manufacturer(code: "359", description:"پالایشگاه تبریز", username: "tolidi", password: "test", enabled: true).save()
+//        def userRole14 = UserRole.findByUser(tolid)?:UserRole.create(tolid, mRole)
+//        def bazargani = Supplier.findByUsername("bazargani")?:new Supplier(code: "359", description: "پالایشگاه تبریز", username: "bazargani", password: "test", enabled: true).save()
+//        def userRole15 =UserRole.findByUser(bazargani)?: UserRole.create(bazargani, sRole)
 //
 //        def phase2 = new Phase(phase: "DealerBroker", comment: "test2", organization: bahman1, startDate: new Date(), status: "Waiting").save()
 //        def phase1 = new Phase(phase: "BuyerBroker", comment: "test1", organization: bahman2, startDate: new Date(), endDate: new Date(), status: "Pass").save()
@@ -62,7 +62,7 @@ class BootStrap {
 //        def phase7 = new Phase(phase: "Supplier", comment: "test2", organization: bazargani, startDate: new Date(), status: "Pass").save()
 //        def phase8 = new Phase(phase: "Manufacturer", comment: "test2", organization: bazargani, startDate: new Date(), status: "Waiting").save()
 //
-//
+////
 //        def contract1 = new Contract(contractNo: "1391193129",
 //                contractPartNo: "1",
 //                contractDate: new Date(),
@@ -96,11 +96,11 @@ class BootStrap {
 //                importDate: new Date(),
 ////                settlementCertificate:attachment
 //        ).save()
-//
-//        contract1.addToPhases(phase1)
-//        contract1.addToPhases(phase2)
-//        contract1.save()
-//        def contract2 = new Contract(contractNo: "1391193129",
+////
+////        contract1.addToPhases(phase1)
+////        contract1.addToPhases(phase2)
+////        contract1.save()
+////        def contract2 = new Contract(contractNo: "1391193129",
 //                contractPartNo: "2",
 //                contractDate: new Date(),
 //                allotmentDate: new Date(),

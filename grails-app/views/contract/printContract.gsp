@@ -161,7 +161,7 @@
 <br>
 
 <div class="row">
-    <div class="span4"><g:message code="accounting.contractValue.label"
+    <div class="span4"><g:message code=".contractValue.label"
                                   default=""/>
     ${contractValue}
     </div>

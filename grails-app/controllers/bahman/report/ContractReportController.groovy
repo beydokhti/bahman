@@ -198,7 +198,7 @@ class ContractReportController {
             def newXml = stringWriter.toString().trim()
 
             // The actual file download. This approach actually calls the save dialog of the browser.
-            byte[] byteArr = newXml.getBytes()
+            byte[] byteArr = newXml.getBytes("UTF-8")
 
 
             response.setHeader("Content-disposition", "attachment; filename=report.xml")

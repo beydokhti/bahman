@@ -229,8 +229,10 @@
     <div style="text-align:center ">
         <input class="btn" type="button" onclick="doAddAttachment()"
                value="${message(code: 'button.add.Attachment', default: 'Add Attachment')}">
-        <input class="btn" type="button" onclick="doAddFreight()"
-               value="${message(code: 'button.add.Freight', default: 'Add Freight')}">
+        <g:if test="${lastPhase.phase == 'BuyerBroker'}">
+            <input class="btn" type="button" onclick="doAddFreight()"
+                   value="${message(code: 'button.add.Freight', default: 'Add Freight')}">
+        </g:if>
         <input class="btn" type="button" onclick="doSubmit()"
                value="${message(code: 'button.submit', default: 'Submit')}">
         <g:if test="${lastPhase.phase != 'BuyerBroker'}">
