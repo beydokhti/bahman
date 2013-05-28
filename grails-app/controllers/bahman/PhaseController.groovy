@@ -104,11 +104,14 @@ class PhaseController {
 
     def save() {
         def prevPhase = Phase.get(params.phaseId)
+        if (prevPhase.status=="Waiting"){
         prevPhase.status = params.status
         prevPhase.endDate = new Date()
-        def phaseInstance = new Phase(params)
 
-        phaseInstance.startDate = new Date()
+
+            def phaseInstance = new Phase(params)
+            phaseInstance.startDate = new Date()
+
         if (prevPhase.phase == "BuyerBroker" && params.status == "Pass") {
             phaseInstance.phase = "DealerBroker"
         }
@@ -150,11 +153,17 @@ class PhaseController {
             return
         }
         def contract = Contract.get(params.contractId)
+
         contract.addToPhases(phaseInstance)
         if (contract.save()) {
             render phaseInstance.id
             redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
         }
+        }else{
+            def contract=Contract.get(params.contractId)
+            redirect(controller: "contract", action: "showPhase", params: [id:contract.id ])
+        }
+
 //        render 0
     }
 

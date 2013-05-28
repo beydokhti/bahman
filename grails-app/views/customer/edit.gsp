@@ -85,6 +85,47 @@
                 <g:textField name="mobileNo" maxlength="15" value="${customerInstance?.mobileNo}"/>
             </div>
 
+            <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'nId', 'error')} ">
+                <label for="nId">
+                    <g:message code="customer.nId.label" default="National Id"/>
+
+                </label>
+                <g:textField name="nId" maxlength="10" value="${customerInstance?.nId}"/>
+            </div>
+
+            <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'businessId', 'error')} ">
+                <label for="businessId">
+                    <g:message code="customer.businessId.label" default="Business Id"/>
+
+                </label>
+                <g:textField name="businessId" maxlength="15" value="${customerInstance?.businessId}"/>
+            </div>
+
+            <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'address', 'error')} ">
+                <label for="address">
+                    <g:message code="customer.address.label" default="Address"/>
+
+                </label>
+                <g:textField name="address" maxlength="200" value="${customerInstance?.address}"/>
+            </div>
+
+            <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'phoneNo', 'error')} ">
+                <label for="phoneNo">
+                    <g:message code="customer.phoneNo.label" default="Phone No"/>
+
+                </label>
+                <g:textField name="phoneNo" maxlength="15" value="${customerInstance?.phoneNo}"/>
+            </div>
+
+            <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'postalCode', 'error')} ">
+                <label for="postalCode">
+                    <g:message code="customer.postalCode.label" default="Postal Code"/>
+
+                </label>
+                <g:textField name="postalCode" maxlength="10" value="${customerInstance?.postalCode}"/>
+            </div>
+
+
             <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'accountExpired', 'error')} ">
                 <label for="accountExpired">
                     <g:message code="customer.accountExpired.label" default="Account Expired"/>
@@ -116,6 +157,8 @@
                 </label>
                 <g:checkBox name="passwordExpired" value="${customerInstance?.passwordExpired}"/>
             </div>
+
+
 
         </fieldset>
         <fieldset class="buttons">

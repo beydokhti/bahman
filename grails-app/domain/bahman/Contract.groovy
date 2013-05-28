@@ -1,8 +1,8 @@
 package bahman
 
 class Contract {
-    String contractNo
     String contractPartNo
+    String contractNo
     Date contractDate
     Date allotmentDate
     Date settlementDeadline
@@ -32,6 +32,7 @@ class Contract {
     String contractID
     Date releaseDate
     Date importDate
+    String freight
     static hasMany = [attachments:Attachment,
             phases:Phase,
             drafts:Attachment,
@@ -69,6 +70,7 @@ class Contract {
         settlementDate (nullable:true)
         contractID (nullable:false,maxSize: 50)
         releaseDate (nullable:false)
+        freight(nullable: true)
         importDate (nullable:false)
         drafts (nullable: true)
         attachments (nullable: true)

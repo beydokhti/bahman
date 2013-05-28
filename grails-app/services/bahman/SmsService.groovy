@@ -4,7 +4,7 @@ class SmsService {
 
     def sendSms(String message,String mobileNo) {
 
-                if (mobileNo!="" && mobileNo.length()!=0 )  {
+                if (mobileNo!=null && mobileNo!="" && mobileNo.length()!=0 )  {
                     def sms=new Sms()
                     sms.message=message
                     sms.mobileNo=mobileNo

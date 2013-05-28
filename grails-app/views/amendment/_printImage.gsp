@@ -9,6 +9,7 @@
     <script>
         function printpage()
         {
+            $(this).hide
             window.print()
         }
     </script>

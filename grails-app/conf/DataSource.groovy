@@ -26,9 +26,9 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/bahman?useUnicode=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://localhost/novin?useUnicode=true&characterEncoding=UTF-8"
             username = "root"
-            password = ""
+            password = "Salam123"
             pooled = true
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"

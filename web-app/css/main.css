@@ -374,10 +374,68 @@ fieldset,
     width: 40%;
 }
 
-.field-label {
-    background: #DFDDFF;
+.field-con{
+    /*padding-top:6px;*/
+    /*padding-bottom:6px;*/
+    background:#e1e1e1;
+    /*margin-bottom:1px;*/
+}
+
+.field-lab{
+    float:left;
+    /*width:70px;*/
+    /*text-align:right;*/
+    margin-right:7px;
+    color:#0066CC;
+    line-height:23px;
+    /*padding:4px;*/
+    /*font:13px Georgia, "Times New Roman", Times, serif;*/
+    border:1px solid #999999;
     border-radius: 3px;
+    /*margin-bottom: 10px;*/
+}
+
+no-space-right{
+    margin-right: 0px;
+}
+
+no-space-left{
+    margin-left: 0px;
+}
+
+.field-label {
+    /*background: #DFDDFF;*/
+    /*border-radius: 3px;*/
     margin-bottom: 10px;
+    /*float:left;*/
+    /*width:70px;*/
+    /*text-align:right;*/
+    /*margin-right:7px;*/
+    color:#F0F0F0;
+    line-height:23px;
+    padding-right: 4px;
+    /*font:13px Georgia, "Times New Roman", Times, serif;*/
+    border:1px solid #999999;
+    border-radius: 3px;
+    background-color: #417DAB;
+}
+
+.field-data {
+    padding-right: 4px;
+    /*background: #DFDDFF;*/
+    /*border-radius: 3px;*/
+    margin-bottom: 10px;
+    /*float:left;*/
+    /*width:70px;*/
+    /*text-align:right;*/
+    /*margin-right:7px;*/
+    color:#417DAB;
+    line-height:23px;
+    /*padding:4px;*/
+    /*font:13px Georgia, "Times New Roman", Times, serif;*/
+    border:1px solid #999999;
+    border-radius: 3px;
+    background-color: #F0F0F0;
 }
 .field-all {
     background: red;
@@ -415,6 +473,17 @@ fieldset,
     display: inline-block;
     text-align: right;
 }
+
+.property-value-small-inline{
+    margin-top: 1px;
+    font-weight: bold;
+    /*margin-bottom:1px;*/
+    padding: 3px;
+    width:54%;
+    display: inline;
+    text-align: right;
+}
+
 
 .detail-property-list {
     background-color: #ffffff;
@@ -461,8 +530,9 @@ fieldset,
     /*border-color:#DFDDFF  ;*/
     /*border-style: solid;*/
     border-radius: 5px 5px 5px 5px;
-    background-color:#DFDDFF ;
+    background-color:#417DAB ;
     text-align: center;
+    color:#F0F0F0 ;
 }
 .phasecontain{
     margin-top: 50px;
@@ -950,3 +1020,6 @@ a.skip {
 [class*="span"]{
     float: right !important;
 }
+
+
+

@@ -227,7 +227,8 @@ class AmendmentController {
 
     def printView() {
         def amendment = Amendment.get(params.amendmentId)
-        render(template: 'printImage', model: [amendment: amendment])
+//        render(template: 'printImage', model: [amendment: amendment])
+        return ([amendment: amendment])
     }
     def showAmendmentDetails() {
         def amendmentInstance = Amendment.get(params.id)

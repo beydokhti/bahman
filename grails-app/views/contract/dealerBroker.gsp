@@ -37,7 +37,7 @@
         <div class="tab-content">
             <div id="rA" class="tab-pane active" >
 
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr1">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -68,7 +68,7 @@
             </div>
 
             <div id="rB" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr2">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -99,12 +99,13 @@
                 <rg:dialog id="contract" title="Contract Form">
                     <rg:fields bean="${new bahman.Contract()}">
                         <rg:modify>
-                            <rg:hiddenReference field="phases"></rg:hiddenReference>
-                            <rg:hiddenReference field="attachments"></rg:hiddenReference>
-                            <rg:hiddenReference field="importDate"></rg:hiddenReference>
-                            <rg:hiddenReference field="drafts"></rg:hiddenReference>
-                            <rg:hiddenReference filed="dealerBrokerCode"></rg:hiddenReference>
-                            <rg:hiddenReference filed="dealerBrokerDesc"></rg:hiddenReference>
+                            <rg:ignoreField field="phases"></rg:ignoreField>
+                            <rg:ignoreField field="attachments"></rg:ignoreField>
+                            <rg:ignoreField field="amendments"></rg:ignoreField>
+                            <rg:ignoreField field="importDate"></rg:ignoreField>
+                            <rg:ignoreField field="drafts"></rg:ignoreField>
+                            <rg:ignoreField filed="dealerBrokerCode"></rg:ignoreField>
+                            <rg:ignoreField filed="dealerBrokerDesc"></rg:ignoreField>
                             <rg:ignoreField field="prevStatus"></rg:ignoreField>
                             <rg:ignoreField field="lastPhase"></rg:ignoreField>
                         </rg:modify>
@@ -123,7 +124,7 @@
             </div>
 
             <div id="rC" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr3">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -151,13 +152,13 @@
             </div>
 
             <div id="rD" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr4">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
                     <rg:like name="customerDesc"/>
                     <rg:eq name="dealerBrokerCode" value="${organization?.code}" hidden="true"/>
-                    <rg:isNotEmpty name="amendments"></rg:isNotEmpty>
+                    <rg:isNotEmpty name="amendments"/>
                     %{--<rg:isNotEmpty name="amendments"/>--}%
                     <rg:filterGrid grid="ContractAmendmentGrid" label="${message(code: "search")}"/>
                 </rg:criteria>
@@ -181,7 +182,7 @@
 
             <div id="rE" class="tab-pane active" >
 
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr5">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>

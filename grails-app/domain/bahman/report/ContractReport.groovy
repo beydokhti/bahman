@@ -34,6 +34,7 @@ class ContractReport {
     String releaseDate
     String importDate
     String draftNo
+    String freight
 
 
     static mapWith = "none"
@@ -70,6 +71,7 @@ class ContractReport {
         boursePrice ()
         settlementDate ()
         contractID ()
+        freight()
         releaseDate ()
         importDate ()
 

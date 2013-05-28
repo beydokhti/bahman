@@ -28,14 +28,14 @@
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
 
     <div class="row">
-        <div class="span4">
+        <div class="span3">
             <div class="detail-property-list">
 
                 <div class="detailcontain">
                     <span id="contractNo-label" class="property-label-small"><g:message
                             code="contract.contractNo.label" default="Contract No"/></span>
 
-                    <span class="property-value-small" aria-labelledby="contractNo-label"><g:fieldValue
+                    <span class="property-value-small-inline" aria-labelledby="contractNo-label"><g:fieldValue
                             bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
                                                                                           field="contractPartNo"/></span>
                 </div>
@@ -43,21 +43,21 @@
 
         </div>
 
-        <div class="span4">
+        <div class="span3">
             <div class="detail-property-list">
 
                 <div class="detailcontain">
                     <span id="customerDesc-label" class="property-label-small"><g:message
                             code="contract.customerDesc.label" default="Customer Desc"/></span>
 
-                    <span class="property-value-small" aria-labelledby="customerDesc-label"><g:fieldValue
+                    <span class="property-value-small-inline" aria-labelledby="customerDesc-label"><g:fieldValue
                             bean="${contractInstance}" field="customerDesc"/></span>
                 </div>
             </div>
 
         </div>
 
-        <div class="span4">
+        <div class="span3">
             <div class="detail-property-list">
 
                 <div class="detailcontain">
@@ -66,7 +66,7 @@
 
                     <g:each in="${contractInstance?.drafts}" var="drafts">
                         <g:if test="${drafts?.status != 'R'}">
-                            <span class="property-value-small"
+                            <span class="property-value-small-inline"
                                   aria-labelledby="customerDesc-label">${drafts?.description}</span>
                         </g:if>
                     </g:each>
@@ -74,6 +74,20 @@
             </div>
 
         </div>
+
+    <div class="span3">
+        <div class="detail-property-list">
+
+            <div class="detailcontain">
+                <span id="freight-label" class="property-label-small"><g:message
+                        code="contract.freight.label" default="Freight"/></span>
+
+                <span class="property-value-small-inline" aria-labelledby="contractFreight-label"><g:fieldValue
+                        bean="${contractInstance}" field="freight"/></span>
+            </div>
+        </div>
+
+    </div>
     </div>
 
     <div class="row-fluid">

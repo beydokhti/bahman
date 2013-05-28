@@ -15,32 +15,100 @@
     <g:set var="entityName" value="${message(code: 'attachment.label', default: 'attachment')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
     <script type="text/javascript">
+        %{--var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {--}%
+            %{--if (!params)--}%
+                %{--params = {}--}%
+            %{--$.ajaxSettings.traditional = true;--}%
+            %{--$.ajax({--}%
+                %{--type:"GET",--}%
+                %{--url:remoteAddress--}%
+            %{--}).done(function (response) {--}%
+                        %{--var r = $("#ajax-form" + remoteAddress.hashCode());--}%
+                        %{--if (!r.length)--}%
+                            %{--r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' action='" + saveAddress + "'></form>")--}%
+                        %{--r.html("")--}%
+
+                        %{--r.dialog({--}%
+                            %{--modal:true,--}%
+                            %{--width:params.width,--}%
+                            %{--resizable:false,--}%
+                            %{--buttons:{--}%
+                                %{--'ذخیره':function () {--}%
+                                    %{--if (params && params.beforeSubmit)--}%
+                                        %{--params.beforeSubmit();--}%
+                                    %{--if((params.confirm=='Y' && confirm("<g:message code="are-you-sure" />"))||params.confirm=='N' ){--}%
+%{--//                                        if (params.switch == 'ajaxSubmit') {--}%
+%{--//                                        r.ajaxSubmit({--}%
+%{--//                                            url:saveAddress,--}%
+%{--//                                            type:"post",--}%
+%{--//                                            success:function (resp) {--}%
+%{--//                                                if (params && params.afterSave)--}%
+%{--//                                                    params.afterSave(resp)--}%
+%{--//                                                if (saveCallback) {--}%
+%{--//                                                    saveCallback(resp)--}%
+%{--//                                                }--}%
+%{--//                                            }--}%
+%{--//                                        })--}%
+%{--//                                    }                                     } else {--}%
+                                        %{--r.submit()--}%
+                                    %{--}--}%
+                                    %{--$(this).dialog("close");--}%
+                                %{--},--}%
+                                %{--"انصراف":function () {--}%
+                                    %{--$(this).dialog("close");--}%
+                                %{--}--}%
+                            %{--},--}%
+                            %{--close:function () {--}%
+                                %{--r.html("")--}%
+                            %{--}--}%
+                        %{--})--}%
+                        %{--if (params && params.width) {--}%
+                            %{--r.dialog("option", "width", params.width)--}%
+                            %{--r.dialog("option", "position", "top")--}%
+                        %{--}--}%
+
+                        %{--r.append(response);--}%
+                        %{--if (loadCallback)--}%
+                            %{--loadCallback(response);--}%
+                    %{--});--}%
+        %{--}--}%
+
+        %{--function doAddDraft(){--}%
+
+            %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',--}%
+                    %{--'<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment']"/>',--}%
+                    %{--function (res) {--}%
+                        %{--$("#attachment-container").append($(res))--}%
+                    %{--}, undefined, {width:400,confirm:'Y'})--}%
+        %{--}--}%
+
+
         var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
             if (!params)
                 params = {}
             $.ajaxSettings.traditional = true;
             $.ajax({
-                type:"GET",
-                url:remoteAddress
+                type: "GET",
+                url: remoteAddress
             }).done(function (response) {
                         var r = $("#ajax-form" + remoteAddress.hashCode());
                         if (!r.length)
-                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' action='" + saveAddress + "'></form>")
+                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' method='post' action='" + saveAddress + "'></form>")
                         r.html("")
 
                         r.dialog({
-                            modal:true,
-                            width:params.width,
-                            resizable:false,
-                            buttons:{
-                                'ذخیره':function () {
+                            modal: true,
+                            width: params.width,
+                            resizable: false,
+                            buttons: {
+                                'ذخیره': function () {
                                     if (params && params.beforeSubmit)
                                         params.beforeSubmit();
-                                    if((params.confirm=='Y' && confirm("<g:message code="are-you-sure" />"))||params.confirm=='N' ){
+                                    if (params.switch == 'ajaxSubmit') {
                                         r.ajaxSubmit({
-                                            url:saveAddress,
-                                            type:"post",
-                                            success:function (resp) {
+                                            url: saveAddress,
+                                            type: "post",
+                                            success: function (resp) {
                                                 if (params && params.afterSave)
                                                     params.afterSave(resp)
                                                 if (saveCallback) {
@@ -48,14 +116,16 @@
                                                 }
                                             }
                                         })
+                                    } else {
+                                        r.submit()
                                     }
                                     $(this).dialog("close");
                                 },
-                                "انصراف":function () {
+                                "انصراف": function () {
                                     $(this).dialog("close");
                                 }
                             },
-                            close:function () {
+                            close: function () {
                                 r.html("")
                             }
                         })
@@ -70,14 +140,15 @@
                     });
         }
 
-        function doAddDraft(){
+        function doAddDraft() {
 
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                    '<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment']"/>',
+                    '<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'showAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))
-                    }, undefined, {width:400,confirm:'Y'})
+                    }, undefined, {width: 400, confirm: 'Y'})
         }
+
     </script>
 </head>
 
@@ -93,14 +164,14 @@
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
     %{--<input name>contract--}%
     <div class="row">
-        <div class="span4">
+        <div class="span3">
             <div class="detail-property-list">
 
                 <div class="detailcontain">
                     <span id="contractNo-label" class="property-label-small"><g:message
                             code="contract.contractNo.label" default="Contract No"/></span>
 
-                    <span class="property-value-small" aria-labelledby="contractNo-label"><g:fieldValue
+                    <span class="property-value-small-inline" aria-labelledby="contractNo-label"><g:fieldValue
                             bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
                                                                                           field="contractPartNo"/></span>
                 </div>
@@ -108,21 +179,21 @@
 
         </div>
 
-        <div class="span4">
+        <div class="span3">
             <div class="detail-property-list">
 
                 <div class="detailcontain">
                     <span id="customerDesc-label" class="property-label-small"><g:message
                             code="contract.customerDesc.label" default="Customer Desc"/></span>
 
-                    <span class="property-value-small" aria-labelledby="customerDesc-label"><g:fieldValue
+                    <span class="property-value-small-inline" aria-labelledby="customerDesc-label"><g:fieldValue
                             bean="${contractInstance}" field="customerDesc"/></span>
                 </div>
             </div>
 
         </div>
 
-        <div class="span4">
+        <div class="span3">
             <div class="detail-property-list">
 
                 <div class="detailcontain">
@@ -131,7 +202,7 @@
 
                     <g:each in="${contractInstance?.drafts}" var="drafts">
                         <g:if test="${drafts?.status != 'R'}">
-                            <span class="property-value-small"
+                            <span class="property-value-small-inline"
                                   aria-labelledby="customerDesc-label">${drafts?.description}</span>
                         </g:if>
                     </g:each>
@@ -139,6 +210,20 @@
             </div>
 
         </div>
+
+    <div class="span3">
+        <div class="detail-property-list">
+
+            <div class="detailcontain">
+                <span id="freight-label" class="property-label-small"><g:message
+                        code="contract.freight.label" default="Freight"/></span>
+
+                <span class="property-value-small-inline" aria-labelledby="contractFreight-label"><g:fieldValue
+                        bean="${contractInstance}" field="freight"/></span>
+            </div>
+        </div>
+
+    </div>
     </div>
 
     <div class="row-fluid">

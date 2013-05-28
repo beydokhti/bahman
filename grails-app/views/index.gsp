@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Bahman Kala</title>
+    <title>Novin Kala</title>
     <style type="text/css" media="screen">
     #status {
         background-color: #eee;

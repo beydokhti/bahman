@@ -42,7 +42,7 @@
 
         <div class="tab-content">
             <div id="rA" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr1">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                 %{--<rg:like name="buyerBrokerDesc"/>--}%
@@ -75,6 +75,7 @@
                             <rg:hiddenReference field="drafts"></rg:hiddenReference>
                             <rg:hiddenReference filed="buyerBrokerCode"></rg:hiddenReference>
                             <rg:hiddenReference filed="buyerBrokerDesc"></rg:hiddenReference>
+                            <rg:ignoreField field="amendments"></rg:ignoreField>
                             <rg:ignoreField field="prevStatus"></rg:ignoreField>
                             <rg:ignoreField field="lastPhase"></rg:ignoreField>
                         </rg:modify>
@@ -93,7 +94,7 @@
 
             <div id="rB" class="tab-pane active">
 
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr2">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="dealerBrokerDesc"/>
@@ -124,7 +125,7 @@
             </div>
 
             <div id="rC" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr3">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="dealerBrokerDesc"/>
@@ -146,7 +147,7 @@
                 </rg:grid>
             </div>
             <div id="rD" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr4">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="dealerBrokerDesc"/>
@@ -177,7 +178,7 @@
 
             <div id="rE" class="tab-pane active" >
 
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr5">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>

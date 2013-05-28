@@ -46,7 +46,7 @@
 
         <div class="tab-content">
             <div id="rA" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr1">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -72,7 +72,7 @@
             </div>
 
             <div id="rB" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr2">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -98,7 +98,7 @@
             </div>
 
             <div id="rC" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr3">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -120,7 +120,7 @@
             </div>
 
             <div id="rD" class="tab-pane active">
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr4">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>
@@ -142,7 +142,7 @@
 
             <div id="rE" class="tab-pane active">
 
-                <rg:criteria inline='true'>
+                <rg:criteria inline='true' id="cr5">
                     <rg:like name="contractNo"/>
                     <rg:like name="contractPartNo"/>
                     <rg:like name="buyerBrokerDesc"/>

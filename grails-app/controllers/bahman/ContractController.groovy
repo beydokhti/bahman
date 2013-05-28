@@ -65,17 +65,13 @@ class ContractController {
                         code = contract.buyerBrokerCode
                     else
                         code = contract.dealerBrokerCode
-                }
-
-                else if (user instanceof Customer) {
+                } else if (user instanceof Customer) {
                     code = contract.customerCode
                     userType = "Customer"
-                }
-                else if (user instanceof Supplier) {
+                } else if (user instanceof Supplier) {
                     code = contract.supplierCode
                     userType = "Supplier"
-                }
-                else if (user instanceof Manufacturer) {
+                } else if (user instanceof Manufacturer) {
 //                    desc = contract.manufacturerDesc
                     code = contract.supplierCode
                     userType = "Manufacturer"
@@ -91,9 +87,15 @@ class ContractController {
 //                String phaseStatus = Contract.findByPhaseStatus(contract, userType)
 //                if (phaseStatus.equals("Pass"))
                 showAmendment = "True"
+                def customer = Customer.findByCode(contract.customerCode)
+
+                Number addedTax = Math.round(contract.price.toInteger()*contract.totalShipments.toInteger() * 0.06)
+                Number fees = Math.round(contract.price.toInteger() *contract.totalShipments.toInteger()* 0.00278)
+                Number contractValue=Math.round(contract.price.toInteger() *contract.totalShipments.toInteger())
+
 //                if (user.code == code || user.description == desc) {
                 if (user.code == code) {
-                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment]
+                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue]
                 }
 
             }
@@ -121,20 +123,15 @@ class ContractController {
 //                    }
                     if (user.brokerType == "BuyerBroker") {
                         code = contract.buyerBrokerCode
-                    }
-                    else if (user.brokerType == "DealerBroker") {
+                    } else if (user.brokerType == "DealerBroker") {
                         code = contract.dealerBrokerCode
                     }
 
-                }
-
-                else if (user instanceof Customer) {
+                } else if (user instanceof Customer) {
                     code = contract.customerCode
-                }
-                else if (user instanceof Supplier) {
+                } else if (user instanceof Supplier) {
                     code = contract.supplierCode
-                }
-                else if (user instanceof Manufacturer) {
+                } else if (user instanceof Manufacturer) {
                     code = contract.supplierCode
                     desc = contract.manufacturerDesc
                 }
@@ -155,19 +152,14 @@ class ContractController {
 //                def dealer =UserRole.findByUserAndSubRoles(user,subRoleB)
                 if (user.brokerType == "BuyerBroker") {
                     redirect(action: "buyerBroker", params: params)
-                }
-                else if (user.brokerType == "DealerBroker") {
+                } else if (user.brokerType == "DealerBroker") {
                     redirect(action: "dealerBroker", params: params)
                 }
-            }
-
-            else if (user instanceof Customer) {
+            } else if (user instanceof Customer) {
                 redirect(action: "Customer", params: params)
-            }
-            else if (user instanceof Supplier) {
+            } else if (user instanceof Supplier) {
                 redirect(action: "Supplier", params: params)
-            }
-            else if (user instanceof Manufacturer) {
+            } else if (user instanceof Manufacturer) {
                 redirect(action: "Manufacturer", params: params)
             }
         }
@@ -260,7 +252,8 @@ class ContractController {
             return [contractInstance: contractInstance]
         }
     }
-    def getImageAmendment(){
+
+    def getImageAmendment() {
         if (params.id) {
             def amendment = Amendment.get(params.id)
             String ct = amendment.contentType.substring(0, amendment.contentType.indexOf('/')).toLowerCase()
@@ -346,9 +339,10 @@ class ContractController {
 
     def upload() {
         def file = request.getFile('file')
-        def custRole = Role.findByAuthority( "Customer")
+        if (file.contentType=='application/vnd.ms-excel' ){
+        def custRole = Role.findByAuthority("Customer")
         def customer1
-        Workbook sb
+        def sb
         try {
             def fileIs = new ByteArrayInputStream(file.bytes)
             sb = new XSSFWorkbook(fileIs)
@@ -393,7 +387,7 @@ class ContractController {
                 ]
         ]
         Map propertyConfigurationMap = [:]
-        CONFIG_COLUMN_MAP.columnMap.each {key, value ->
+        CONFIG_COLUMN_MAP.columnMap.each { key, value ->
             propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
         }
 
@@ -403,14 +397,14 @@ class ContractController {
             dateFields.each { field ->
                 try {
                     def fff = it[field]
-                    def dateParts = it[field].split("/").collect {it as Integer}
+                    def dateParts = it[field].split("/").collect { it as Integer }
                     JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
                     def gc = jc.toJavaUtilGregorianCalendar()
                     it[field] = 'date.struct'
                     it["${field}_year"] = gc.get(Calendar.YEAR) as String
                     it["${field}_month"] = gc.get(Calendar.MONTH) as String
                     it["${field}_day"] = gc.get(Calendar.DATE) as String
-                } catch (x) {x.printStackTrace()}
+                } catch (x) { x.printStackTrace() }
             }
 
             Contract contract = new Contract(it)
@@ -420,28 +414,31 @@ class ContractController {
                 oldContract.settlementDate = contract.settlementDate
                 oldContract.save()
 
-            }
-            else {
+            } else {
                 contract.save()
                 phaseService.addDefaultPhases(contract)
                 try {
-                    customer1=null
-                    customer1=Customer.findByCode(contract.customerCode)?:new Customer(code: contract.customerCode,
+                    customer1 = null
+                    customer1 = Customer.findByCode(contract.customerCode) ?: new Customer(code: contract.customerCode,
                             description: contract.customerDesc,
-                            username:"client"+contract.customerCode,
-                            password: "pass" +contract.customerCode,
+                            username: "client" + contract.customerCode,
+                            password: "pass" + contract.customerCode,
                             enabled: false).save()
-                    if (!customer1.equals(null)){
-                        UserRole.findByUser(customer1)?:UserRole.create(customer1, custRole)
+                    if (!customer1.equals(null)) {
+                        UserRole.findByUser(customer1) ?: UserRole.create(customer1, custRole)
                     }
 
-                }   catch (Exception e){}
+                } catch (Exception e) {}
 
             }
 
         }
 
         redirect(action: "list")
+        }
+        else{
+        redirect(action: "importExcel")
+        }
     }
 
     def showAttachmentPhaseDraft() {
@@ -482,6 +479,37 @@ class ContractController {
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'contract.label', default: 'contract'), contractInstance.id])
         redirect(action: "show", id: contractInstance.id)
+    }
+
+    def printContract() {
+        def contract = Contract.findById(params.id)
+
+        def customer = Customer.findByCode(contract.customerCode)
+
+        Number addedTax = Math.round(contract.price.toInteger()*contract.totalShipments.toInteger() * 0.06)
+        Number fees = Math.round(contract.price.toInteger() *contract.totalShipments.toInteger()* 0.00278)
+        Number contractValue=Math.round(contract.price.toInteger() *contract.totalShipments.toInteger())
+
+//            render(template: 'printContract', model: [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees])
+        return [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue]
+    }
+
+    def saveFreight() {
+        def contract = Contract.get(params.contractId)
+
+        contract.freight = params.description
+
+        if (contract.save())
+            render 0;
+
+    }
+
+    def freightForm() {
+        def contractInstance
+        if (params.contractId) {
+            contractInstance = Contract.get(params.contractId)
+            render(template: 'freightForm', model: [contractInstance: contractInstance])
+        }
     }
 
 }

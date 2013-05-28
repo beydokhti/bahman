@@ -14,7 +14,8 @@
         window.print();
     }
 </script>
-<img id="img" src="<g:createLink action="getImage" controller="attachment" id="${attachment?.id}"/>">
+<img id="img" src="<g:createLink action="getImage" controller="amendment" id="${amendment?.id}"/>">
+
 
 
 <div class="row">

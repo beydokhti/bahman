@@ -1,10 +1,7 @@
 package bahman
 
-import grails.converters.JSON
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 class AttachmentController {
     def springSecurityService
@@ -273,6 +270,8 @@ class AttachmentController {
 
     def printView() {
         def attachment = Attachment.get(params.attachmentId)
-        render(template: 'printImage', model: [attachment: attachment])
+//        render(template: 'printImage', model: [attachment: attachment])
+        return( [attachment: attachment])
+
     }
 }

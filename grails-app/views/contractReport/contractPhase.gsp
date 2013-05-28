@@ -19,7 +19,7 @@
 <g:form action="showContractPhaseReport" controller="contractReport">
     <div class="row">
 
-        <div class="fieldcontain">
+        %{--<div class="fieldcontain">--}%
 
             <div class="span2">
                 <g:message code="contract.contractNo.label" default="Contract No"/>
@@ -36,11 +36,11 @@
             <div class="span3">
                 <g:textField name="contractNoTo"/>
             </div>
-        </div>
+        %{--</div>--}%
     </div>
 
     <div class="row">
-        <div class="fieldcontain">
+        %{--<div class="fieldcontain">--}%
             <div class="span2">
                 <g:message code="contract.contractPartNo.label" default="Contract Part No"/>
             </div>
@@ -56,11 +56,11 @@
             <div class="span1">
                 <g:textField name="contractPartNoTo"/>
             </div>
-        </div>
+        %{--</div>--}%
     </div>
 
     <div class="row">
-        <div class="fieldcontain">
+        %{--<div class="fieldcontain">--}%
             <div class="span2">
                 <g:message code="contract.contractDate.label" default="Contract Date"/>
 
@@ -77,12 +77,12 @@
             <div class="span3">
                 <rg:datePicker name="contractDateTo" precision="day"/>
             </div>
-        </div>
+        %{--</div>--}%
     </div>
 
 
     <div class="row">
-        <div class="fieldcontain">
+        %{--<div class="fieldcontain">--}%
             <div class="span2">
                 <g:message code="contract.buyerBrokerCode.label" default="Buyer Broker"/>
 
@@ -99,11 +99,11 @@
             <div class="span3">
                 <g:textField name="buyerBrokerCodeTo"/>
             </div>
-        </div>
+        %{--</div>--}%
     </div>
 
     <div class="row">
-        <div class="fieldcontain">
+        %{--<div class="fieldcontain">--}%
             <div class="span2">
                 <g:message code="contract.customerCode.label" default="Customer Code"/>
 
@@ -120,10 +120,11 @@
             <div class="span3">
                 <g:textField name="customerCodeTo"/>
             </div>
-        </div>
+        %{--</div>--}%
     </div>
+
     <div class="row">
-        <div class="fieldcontain">
+        %{--<div class="fieldcontain">--}%
             <div class="span2">
     <g:message code="contract.supplierCode.label" default="Supplier Code"/>
 
@@ -140,16 +141,36 @@
     <div class="span3">
         <g:textField name="supplierCodeTo"/>
     </div>
-    </div>
-    <g:submitButton name="showReport" class="show" value="${message(code: 'report.show.label', default: 'Show')}"/>
-    <g:actionSubmit value="${message(code: 'report.export.excel.label', default: 'Show')}" action="xls"/>
-    %{--<input type="button" onclick="xls()" value="excel"/>--}%
-</g:form>
-<script type="text/javascript">
-    function xls() {
+    %{--</div>--}%
+   </div>
 
-    }
-</script>
+
+    <div class="row">
+        %{--<div class="fieldcontain">--}%
+            <div class="span2">
+                <g:message code="contract.productSymbol.label" default="Customer Code"/>
+
+            </div>
+
+            <div class="span3">
+                <g:textField name="productSymbol"/>
+            </div>
+
+            <div class="span1">
+                <g:message code="contract.customerDesc" style="text-align: center"/>
+            </div>
+
+            <div class="span3">
+                <g:textField name="customerDesc"/>
+            </div>
+        %{--</div>--}%
+    </div>
+
+
+    <g:submitButton name="showReport" class="show" value="${message(code: 'report.show.label', default: 'Show')}"/>
+    <g:actionSubmit value="${message(code: 'report.export.excel.label', default: 'EXCEL')}" action="xls"/>
+    <g:actionSubmit value="${message(code: 'report.export.xml.label', default: 'XML')}" action="xml"/>
+</g:form>
 <rg:grid domainClass="${bahman.report.ContractReport}" maxColumns="11" showFirstColumn="false" footerRow="true" showAllRows="true"
          width="2000px"
          source="${[service: "contractPhaseReport", method: "report",
@@ -158,7 +179,8 @@
                          contractDateFrom: "${reportParams.contractDateFrom}", contractDateTo: "${reportParams.contractDateTo}",
                          buyerBrokerCodeFrom: "${reportParams.buyerBrokerCodeFrom}", buyerBrokerCodeTo: "${reportParams.buyerBrokerCodeTo}",
                          customerCodeFrom:"${reportParams.customerCodeFrom}",customerCodeTo:"${reportParams.customerCodeTo}",
-                         supplierCodeFrom:"${reportParams.supplierCodeFrom}",supplierCodeTo:"${reportParams.supplierCodeTo}"]]}"/>
+                         supplierCodeFrom:"${reportParams.supplierCodeFrom}",supplierCodeTo:"${reportParams.supplierCodeTo}",
+                         productSymbol:"${reportParams.productSymbol}",customerDesc:"${reportParams.customerDesc}"]]}"/>
 
 </body>
 </html>
