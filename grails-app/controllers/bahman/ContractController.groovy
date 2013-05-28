@@ -349,13 +349,13 @@ class ContractController {
             sb = new XSSFWorkbook(fileIs)
             System.out.println("step1")
         } catch (x) {
-            try {
+//            try {
                 def fileIs = new ByteArrayInputStream(file.bytes)
                 sb = new HSSFWorkbook(fileIs)
                 System.out.println("step2")
-            }catch (Exception e){
-                System.out.println(e.getMessage())
-            }
+//            }catch (Exception e){
+//                System.out.println(e.getMessage())
+//            }
         }
             System.out.println("step3")
         Map CONFIG_COLUMN_MAP = [
@@ -411,12 +411,12 @@ class ContractController {
                     def gc = jc.toJavaUtilGregorianCalendar()
                     it[field] = 'date.struct'
                     it["${field}_year"] = gc.get(Calendar.YEAR) as String
-                    def dy = it["${field}_year"]
+//                    def dy = it["${field}_year"]
                     it["${field}_month"] = gc.get(Calendar.MONTH)+1 as String
-                    def dm = it["${field}_month"] +1
+//                    def dm = it["${field}_month"] +1
                     it["${field}_day"] = gc.get(Calendar.DATE) as String
-                    def dd = it["${field}_day"]
-                    def dd2 = it["${field}_day"]
+//                    def dd = it["${field}_day"]
+//                    def dd2 = it["${field}_day"]
                 } catch (x) { x.printStackTrace() }
             }
 
