@@ -89,14 +89,14 @@ class ContractController {
                 showAmendment = "True"
                 def customer = Customer.findByCode(contract.customerCode)
 
-                Number addedTax = Math.round(contract.price.toInteger()*contract.quantity.toInteger() * 0.06)
-                Number fees = Math.round(contract.price.toInteger() *contract.quantity.toInteger()* 0.00278)
-                Number contractValue=contract.price.toInteger() *contract.quantity.toInteger()
-                Number shareSeller=contractValue- fees
+                Number addedTax = Math.round(contract.price.toInteger() * contract.quantity.toInteger() * 0.06)
+                Number fees = Math.round(contract.price.toInteger() * contract.quantity.toInteger() * 0.00278)
+                Number contractValue = contract.price.toInteger() * contract.quantity.toInteger()
+                Number shareSeller = contractValue - fees
 
 //                if (user.code == code || user.description == desc) {
                 if (user.code == code) {
-                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue,shareSeller:shareSeller]
+                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, customer: customer, addedTax: addedTax, fees: fees, contractValue: contractValue, shareSeller: shareSeller]
                 }
 
             }
@@ -340,117 +340,121 @@ class ContractController {
 
     def upload() {
         def file = request.getFile('file')
-        if (file.contentType=='application/vnd.ms-excel' ){
-        def custRole = Role.findByAuthority("Customer")
-        def customer1
-        def sb
+//        if (file.contentType=='application/vnd.ms-excel' ){
         try {
-            def fileIs = new ByteArrayInputStream(file.bytes)
-            sb = new XSSFWorkbook(fileIs)
-            System.out.println("step1")
-        } catch (x) {
+            def custRole = Role.findByAuthority("Customer")
+            def customer1
+            def sb
+            try {
+                def fileIs = new ByteArrayInputStream(file.bytes)
+                sb = new XSSFWorkbook(fileIs)
+                println("step1")
+            } catch (x) {
 //            try {
+                x.printStackTrace()
                 def fileIs = new ByteArrayInputStream(file.bytes)
                 sb = new HSSFWorkbook(fileIs)
-                System.out.println("step2")
+                println("step2")
 //            }catch (Exception e){
 //                System.out.println(e.getMessage())
 //            }
-        }
-            System.out.println("step3")
-        Map CONFIG_COLUMN_MAP = [
-                sheet: 'Sheet1',
-                startRow: 1,
-                columnMap: [
-                        'B': 'contractNo',
-                        'C': 'contractPartNo',
-                        'D': 'contractDate',
-                        'E': 'allotmentDate',
-                        'F': 'settlementDeadline',
-                        'G': 'settlementType',
-                        'H': 'dealerBrokerDesc',
-                        'I': 'buyerBrokerDesc',
-                        'J': 'customerDesc',
-                        'K': 'productSymbol',
-                        'L': 'productDesc',
-                        'M': 'totalShipments',
-                        'N': 'price',
-                        'O': 'contractType',
-                        'P': 'deliveryDate',
-                        'Q': 'manufacturerDesc',
-                        'R': 'deliveryPlace',
-                        'S': 'productMainGroup',
-                        'T': 'productGroup',
-                        'U': 'productSubGroup',
-                        'V': 'weight',
-                        'W': 'quantity',
-                        'X': 'buyerBrokerCode',
-                        'Y': 'dealerBrokerCode',
-                        'Z': 'customerCode',
-                        'AA': 'supplierCode',
-                        'AB': 'boursePrice',
-                        'AC': 'settlementDate',
-                        'AD': 'contractID',
-                        'AE': 'releaseDate'
-                ]
-        ]
-        Map propertyConfigurationMap = [:]
-        CONFIG_COLUMN_MAP.columnMap.each { key, value ->
-            propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
-        }
+            }
+            println("step3")
+            Map CONFIG_COLUMN_MAP = [
+                    sheet: 'Sheet1',
+                    startRow: 1,
+                    columnMap: [
+                            'B': 'contractNo',
+                            'C': 'contractPartNo',
+                            'D': 'contractDate',
+                            'E': 'allotmentDate',
+                            'F': 'settlementDeadline',
+                            'G': 'settlementType',
+                            'H': 'dealerBrokerDesc',
+                            'I': 'buyerBrokerDesc',
+                            'J': 'customerDesc',
+                            'K': 'productSymbol',
+                            'L': 'productDesc',
+                            'M': 'totalShipments',
+                            'N': 'price',
+                            'O': 'contractType',
+                            'P': 'deliveryDate',
+                            'Q': 'manufacturerDesc',
+                            'R': 'deliveryPlace',
+                            'S': 'productMainGroup',
+                            'T': 'productGroup',
+                            'U': 'productSubGroup',
+                            'V': 'weight',
+                            'W': 'quantity',
+                            'X': 'buyerBrokerCode',
+                            'Y': 'dealerBrokerCode',
+                            'Z': 'customerCode',
+                            'AA': 'supplierCode',
+                            'AB': 'boursePrice',
+                            'AC': 'settlementDate',
+                            'AD': 'contractID',
+                            'AE': 'releaseDate'
+                    ]
+            ]
+            Map propertyConfigurationMap = [:]
+            CONFIG_COLUMN_MAP.columnMap.each { key, value ->
+                propertyConfigurationMap[value] = [expectedType: ExpectedPropertyType.StringType, defaultValue: null]
+            }
 
-            System.out.println("step4")
-        def dateFields = ["contractDate", "allotmentDate", "settlementDeadline", "deliveryDate", "settlementDate", "releaseDate"]
-        def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
-        res.each {
-            dateFields.each { field ->
-                try {
-                    def fff = it[field]
-                    def dateParts = it[field].split("/").collect { it as Integer }
-                    JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
-                    def gc = jc.toJavaUtilGregorianCalendar()
-                    it[field] = 'date.struct'
-                    it["${field}_year"] = gc.get(Calendar.YEAR) as String
+            println("step4")
+            def dateFields = ["contractDate", "allotmentDate", "settlementDeadline", "deliveryDate", "settlementDate", "releaseDate"]
+            def res = excelImportService.columns(sb, CONFIG_COLUMN_MAP, null, propertyConfigurationMap)
+            res.each {
+                dateFields.each { field ->
+                    try {
+                        def fff = it[field]
+                        def dateParts = it[field].split("/").collect { it as Integer }
+                        JalaliCalendar jc = new JalaliCalendar(dateParts[0], dateParts[1], dateParts[2])
+                        def gc = jc.toJavaUtilGregorianCalendar()
+                        it[field] = 'date.struct'
+                        it["${field}_year"] = gc.get(Calendar.YEAR) as String
 //                    def dy = it["${field}_year"]
-                    it["${field}_month"] = gc.get(Calendar.MONTH)+1 as String
+                        it["${field}_month"] = gc.get(Calendar.MONTH) + 1 as String
 //                    def dm = it["${field}_month"] +1
-                    it["${field}_day"] = gc.get(Calendar.DATE) as String
+                        it["${field}_day"] = gc.get(Calendar.DATE) as String
 //                    def dd = it["${field}_day"]
 //                    def dd2 = it["${field}_day"]
-                } catch (x) { x.printStackTrace() }
+                    } catch (x) { x.printStackTrace() }
+                }
+
+                Contract contract = new Contract(it)
+                contract.importDate = new Date()
+                def oldContract = Contract.findByContractNoAndContractPartNo(contract.contractNo, contract.contractPartNo)
+                if (oldContract) {
+                    oldContract.settlementDate = contract.settlementDate
+                    oldContract.save()
+
+                } else {
+                    contract.save()
+                    phaseService.addDefaultPhases(contract)
+                    try {
+                        customer1 = null
+                        customer1 = Customer.findByCode(contract.customerCode) ?: new Customer(code: contract.customerCode,
+                                description: contract.customerDesc,
+                                username: "client" + contract.customerCode,
+                                password: "pass" + contract.customerCode,
+                                enabled: false).save()
+                        if (!customer1.equals(null)) {
+                            UserRole.findByUser(customer1) ?: UserRole.create(customer1, custRole)
+                        }
+
+                    } catch (Exception e) {e.printStackTrace()}
+
+                }
+
             }
 
-            Contract contract = new Contract(it)
-            contract.importDate = new Date()
-            def oldContract = Contract.findByContractNoAndContractPartNo(contract.contractNo, contract.contractPartNo)
-            if (oldContract) {
-                oldContract.settlementDate = contract.settlementDate
-                oldContract.save()
-
-            } else {
-                contract.save()
-                phaseService.addDefaultPhases(contract)
-                try {
-                    customer1 = null
-                    customer1 = Customer.findByCode(contract.customerCode) ?: new Customer(code: contract.customerCode,
-                            description: contract.customerDesc,
-                            username: "client" + contract.customerCode,
-                            password: "pass" + contract.customerCode,
-                            enabled: false).save()
-                    if (!customer1.equals(null)) {
-                        UserRole.findByUser(customer1) ?: UserRole.create(customer1, custRole)
-                    }
-
-                } catch (Exception e) {}
-
-            }
-
+            redirect(action: "list")
         }
-
-        redirect(action: "list")
-        }
-        else{
-        redirect(action: "importExcel")
+        catch (e) {
+//        else{
+            e.printStackTrace()
+            redirect(action: "importExcel")
         }
     }
 
@@ -499,12 +503,12 @@ class ContractController {
 
         def customer = Customer.findByCode(contract.customerCode)
 
-        Number addedTax = Math.round(contract.price.toInteger()*contract.quantity.toInteger() * 0.06)
-        Number fees = Math.round(contract.price.toInteger() *contract.quantity.toInteger()* 0.00278)
-        Number contractValue=Math.round(contract.price.toInteger() *contract.quantity.toInteger())
+        Number addedTax = Math.round(contract.price.toInteger() * contract.quantity.toInteger() * 0.06)
+        Number fees = Math.round(contract.price.toInteger() * contract.quantity.toInteger() * 0.00278)
+        Number contractValue = Math.round(contract.price.toInteger() * contract.quantity.toInteger())
 
 //            render(template: 'printContract', model: [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees])
-        return [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees,contractValue:contractValue]
+        return [contractInstance: contract, customer: customer, addedTax: addedTax, fees: fees, contractValue: contractValue]
     }
 
     def saveFreight() {

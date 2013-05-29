@@ -14,6 +14,9 @@ class User {
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
+        accountExpired(nullable:true)
+        accountLocked(nullable:true)
+        passwordExpired(nullable:true)
 
 	}
 
