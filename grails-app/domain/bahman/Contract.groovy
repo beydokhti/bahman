@@ -33,6 +33,14 @@ class Contract {
     Date releaseDate
     Date importDate
     String freight
+    String placeOfUnloading
+    String addedTaxReceipt
+    Date addedTaxReceiptDate
+    Customer customer
+    Manufacturer manufacturer
+    Broker buyerBroker
+    Supplier supplier
+
     static hasMany = [attachments:Attachment,
             phases:Phase,
             drafts:Attachment,
@@ -70,8 +78,15 @@ class Contract {
         settlementDate (nullable:true)
         contractID (nullable:false,maxSize: 50)
         releaseDate (nullable:false)
-        freight(nullable: true)
+        freight(nullable: true,maxSize: 100)
+        placeOfUnloading(nullable: true,maxSize: 500)
+        addedTaxReceipt(nullable: true,maxSize: 50)
+        addedTaxReceiptDate(nullable: true)
         importDate (nullable:false)
+        customer(nullable: true)
+        manufacturer(nullable: true)
+        supplier(nullable: true)
+        buyerBroker(nullable: true)
         drafts (nullable: true)
         attachments (nullable: true)
         phases(nullable: true)

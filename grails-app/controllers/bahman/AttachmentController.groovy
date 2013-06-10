@@ -74,11 +74,15 @@ class AttachmentController {
             else
                 render attachmentInstance as JSON\*/
         }
+
+
         redirect(controller: params.rcontroller, action: params.raction, id: params.redirectId)
     }
 
 
     def saveDraft() {
+
+
         def attachmentInstance = new Attachment(params)
         def file = request.getFile("document")
         try {

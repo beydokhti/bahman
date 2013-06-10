@@ -25,15 +25,15 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${manufacturerInstance?.password}">
-				<li class="fieldcontain">
-					<span id="password-label" class="property-label"><g:message code="manufacturer.password.label" default="Password" /></span>
-					
-						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${manufacturerInstance}" field="password"/></span>
-					
-				</li>
-				</g:if>
-			
+				%{--<g:if test="${manufacturerInstance?.password}">--}%
+				%{--<li class="fieldcontain">--}%
+					%{--<span id="password-label" class="property-label"><g:message code="manufacturer.password.label" default="Password" /></span>--}%
+					%{----}%
+						%{--<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${manufacturerInstance}" field="password"/></span>--}%
+					%{----}%
+				%{--</li>--}%
+				%{--</g:if>--}%
+
 				<g:if test="${manufacturerInstance?.code}">
 				<li class="fieldcontain">
 					<span id="code-label" class="property-label"><g:message code="manufacturer.code.label" default="Code" /></span>
@@ -51,8 +51,61 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${manufacturerInstance?.accountExpired}">
+                <g:if test="${manufacturerInstance?.address}">
+                    <li class="fieldcontain">
+                        <span id="address-label" class="property-label"><g:message code="manufacturer.address.label" default="address" /></span>
+
+                        <span class="property-value" aria-labelledby="address-label"><g:fieldValue bean="${manufacturerInstance}" field="address"/></span>
+
+                    </li>
+                </g:if>
+                <g:if test="${manufacturerInstance?.sellerName}">
+                    <li class="fieldcontain">
+                        <span id="sellerName-label" class="property-label"><g:message code="manufacturer.sellerName.label" default="sellerName" /></span>
+
+                        <span class="property-value" aria-labelledby="sellerName-label"><g:fieldValue bean="${manufacturerInstance}" field="sellerName"/></span>
+
+                    </li>
+                </g:if>
+
+                <g:if test="${manufacturerInstance?.phoneNo}">
+                    <li class="fieldcontain">
+                        <span id="phoneNo-label" class="property-label"><g:message code="manufacturer.phoneNo.label" default="phoneNo" /></span>
+
+                        <span class="property-value" aria-labelledby="phoneNo-label"><g:fieldValue bean="${manufacturerInstance}" field="phoneNo"/></span>
+
+                    </li>
+                </g:if>
+                <g:if test="${manufacturerInstance?.businessId}">
+                    <li class="fieldcontain">
+                        <span id="businessId-label" class="property-label"><g:message code="manufacturer.businessId.label" default="businessId" /></span>
+
+                        <span class="property-value" aria-labelledby="businessId-label"><g:fieldValue bean="${manufacturerInstance}" field="businessId"/></span>
+
+                    </li>
+                </g:if>
+
+                <g:if test="${manufacturerInstance?.postalCode}">
+                    <li class="fieldcontain">
+                        <span id="postalCode-label" class="property-label"><g:message code="manufacturer.postalCode.label" default="postalCode" /></span>
+
+                        <span class="property-value" aria-labelledby="postalCode-label"><g:fieldValue bean="${manufacturerInstance}" field="postalCode"/></span>
+
+                    </li>
+                </g:if>
+                <g:if test="${manufacturerInstance?.fax}">
+                    <li class="fieldcontain">
+                        <span id="fax-label" class="property-label"><g:message code="manufacturer.fax.label" default="fax" /></span>
+
+                        <span class="property-value" aria-labelledby="fax-label"><g:fieldValue bean="${manufacturerInstance}" field="fax"/></span>
+
+                    </li>
+                </g:if>
+
+
+
+
+                <g:if test="${manufacturerInstance?.accountExpired}">
 				<li class="fieldcontain">
 					<span id="accountExpired-label" class="property-label"><g:message code="manufacturer.accountExpired.label" default="Account Expired" /></span>
 					

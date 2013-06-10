@@ -34,6 +34,48 @@
 	<g:textField name="description" maxlength="200" required="" value="${manufacturerInstance?.description}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'sellerName', 'error')}">
+    <label for="sellerName">
+        <g:message code="manufacturer.sellerName.label" default="Seller Name" />
+    </label>
+    <g:textField name="sellerName" maxlength="200" value="${manufacturerInstance?.sellerName}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'businessId', 'error')}">
+    <label for="businessId">
+        <g:message code="manufacturer.businessId.label" default="Business Id" />
+    </label>
+    <g:textField name="businessId" maxlength="15" value="${manufacturerInstance?.businessId}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'address', 'error')}">
+    <label for="address">
+        <g:message code="manufacturer.address.label" default="Address" />
+    </label>
+    <g:textField name="address" maxlength="200" value="${manufacturerInstance?.address}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'phoneNo', 'error')}">
+    <label for="phoneNo">
+        <g:message code="manufacturer.phoneNo.label" default="phoneNo" />
+    </label>
+    <g:textField name="phoneNo" maxlength="15" value="${manufacturerInstance?.phoneNo}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'postalCode', 'error')}">
+    <label for="postalCode">
+        <g:message code="manufacturer.postalCode.label" default="postalCode" />
+    </label>
+    <g:textField name="postalCode" maxlength="10" value="${manufacturerInstance?.postalCode}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'fax', 'error')}">
+    <label for="fax">
+        <g:message code="manufacturer.fax.label" default="fax" />
+    </label>
+    <g:textField name="fax" maxlength="15" value="${manufacturerInstance?.fax}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'accountExpired', 'error')} ">
 	<label for="accountExpired">
 		<g:message code="manufacturer.accountExpired.label" default="Account Expired" />

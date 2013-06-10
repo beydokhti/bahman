@@ -15,73 +15,6 @@
     <g:set var="entityName" value="${message(code: 'attachment.label', default: 'attachment')}"/>
     <title><g:message code="default.list.label" args="[entityName]"/></title>
     <script type="text/javascript">
-        %{--var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {--}%
-            %{--if (!params)--}%
-                %{--params = {}--}%
-            %{--$.ajaxSettings.traditional = true;--}%
-            %{--$.ajax({--}%
-                %{--type:"GET",--}%
-                %{--url:remoteAddress--}%
-            %{--}).done(function (response) {--}%
-                        %{--var r = $("#ajax-form" + remoteAddress.hashCode());--}%
-                        %{--if (!r.length)--}%
-                            %{--r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' action='" + saveAddress + "'></form>")--}%
-                        %{--r.html("")--}%
-
-                        %{--r.dialog({--}%
-                            %{--modal:true,--}%
-                            %{--width:params.width,--}%
-                            %{--resizable:false,--}%
-                            %{--buttons:{--}%
-                                %{--'ذخیره':function () {--}%
-                                    %{--if (params && params.beforeSubmit)--}%
-                                        %{--params.beforeSubmit();--}%
-                                    %{--if((params.confirm=='Y' && confirm("<g:message code="are-you-sure" />"))||params.confirm=='N' ){--}%
-%{--//                                        if (params.switch == 'ajaxSubmit') {--}%
-%{--//                                        r.ajaxSubmit({--}%
-%{--//                                            url:saveAddress,--}%
-%{--//                                            type:"post",--}%
-%{--//                                            success:function (resp) {--}%
-%{--//                                                if (params && params.afterSave)--}%
-%{--//                                                    params.afterSave(resp)--}%
-%{--//                                                if (saveCallback) {--}%
-%{--//                                                    saveCallback(resp)--}%
-%{--//                                                }--}%
-%{--//                                            }--}%
-%{--//                                        })--}%
-%{--//                                    }                                     } else {--}%
-                                        %{--r.submit()--}%
-                                    %{--}--}%
-                                    %{--$(this).dialog("close");--}%
-                                %{--},--}%
-                                %{--"انصراف":function () {--}%
-                                    %{--$(this).dialog("close");--}%
-                                %{--}--}%
-                            %{--},--}%
-                            %{--close:function () {--}%
-                                %{--r.html("")--}%
-                            %{--}--}%
-                        %{--})--}%
-                        %{--if (params && params.width) {--}%
-                            %{--r.dialog("option", "width", params.width)--}%
-                            %{--r.dialog("option", "position", "top")--}%
-                        %{--}--}%
-
-                        %{--r.append(response);--}%
-                        %{--if (loadCallback)--}%
-                            %{--loadCallback(response);--}%
-                    %{--});--}%
-        %{--}--}%
-
-        %{--function doAddDraft(){--}%
-
-            %{--loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',--}%
-                    %{--'<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment']"/>',--}%
-                    %{--function (res) {--}%
-                        %{--$("#attachment-container").append($(res))--}%
-                    %{--}, undefined, {width:400,confirm:'Y'})--}%
-        %{--}--}%
-
 
         var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
             if (!params)
@@ -164,78 +97,71 @@
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
     %{--<input name>contract--}%
     <div class="row">
-        <div class="span3">
-            <div class="detail-property-list">
+        <div id="contractNo-label" class="span2 field-label"><g:message
+                code="contract.contractNo.label" default="Contract No"/></div>
 
-                <div class="detailcontain">
-                    <span id="contractNo-label" class="property-label-small"><g:message
-                            code="contract.contractNo.label" default="Contract No"/></span>
+        <div class="property-value-small-inline span3" aria-labelledby="contractNo-label"><g:fieldValue
+                bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
+                                                                              field="contractPartNo"/></div>
 
-                    <span class="property-value-small-inline" aria-labelledby="contractNo-label"><g:fieldValue
-                            bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
-                                                                                          field="contractPartNo"/></span>
-                </div>
-            </div>
 
-        </div>
+        <div id="customerDesc-label" class="span2 field-label"><g:message
+                code="contract.customerDesc.label" default="Customer Desc"/></div>
 
-        <div class="span3">
-            <div class="detail-property-list">
-
-                <div class="detailcontain">
-                    <span id="customerDesc-label" class="property-label-small"><g:message
-                            code="contract.customerDesc.label" default="Customer Desc"/></span>
-
-                    <span class="property-value-small-inline" aria-labelledby="customerDesc-label"><g:fieldValue
-                            bean="${contractInstance}" field="customerDesc"/></span>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="span3">
-            <div class="detail-property-list">
-
-                <div class="detailcontain">
-                    <span id="draft-label" class="property-label-small"><g:message
-                            code="contract.draft.label" default="Draft"/></span>
-
-                    <g:each in="${contractInstance?.drafts}" var="drafts">
-                        <g:if test="${drafts?.status != 'R'}">
-                            <span class="property-value-small-inline"
-                                  aria-labelledby="customerDesc-label">${drafts?.description}</span>
-                        </g:if>
-                    </g:each>
-                </div>
-            </div>
-
-        </div>
-
-    <div class="span3">
-        <div class="detail-property-list">
-
-            <div class="detailcontain">
-                <span id="freight-label" class="property-label-small"><g:message
-                        code="contract.freight.label" default="Freight"/></span>
-
-                <span class="property-value-small-inline" aria-labelledby="contractFreight-label"><g:fieldValue
-                        bean="${contractInstance}" field="freight"/></span>
-            </div>
-        </div>
+        <div class="property-value-small-inline span3" aria-labelledby="customerDesc-label"><g:fieldValue
+                bean="${contractInstance}" field="customerDesc"/></div>
 
     </div>
+
+    <div class="row">
+        <div id="productDesc-label" class="span2 field-label"><g:message
+                code="contract.productDesc.label" default="product Desc"/></div>
+
+        <div class="property-value-small-inline span3" aria-labelledby="productDesc-label"><g:fieldValue
+                bean="${contractInstance}" field="productDesc"/></div>
+
+
+        <div id="freight-label" class="span2 field-label"><g:message
+                code="contract.freight.label" default="Freight"/></div>
+
+        <div class="property-value-small-inline span3" aria-labelledby="contractFreight-label"><g:fieldValue
+                bean="${contractInstance}" field="freight"/></div>
+
     </div>
 
-    <div class="row-fluid">
-        <ul class="thumbnails" id="attachment-container">
-            <g:each in="${contractInstance?.attachments}" var="attachment">
-            <g:if test="${attachment?.status!='R'}">
-                <g:render template="showAttachment" model="[attachment:attachment]"/>
+    <div class="row">
+        <div id="placeOfUnloading-label" class="span2 field-label"><g:message
+                code="contract.placeOfUnloading.label" default="placeOfUnloading"/></div>
+
+        <div class="property-value-small-inline span3" aria-labelledby="placeOfUnloading-label"><g:fieldValue
+                bean="${contractInstance}" field="placeOfUnloading"/></div>
+
+        <div id="draft-label" class="span2 field-label"><g:message
+                code="contract.draft.label" default="Draft"/></div>
+
+        <g:each in="${contractInstance?.drafts}" var="drafts">
+            <g:if test="${drafts?.status != 'R'}">
+                <div class="property-value-small-inline span3"
+                     aria-labelledby="customerDesc-label">${drafts?.description}</div>
             </g:if>
-            </g:each>
-        </ul>
+        </g:each>
     </div>
-    <div class="row-fluid">
+    <div class="row">
+
+        <div id="addedTaxReceipt-label" class="span3 field-label"><g:message
+                code="contract.addedTaxReceipt.label" default="added Tax Receipt"/></div>
+
+        <div class="property-value-small-inline span2" aria-labelledby="addedTaxReceipt-label"><g:fieldValue
+                bean="${contractInstance}" field="addedTaxReceipt"/></div>
+
+        <div id="addedTaxReceiptDate-label" class="span3 field-label"><g:message
+                code="contract.addedTaxReceiptDate.label" default="added Tax Receipt Date"/></div>
+
+        <div class="property-value-small-inline span2" aria-labelledby="contractFreight-label"><rg:formatJalaliDate
+                date="${contractInstance.addedTaxReceiptDate}"></rg:formatJalaliDate></div>
+    </div>
+
+    %{--------------------------------------------------------------------------------------------------------------------------------}%    <div class="row-fluid">
         <ul class="thumbnails" id="amendment-container">
             <g:each in="${contractInstance?.amendments}" var="amendment">
                 <g:if test="${amendment?.status=='Visible'}">
@@ -253,6 +179,7 @@
             </g:each>
         </ul>
     </div>
+
     <div style="text-align:center ">
        <input class="btn" type="button" onclick="doAddDraft()" value="Add Draft">
    </div>

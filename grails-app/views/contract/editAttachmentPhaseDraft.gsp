@@ -130,71 +130,76 @@
         <rg:cancelButton/>
     </rg:dialog>
     <g:javascript plugin="rapid-grails" src="jquery.form.js"></g:javascript>
-    %{--<input name>contract--}%
+
     <div class="row">
-        <div class="span3">
-            <div class="detail-property-list">
+        <div id="contractNo-label" class="span2 field-label"><g:message
+                code="contract.contractNo.label" default="Contract No"/></div>
 
-                <div class="detailcontain">
-                    <span id="contractNo-label" class="property-label-small"><g:message
-                            code="contract.contractNo.label" default="Contract No"/></span>
+        <div class="property-value-small-inline span3" aria-labelledby="contractNo-label"><g:fieldValue
+                bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
+                                                                              field="contractPartNo"/></div>
 
-                    <span class="property-value-small-inline" aria-labelledby="contractNo-label"><g:fieldValue
-                            bean="${contractInstance}" field="contractNo"/>/<g:fieldValue bean="${contractInstance}"
-                                                                                          field="contractPartNo"/></span>
-                </div>
-            </div>
 
-        </div>
+        <div id="customerDesc-label" class="span2 field-label"><g:message
+                code="contract.customerDesc.label" default="Customer Desc"/></div>
 
-        <div class="span3">
-            <div class="detail-property-list">
+        <div class="property-value-small-inline span3" aria-labelledby="customerDesc-label"><g:fieldValue
+                bean="${contractInstance}" field="customerDesc"/></div>
 
-                <div class="detailcontain">
-                    <span id="customerDesc-label" class="property-label-small"><g:message
-                            code="contract.customerDesc.label" default="Customer Desc"/></span>
-
-                    <span class="property-value-small-inline" aria-labelledby="customerDesc-label"><g:fieldValue
-                            bean="${contractInstance}" field="customerDesc"/></span>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="span3">
-            <div class="detail-property-list">
-
-                <div class="detailcontain">
-                    <span id="draft-label" class="property-label-small"><g:message
-                            code="contract.draft.label" default="Draft"/></span>
-
-                    <g:each in="${contractInstance?.drafts}" var="drafts">
-                        <g:if test="${drafts?.status != 'R'}">
-                            <span class="property-value-small-inline"
-                                  aria-labelledby="customerDesc-label">${drafts?.description}</span>
-                        </g:if>
-                    </g:each>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="span3">
-            <div class="detail-property-list">
-
-                <div class="detailcontain">
-                    <span id="freight-label" class="property-label-small"><g:message
-                            code="contract.freight.label" default="Freight"/></span>
-
-                    <span class="property-value-small-inline" aria-labelledby="contractFreight-label"><g:fieldValue
-                            bean="${contractInstance}" field="freight"/></span>
-                </div>
-            </div>
-
-        </div>
     </div>
-    %{--<div class="row">--}%
-    %{--<div class="span6">--}%
+
+    <div class="row">
+        <div id="productDesc-label" class="span2 field-label"><g:message
+                code="contract.productDesc.label" default="product Desc"/></div>
+
+        <div class="property-value-small-inline span3" aria-labelledby="productDesc-label"><g:fieldValue
+                bean="${contractInstance}" field="productDesc"/></div>
+
+
+        <div id="freight-label" class="span2 field-label"><g:message
+                code="contract.freight.label" default="Freight"/></div>
+
+        <div class="property-value-small-inline span3" aria-labelledby="contractFreight-label"><g:fieldValue
+                bean="${contractInstance}" field="freight"/></div>
+
+    </div>
+
+    <div class="row">
+        <div id="placeOfUnloading-label" class="span2 field-label"><g:message
+                code="contract.placeOfUnloading.label" default="placeOfUnloading"/></div>
+
+        <div class="property-value-small-inline span3" aria-labelledby="placeOfUnloading-label"><g:fieldValue
+                bean="${contractInstance}" field="placeOfUnloading"/></div>
+
+        <div id="draft-label" class="span2 field-label"><g:message
+                code="contract.draft.label" default="Draft"/></div>
+
+        <g:each in="${contractInstance?.drafts}" var="drafts">
+            <g:if test="${drafts?.status != 'R'}">
+                <div class="property-value-small-inline span3"
+                     aria-labelledby="customerDesc-label">${drafts?.description}</div>
+            </g:if>
+        </g:each>
+    </div>
+
+    <div class="row">
+
+        <div id="addedTaxReceipt-label" class="span3 field-label"><g:message
+                code="contract.addedTaxReceipt.label" default="added Tax Receipt"/></div>
+
+        <div class="property-value-small-inline span2" aria-labelledby="addedTaxReceipts-label"><g:fieldValue
+                bean="${contractInstance}" field="addedTaxReceipt"/></div>
+
+        <div id="addedTaxReceiptDate-label" class="span3 field-label"><g:message
+                code="contract.addedTaxReceiptDate.label" default="added Tax Receipt Date"/></div>
+
+        <div class="property-value-small-inline span2" aria-labelledby="contractFreight-label"><rg:formatJalaliDate
+                date="${contractInstance.addedTaxReceiptDate}"></rg:formatJalaliDate></div>
+    </div>
+
+    %{--------------------------------------------------------------------------------------------------------------------------------}%
+
+
     <div class="row-fluid">
         <ul class="thumbnails" id="attachment-container">
             <g:each in="${contractInstance?.attachments}" var="attachment">

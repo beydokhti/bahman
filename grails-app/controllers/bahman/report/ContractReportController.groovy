@@ -9,7 +9,7 @@ import rapidgrails.Field
 
 class ContractReportController {
     def exportService
-    def ContractPhaseReportService
+    def contractPhaseReportService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -120,7 +120,7 @@ class ContractReportController {
 
 
 
-        def reportList=contractPhaseReportService.report (params).list
+        def reportList = contractPhaseReportService.report (params).list
         println(reportList)
         response.contentType = 'application/vnd.ms-excel'
         response.setHeader("Content-disposition", "attachment; filename=report.xls")
@@ -132,7 +132,7 @@ class ContractReportController {
     def Xml() {
         try{
 
-        def collection=contractPhaseReportService.report (params).list
+        def collection = contractPhaseReportService.report(params).list
 
         def process = { binding, element, name ->
             if( element[ name ] instanceof Collection ) {

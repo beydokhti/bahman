@@ -79,6 +79,45 @@
                         <g:textField name="password" required="" value="${manufacturerInstance?.password}"/>
                     </div>
 
+                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'address', 'error')}">
+                        <label for="address">
+                            <g:message code="manufacturer.address.label" default="address" />
+                        </label>
+                        <g:textField name="address" value="${manufacturerInstance?.address}"/>
+                    </div>
+
+                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'businessId', 'error')}">
+                        <label for="businessId">
+                            <g:message code="manufacturer.businessId.label" default="businessId" />
+                        </label>
+                        <g:textField name="businessId" value="${manufacturerInstance?.businessId}"/>
+                    </div>
+
+                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'sellerName', 'error')}">
+                        <label for="sellerName">
+                            <g:message code="manufacturer.sellerName.label" default="sellerName" />
+                        </label>
+                        <g:textField name="sellerName" value="${manufacturerInstance?.sellerName}"/>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'phoneNo', 'error')}">
+                        <label for="phoneNo">
+                            <g:message code="manufacturer.phoneNo.label" default="phoneNo" />
+                        </label>
+                        <g:textField name="phoneNo" value="${manufacturerInstance?.phoneNo}"/>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'postalCode', 'error')}">
+                        <label for="postalCode">
+                            <g:message code="manufacturer.postalCode.label" default="postalCode" />
+                        </label>
+                        <g:textField name="postalCode" value="${manufacturerInstance?.postalCode}"/>
+                    </div>
+                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'fax', 'error')}">
+                        <label for="fax">
+                            <g:message code="manufacturer.fax.label" default="fax" />
+                        </label>
+                        <g:textField name="fax" value="${manufacturerInstance?.fax}"/>
+                    </div>
+
                     %{--<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'code', 'error')} required">--}%
                         %{--<label for="code">--}%
                             %{--<g:message code="manufacturer.code.label" default="Code" />--}%

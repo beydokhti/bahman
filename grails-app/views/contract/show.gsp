@@ -77,11 +77,11 @@
 <br>
 
 
-<g:if test="${customer}">
+<g:if test="${contractInstance.customer}">
     <div class="row" >
 
     <g:set var="iterate" value="${0}"></g:set>
-    <g:each in="${customer?.properties?.sort()}" var="cu">
+    <g:each in="${contractInstance.customer?.properties?.sort()}" var="cu">
         <g:if test="${(iterate % 3) == 0}">
             </div>
             <div class="row">
@@ -158,7 +158,7 @@
                                                                default=""/></div>
         </div>
 
-        <div class="span2">${contractInstance?.drafts?.sort { -it.id }?.description}</div>
+        <div class="span2">${contractInstance?.drafts?.sort { -it.id }?.find{true}?.description}</div>
     </g:if>
 
     <g:if test="${contractInstance?.freight}">
@@ -247,7 +247,10 @@
                             style="margin-top: 0px"/>
 
         </g:if>
-
+        <g:if test="${userType == "Manufacturer"}">
+            <g:link class="print" action="printRemitSales" id="${contractInstance?.id}"><g:message
+                    code="default.printRemitSales.label" default="Print Remit Sales"/></g:link>
+        </g:if>
     </fieldset>
 %{--<a class="btn" href="<g:createLink action="printContract" controller="contract" params="[contractId:contractInstance?.id]"/>"><g:message code="print"/></a>--}%
 
