@@ -626,8 +626,9 @@ class ContractController {
 
         model.customer = Customer.findByCode(contract.customerCode)
 
-        model.draftNo = contract.drafts?.sort { -it.id }?.find { true }?.description
-        model.draftDate = contract.drafts?.sort { -it.id }?.find { true }?.uploadDate
+//        model.draftNo = contract.drafts?.sort { -it.id }?.find { true }?.description
+        model.draftNo = contract.drafts?.description
+        model.draftDate = contract.drafts?.uploadDate
         def df = new DecimalFormat("###,###,###,###,###")
         model.quantity = df.format(Integer.valueOf(contract.quantity))
         model.price = df.format(Integer.valueOf(contract.price))
@@ -654,8 +655,8 @@ class ContractController {
 
 //        model.customer = Customer.findByCode(contract.customerCode)
 
-        model.draftNo = contract.drafts?.sort { -it.id }?.find { true }?.description
-        model.draftDate = contract.drafts?.sort { -it.id }?.find { true }?.uploadDate
+        model.draftNo = contract.drafts?.description
+        model.draftDate = contract.drafts?.uploadDate
         def df = new DecimalFormat("###,###,###,###,###")
         model.quantity = df.format(Integer.valueOf(contract.quantity))
         model.price = df.format(Integer.valueOf(contract.price))

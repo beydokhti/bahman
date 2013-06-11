@@ -29,7 +29,7 @@
 				<li class="fieldcontain">
 					<span id="document-label" class="property-label"><g:message code="attachment.document.label" default="Document" /></span>
 
-                        <span class="property-value" aria-labelledby="status-label"><img src="<g:createLink action="getImage" controller="contract" params="[id:attachmentInstance?.id]" />"></span>
+                        <span class="property-value" aria-labelledby="document-label"><img src="<g:createLink action="getImage" controller="contract" params="[id:attachmentInstance?.id]" />"></span>
 				</li>
 				</g:if>
 			
@@ -44,18 +44,18 @@
 
                 <g:if test="${attachmentInstance?.version}">
                     <li class="fieldcontain">
-                        <span id="status-label" class="property-label"><g:message code="attachment.version.label" default="Version" /></span>
+                        <span id="version-label" class="property-label"><g:message code="attachment.version.label" default="Version" /></span>
 
-                        <span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${attachmentInstance}" field="status"/></span>
+                        <span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${attachmentInstance}" field="version"/></span>
 
                     </li>
                 </g:if>
 
                 <g:if test="${attachmentInstance?.fileName}">
                     <li class="fieldcontain">
-                        <span id="status-label" class="property-label"><g:message code="attachment.fileName.label" default="File Name" /></span>
+                        <span id="fileName-label" class="property-label"><g:message code="attachment.fileName.label" default="File Name" /></span>
 
-                        <span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${attachmentInstance}" field="fileName"/></span>
+                        <span class="property-value" aria-labelledby="fileName-label"><g:fieldValue bean="${attachmentInstance}" field="fileName"/></span>
 
                     </li>
                 </g:if>

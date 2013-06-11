@@ -75,8 +75,8 @@
 
         function doAddDraft() {
 
-            loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                    '<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'showAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="draft" />',
+                    '<g:createLink action="saveDraft" controller="draft" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'showAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))
                     }, undefined, {width: 400, confirm: 'Y'})
@@ -139,13 +139,14 @@
         <div id="draft-label" class="span2 field-label"><g:message
                 code="contract.draft.label" default="Draft"/></div>
 
-        <g:each in="${contractInstance?.drafts}" var="drafts">
-            <g:if test="${drafts?.status != 'R'}">
-                <div class="property-value-small-inline span3"
-                     aria-labelledby="customerDesc-label">${drafts?.description}</div>
-            </g:if>
-        </g:each>
+        %{--<g:each in="${contractInstance?.drafts}" var="drafts">--}%
+        %{--<g:if test="${drafts?.status != 'R'}">--}%
+        <div class="property-value-small-inline span3"
+             aria-labelledby="customerDesc-label">${contractInstance?.drafts?.description}</div>
+        %{--</g:if>--}%
+        %{--</g:each>--}%
     </div>
+
     <div class="row">
 
         <div id="addedTaxReceipt-label" class="span3 field-label"><g:message
@@ -161,28 +162,38 @@
                 date="${contractInstance.addedTaxReceiptDate}"></rg:formatJalaliDate></div>
     </div>
 
-    %{--------------------------------------------------------------------------------------------------------------------------------}%    <div class="row-fluid">
-        <ul class="thumbnails" id="amendment-container">
-            <g:each in="${contractInstance?.amendments}" var="amendment">
-                <g:if test="${amendment?.status=='Visible'}">
-                    <g:render template="showAmendment" model="[amendment:amendment]"/>
-                </g:if>
-            </g:each>
-        </ul>
-    </div>
+    %{--------------------------------------------------------------------------------------------------------------------------------}%    <div
+        class="row-fluid">
+    <ul class="thumbnails" id="amendment-container">
+        <g:each in="${contractInstance?.amendments}" var="amendment">
+            <g:if test="${amendment?.status == 'Visible'}">
+                <g:render template="showAmendment" model="[amendment: amendment]"/>
+            </g:if>
+        </g:each>
+    </ul>
+</div>
+
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
-            <g:each in="${contractInstance?.drafts}" var="draft">
-            <g:if test="${draft?.status!='R'}">
-                <g:render template="showAttachment" model="[attachment:draft,type:'Draft']"/>
+            %{--<g:each in="${contractInstance?.drafts}" var="draft">--}%
+            %{--<g:if test="${draft?.status!='R'}">--}%
+            <g:if test="${contractInstance?.drafts}">
+                <g:render template="showDraft" model="[draft: contractInstance?.drafts, type: 'Draft']"/>
             </g:if>
-            </g:each>
+            %{--</g:if>--}%
+            %{--</g:each>--}%
         </ul>
     </div>
 
     <div style="text-align:center ">
-       <input class="btn" type="button" onclick="doAddDraft()" value="Add Draft">
-   </div>
+        <g:if test="${flash.message}">
+            <div class="errors">
+                <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}"/>
+            </div>
+        </g:if>
+        <input class="btn" type="button" onclick="doAddDraft()" value="Add Draft">
+    </div>
+
 </div>
 </body>
 </html>

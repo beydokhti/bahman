@@ -56,7 +56,9 @@
                                  [name: 'dealerBrokerDesc'],
                                  [name: 'customerDesc'],
                                  [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+//                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']
+                                 [name: 'draft',expression: 'obj?.drafts?.description']
+                         ]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -88,7 +90,7 @@
                                  [name: 'dealerBrokerDesc'],
                                  [name: 'customerDesc'],
                                  [name:'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -140,7 +142,7 @@
                                  [name: 'buyerBrokerDesc'],
                                  [name: 'dealerBrokerDesc'],
                                  [name: 'customerDesc'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -169,7 +171,7 @@
                                  [name: 'dealerBrokerDesc'],
                                  [name: 'customerDesc'],
                                  [name:'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
                         <rg:isNotEmpty name="amendments"></rg:isNotEmpty>
@@ -201,7 +203,7 @@
                                  [name: 'dealerBrokerDesc'],
                                  [name: 'customerDesc'],
                                  [name:'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>

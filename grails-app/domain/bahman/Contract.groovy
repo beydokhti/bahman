@@ -40,10 +40,9 @@ class Contract {
     Manufacturer manufacturer
     Broker buyerBroker
     Supplier supplier
-
+    Draft drafts
     static hasMany = [attachments:Attachment,
             phases:Phase,
-            drafts:Attachment,
             amendments:Amendment]
 
     static constraints = {

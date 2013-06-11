@@ -177,13 +177,14 @@
         <div id="draft-label" class="span2 field-label"><g:message
                 code="contract.draft.label" default="Draft"/></div>
 
-        <g:each in="${contractInstance?.drafts}" var="drafts">
-            <g:if test="${drafts?.status != 'R'}">
-                <div class="property-value-small-inline span3"
-                     aria-labelledby="customerDesc-label">${drafts?.description}</div>
-            </g:if>
-        </g:each>
+        %{--<g:each in="${contractInstance?.drafts}" var="drafts">--}%
+        %{--<g:if test="${drafts?.status != 'R'}">--}%
+        <div class="property-value-small-inline span3"
+             aria-labelledby="customerDesc-label">${contractInstance?.drafts?.description}</div>
+        %{--</g:if>--}%
+        %{--</g:each>--}%
     </div>
+
     <div class="row">
 
         <div id="addedTaxReceipt-label" class="span3 field-label"><g:message
@@ -228,11 +229,13 @@
 
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
-            <g:each in="${contractInstance?.drafts}" var="draft">
-                <g:if test="${draft?.status != 'R'}">
-                    <g:render template="showAttachment" model="[attachment: draft, type: 'Draft']"/>
-                </g:if>
-            </g:each>
+            %{--<g:each in="${contractInstance?.drafts}" var="draft">--}%
+            %{--<g:if test="${draft?.status != 'R'}">--}%
+            <g:if test="${contractInstance?.drafts}">
+                <g:render template="showDraft" model="[draft: contractInstance?.drafts]"/>
+            </g:if>
+            %{--</g:if>--}%
+            %{--</g:each>--}%
         </ul>
     </div>
 
@@ -242,7 +245,7 @@
         <g:if test="${lastPhase.phase == 'BuyerBroker'}">
             <input class="btn" type="button" onclick="doAddFreight()"
                    value="${message(code: 'button.add.Freight', default: 'Add Freight')}">
-        <input class="btn" type="button" onclick="doAddAddedTaxReceipt()"
+            <input class="btn" type="button" onclick="doAddAddedTaxReceipt()"
                    value="${message(code: 'button.add.AddedTaxReceipt', default: 'Add AddedTax Receipt')}">
         </g:if>
 

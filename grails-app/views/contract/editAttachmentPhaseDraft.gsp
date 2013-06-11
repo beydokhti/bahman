@@ -54,14 +54,14 @@
                                     }
                                     $(this).dialog("close");
                                 },
-                                    "انصراف": function () {
-                                        $(this).dialog("close");
-                                    }
-                                },
-                                close: function () {
-                                    r.html("")
+                                "انصراف": function () {
+                                    $(this).dialog("close");
                                 }
-                            })
+                            },
+                            close: function () {
+                                r.html("")
+                            }
+                        })
                         if (params && params.width) {
                             r.dialog("option", "width", params.width)
                             r.dialog("option", "position", "top")
@@ -109,10 +109,24 @@
                         })
             }
         }
+        function doDeleteDraft(id) {
+            if (confirm("<g:message code="are-you-sure" />")) {
+                $.ajax({
+                    url: '<g:createLink action="deleteDraft" controller="draft" />',
+                    data: {
+                        id: id,
+                        contractId:${contractInstance?.id}
+                    }
+                }).success(function (data) {
+                            $("#main_" + id).remove()
+                        })
+            }
+        }
+
         function doAddDraft() {
 
-            loadOverlayAttachmentPhase('<g:createLink action="form" controller="attachment" />',
-                    '<g:createLink action="saveDraft" controller="attachment" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'editAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="draft" />',
+                    '<g:createLink action="saveDraft" controller="draft" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'editAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))
                     }, undefined, {width: 400, confirm: 'Y'})
@@ -174,12 +188,12 @@
         <div id="draft-label" class="span2 field-label"><g:message
                 code="contract.draft.label" default="Draft"/></div>
 
-        <g:each in="${contractInstance?.drafts}" var="drafts">
-            <g:if test="${drafts?.status != 'R'}">
-                <div class="property-value-small-inline span3"
-                     aria-labelledby="customerDesc-label">${drafts?.description}</div>
-            </g:if>
-        </g:each>
+        %{--<g:each in="${contractInstance?.drafts}" var="drafts">--}%
+        %{--<g:if test="${drafts?.status != 'R'}">--}%
+        <div class="property-value-small-inline span3"
+             aria-labelledby="customerDesc-label">${contractInstance?.drafts?.description}</div>
+        %{--</g:if>--}%
+        %{--</g:each>--}%
     </div>
 
     <div class="row">
@@ -227,20 +241,29 @@
     %{--<div class="span6">--}%
     <div class="row-fluid">
         <ul class="thumbnails" id="draft-container">
-            <g:each in="${contractInstance?.drafts}" var="draft">
-                <g:if test="${draft.status != 'R'}">
-                    <g:if test="${draft.responsible.code == user.code}">
-                        <g:render template="viewAttachment" model="[attachment: draft, type: 'Draft']"/>
-                    </g:if>
-                    <g:else>
-                        <g:render template="showAttachment" model="[attachment: draft, type: 'Draft']"/>
-                    </g:else>
+            %{--<g:each in="${contractInstance?.drafts}" var="draft">--}%
+            %{--<g:if test="${draft.status != 'R'}">--}%
+            <g:if test="${contractInstance?.drafts}">
+                <g:if test="${contractInstance?.drafts?.responsible.code == user.code}">
+                    <g:render template="viewDraft" model="[draft: contractInstance?.drafts]"/>
                 </g:if>
-            </g:each>
+                <g:else>
+                    <g:render template="showDraft" model="[draft: contractInstance?.drafts]"/>
+                </g:else>
+            </g:if>
+            %{--</g:if>--}%
+            %{--</g:each>--}%
         </ul>
     </div>
     %{--</div>--}%
     %{--</div>--}%
+    <g:if test="${flash.message}">
+        <div class="errors">
+            <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}"/>
+            "${flash.message}"
+        </div>
+    </g:if>
+
     <div style="text-align:center ">
 
         <input class="btn" type="button" onclick="doAddAttachment()"

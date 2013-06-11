@@ -118,7 +118,7 @@ class ContractPhaseReportService {
             contractReport.supplierCode = it.supplierCode
             contractReport.productSymbol = it.productSymbol
             contractReport.lastPhase = it.phases?.sort { -it.id }?.find { true }?.phase
-            contractReport.draftNo = it.drafts?.sort { -it.id }?.find { true }?.description
+            contractReport.draftNo = it.drafts?.description
             contractReport.allotmentDate = formatDate(it.allotmentDate)
             contractReport.settlementDeadline = formatDate(it.settlementDeadline)
             contractReport.settlementType = it.settlementType

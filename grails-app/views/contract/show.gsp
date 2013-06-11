@@ -158,7 +158,7 @@
                                                                default=""/></div>
         </div>
 
-        <div class="span2">${contractInstance?.drafts?.sort { -it.id }?.find{true}?.description}</div>
+        <div class="span2">${contractInstance?.drafts?.description}</div>
     </g:if>
 
     <g:if test="${contractInstance?.freight}">

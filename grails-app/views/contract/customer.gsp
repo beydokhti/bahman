@@ -20,7 +20,7 @@
     <rg:grid domainClass="${bahman.Contract}"
              columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
                      [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                     [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                     [name: 'draft',expression: 'obj?.drafts?.description']]">
         <rg:criteria>
             <rg:eq name="customerCode" value="${customer?.code}"/>
         </rg:criteria>

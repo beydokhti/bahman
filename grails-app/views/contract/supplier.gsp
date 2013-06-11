@@ -72,7 +72,7 @@
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'],
                                  [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
                                  [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="supplierCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -98,7 +98,7 @@
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="All"  caption="در حال انجام"
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
                                  [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="supplierCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -142,7 +142,7 @@
                 </rg:criteria>
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Finished" caption="تحویل شده"
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
-                                  [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                  [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="supplierCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
@@ -165,7 +165,7 @@
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Amendment" caption="اصلاحیه"
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
                                  [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="supplierCode" value="${organization?.code}"/>
                         <rg:isNotEmpty name="amendments"></rg:isNotEmpty>
@@ -189,7 +189,7 @@
                 <rg:grid domainClass="${bahman.Contract}" idPostfix="Sent" caption="ارسالی"
                          columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'], [name: 'contractNo'], [name: 'contractPartNo'], [name: 'buyerBrokerDesc'], [name: 'dealerBrokerDesc'], [name: 'customerDesc'],
                                  [name: 'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}?.phase)'],
-                                 [name: 'draft',expression: 'obj?.drafts?.sort{-it.id}.find{true}?.description']]">
+                                 [name: 'draft',expression: 'obj?.drafts?.description']]">
                     <rg:criteria>
                         <rg:eq name="supplierCode" value="${organization?.code}"/>
                         <rg:alias name='phases' value='m'/>
