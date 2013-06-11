@@ -11,5 +11,5 @@
         <g:message code="contract.placeOfUnloading.label" default="place Of Unloading" />
 
     </label>
-    <g:textArea name="placeOfUnloading" cols="40" rows="5" maxlength="500" value="${contractInstance?.freight}"/>
+    <g:textArea name="placeOfUnloading" cols="40" rows="5" maxlength="500" value="${contractInstance?.placeOfUnloading}"/>
 </div>

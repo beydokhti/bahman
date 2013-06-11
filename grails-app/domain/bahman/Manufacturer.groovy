@@ -7,6 +7,8 @@ class Manufacturer extends Organization {
     String phoneNo
     String postalCode
     String fax
+    String draftNoFormat
+    String draftNoSequence
 
     static constraints = {
         sellerName(nullable: true, maxSize: 200)
@@ -15,5 +17,7 @@ class Manufacturer extends Organization {
         phoneNo (nullable: true,maxSize: 15)
         postalCode (nullable: true,maxSize: 10)
         fax (nullable: true,maxSize: 15)
+        draftNoFormat(nullable: true,maxSize: 100)
+        draftNoSequence(nullable: true,maxSize: 100)
     }
 }

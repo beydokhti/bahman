@@ -96,6 +96,10 @@
                                 <g:message code="index.list.label" default="Dashboard"/>
                             </g:link>
                         </div>
+                        <div class="span2">
+                            <g:link action="report" controller="report">
+                                <g:message code="index.report.label" default="Report"/></g:link>
+                        </div>
                         <sec:ifAllGranted roles="Customer">
                             <div class="span2">
                                 <g:link controller="customer" action="changePassword"><g:message
@@ -103,16 +107,31 @@
                             </div>
                         </sec:ifAllGranted>
 
+                        <sec:ifAllGranted roles="Supplier">
+                            <div class="span2">
+                                <g:link controller="supplier" action="changePassword"><g:message
+                                        code="customer.change.password.label"></g:message></g:link>
+                            </div>
+                        </sec:ifAllGranted>
+
+                        <sec:ifAllGranted roles="Manufacturer">
+                            <div class="span2">
+                                <g:link controller="manufacturer" action="changePassword"><g:message
+                                        code="customer.change.password.label"></g:message></g:link>
+                            </div>
+                        </sec:ifAllGranted>
+
+                        <sec:ifAllGranted roles="BuyerBroker">
+                            <div class="span2">
+                                <g:link controller="broker" action="changePassword"><g:message
+                                        code="customer.change.password.label"></g:message></g:link>
+                            </div>
+                        </sec:ifAllGranted>
 
                         <sec:ifAllGranted roles="DealerBroker">
                             <div class="span2">
                                 <g:link action="importExcel" controller="contract">
                                     <g:message code="index.import.label" default="Import"/></g:link>
-                            </div>
-
-                            <div class="span2">
-                                <g:link action="report" controller="report">
-                                    <g:message code="index.report.label" default="Report"/></g:link>
                             </div>
 
                         </sec:ifAllGranted>

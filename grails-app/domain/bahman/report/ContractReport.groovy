@@ -35,45 +35,69 @@ class ContractReport {
     String importDate
     String draftNo
     String freight
-
+    String placeOfUnloading
+    String addedTaxReceipt
+    String addedTaxReceiptDate
+    String customerAddress
+    String customerBusinessId
+    String customerNId
+    String customerPhoneNo
+    String customerPostalCode
+    String manufacturerBusinessId
+    String manufacturerAddress
+    String manufacturerPhoneNo
+    String manufacturerPostalCode
+    String manufacturerFax
 
     static mapWith = "none"
 
     static constraints = {
-        contractNo ()
-        contractPartNo ()
-        contractDate ()
+        contractNo()
+        contractPartNo()
+        contractDate()
         lastPhase()
-        buyerBrokerDesc ()
-        dealerBrokerDesc ()
-        customerDesc ()
-        manufacturerDesc ()
-        supplierCode ()
-        productSymbol ()
+        buyerBrokerDesc()
+        dealerBrokerDesc()
+        customerDesc()
+        manufacturerDesc()
+        supplierCode()
+        productSymbol()
         draftNo()
-        allotmentDate ()
-        settlementDeadline ()
-        settlementType ()
-        productDesc ()
-        totalShipments ()
-        price ()
-        contractType ()
-        deliveryDate ()
-        deliveryPlace ()
-        productMainGroup ()
-        productGroup ()
-        productSubGroup ()
-        weight ()
-        quantity ()
-        buyerBrokerCode ()
-        dealerBrokerCode ()
-        customerCode ()
-        boursePrice ()
-        settlementDate ()
-        contractID ()
+        allotmentDate()
+        settlementDeadline()
+        settlementType()
+        productDesc()
+        totalShipments()
+        price()
+        contractType()
+        deliveryDate()
+        deliveryPlace()
+        productMainGroup()
+        productGroup()
+        productSubGroup()
+        weight()
+        quantity()
+        buyerBrokerCode()
+        dealerBrokerCode()
+        customerCode()
+        boursePrice()
+        settlementDate()
+        contractID()
         freight()
-        releaseDate ()
-        importDate ()
-
+        placeOfUnloading()
+        addedTaxReceipt()
+        addedTaxReceiptDate()
+        releaseDate()
+        importDate()
+        customerAddress()
+        customerBusinessId()
+        customerNId()
+        customerPhoneNo()
+        customerPostalCode()
+        manufacturerBusinessId()
+        manufacturerAddress()
+        manufacturerPhoneNo()
+        manufacturerPostalCode()
+        manufacturerFax()
     }
 }

@@ -130,7 +130,7 @@ class CustomerController {
                 customerInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
                         [message(code: 'customer.label', default: 'Customer')] as Object[],
                         "Another user has updated this Customer while you were editing")
-                render(view: "updatePassword", model: [customerInstance: customerInstance])
+                render(view: "changePassword", model: [customerInstance: customerInstance])
                 return
             }
         }

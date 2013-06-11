@@ -132,7 +132,7 @@ class ContractReportController {
     def Xml() {
         try{
 
-        def collection = contractPhaseReportService.report(params).list
+        def collection = contractPhaseReportService.completeReport(params).list
 
         def process = { binding, element, name ->
             if( element[ name ] instanceof Collection ) {
@@ -180,7 +180,21 @@ class ContractReportController {
                             process( binding, e, 'contractID' )
                             process( binding, e, 'releaseDate' )
                             process( binding, e, 'importDate' )
+                            process( binding, e, 'draftNo' )
                             process( binding, e, 'freight' )
+                            process( binding, e, 'placeOfUnloading' )
+                            process( binding, e, 'addedTaxReceipt' )
+                            process( binding, e, 'addedTaxReceiptDate' )
+                            process( binding, e, 'customerAddress' )
+                            process( binding, e, 'customerBusinessId' )
+                            process( binding, e, 'customerNId' )
+                            process( binding, e, 'customerPhoneNo' )
+                            process( binding, e, 'customerPostalCode' )
+                            process( binding, e, 'manufacturerAddress' )
+                            process( binding, e, 'manufacturerBusinessId' )
+                            process( binding, e, 'manufacturerFax' )
+                            process( binding, e, 'manufacturerPhoneNo' )
+                            process( binding, e, 'manufacturerPostalCode' )
                         }
                     }
                 }
@@ -208,6 +222,7 @@ class ContractReportController {
             response.outputStream.flush()
 
         } catch (Exception e) {
+            e.printStackTrace()
         }
     }
 

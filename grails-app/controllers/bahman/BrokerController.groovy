@@ -1,9 +1,10 @@
 package bahman
 
+import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.springframework.dao.DataIntegrityViolationException
 
 class BrokerController {
-
+    def springSecurityService
     static allowedMethods = [save: "POST", update: "POST"]
 
     def index() {
@@ -105,5 +106,58 @@ class BrokerController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'broker.label', default: 'Broker'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+    def changePassword() {
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+
+            def brokerInstance = Broker.get(user.id)
+            if (!brokerInstance) {
+                return
+            }
+
+            [brokerInstance: brokerInstance]
+        }
+    }
+    def updatePassword() {
+        def brokerInstance = Broker.get(params.id)
+        if (!brokerInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'broker.label', default: 'broker'), params.id])
+//            redirect(action: "list")
+            return
+        }
+
+        if (params.version) {
+            def version = params.version.toLong()
+            if (brokerInstance.version > version) {
+                brokerInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+                        [message(code: 'broker.label', default: 'broker')] as Object[],
+                        "Another user has updated this broker while you were editing")
+                render(view: "changePassword", model: [brokerInstance: brokerInstance])
+                return
+            }
+        }
+
+        brokerInstance.properties = params
+
+        if (!brokerInstance.save(flush: true)) {
+//            render(view: "changePassword", model: [brokerInstance: brokerInstance])
+            return
+        }
+
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'broker.label', default: 'broker'), brokerInstance.id])
+        redirect(action: "showAfterChange", id: brokerInstance.id)
+    }
+
+    def showAfterChange(){
+        def brokerInstance = Broker.get(params.id)
+        if (!brokerInstance) {
+
+            return
+        }
+
+        [brokerInstance: brokerInstance]
+
     }
 }
