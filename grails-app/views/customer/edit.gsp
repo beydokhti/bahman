@@ -90,7 +90,7 @@
                     <g:message code="customer.nId.label" default="National Id"/>
 
                 </label>
-                <g:textField name="nId" maxlength="10" value="${customerInstance?.nId}"/>
+                <g:textField name="nId" maxlength="15" value="${customerInstance?.nId}"/>
             </div>
 
             <div class="fieldcontain ${hasErrors(bean: customerInstance, field: 'businessId', 'error')} ">
@@ -122,7 +122,7 @@
                     <g:message code="customer.postalCode.label" default="Postal Code"/>
 
                 </label>
-                <g:textField name="postalCode" maxlength="10" value="${customerInstance?.postalCode}"/>
+                <g:textField name="postalCode" maxlength="15" value="${customerInstance?.postalCode}"/>
             </div>
 
 

@@ -247,7 +247,7 @@
                             style="margin-top: 0px"/>
 
         </g:if>
-        <g:if test="${userType == "Manufacturer"}">
+        <g:if test="${userType == "Manufacturer" || userType == "Supplier"}">
             <g:link class="print" action="printRemitSales" id="${contractInstance?.id}"><g:message
                     code="default.printRemitSales.label" default="Print Remit Sales"/></g:link>
         </g:if>
