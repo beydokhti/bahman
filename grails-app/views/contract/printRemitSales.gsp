@@ -236,7 +236,7 @@ mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-table-dir:bidi'>
         <p class=MsoNormal align=center dir=LTR style='margin-bottom:0in;margin-bottom:
         .0001pt;text-align:center;line-height:normal'><b><span style='font-size:8.0pt;
         mso-ascii-font-family:Calibri;mso-fareast-font-family:"Times New Roman";
-        mso-hansi-font-family:Calibri;mso-bidi-font-family:"B Nazanin";color:black'>${manufacturer?.businessId}</span>
+        mso-hansi-font-family:Calibri;mso-bidi-font-family:"B Nazanin";color:black'>${contractInstance.manufacturer?.businessId}</span>
         </b></p>
     </td>
     <td width=54 nowrap style='width:40.6pt;padding:0in 5.4pt 0in 5.4pt;
@@ -304,8 +304,7 @@ mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-table-dir:bidi'>
                 lang=AR-SA style='font-size:8.0pt;font-family:"B Nazanin";mso-ascii-font-family:
                 Calibri;mso-fareast-font-family:"Times New Roman";mso-hansi-font-family:Calibri;
                 color:black'>
-            %{--${contractInstance?.placeOfUnloading}--}%
-            %{--محل تخلیه--}%
+            ${contractInstance?.deliveryPlace}
         </span></b></p>
     </td>
     <td width=73 nowrap style='width:54.5pt;padding:0in 5.4pt 0in 5.4pt;
