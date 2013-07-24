@@ -242,4 +242,43 @@ class PhaseController {
         def phaseInstance = new Phase()
         render(template: 'form', model: [phaseInstance: phaseInstance])
     }
+
+    def cancel() {
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                if (user.brokerType == "BuyerBroker") {
+
+
+                    def prevPhase = Phase.get(params.phaseId)
+                    prevPhase.status = "Terminate"
+                    prevPhase.endDate = new Date()
+
+                    def phaseInstance = new Phase(params)
+                    phaseInstance.startDate = new Date()
+                    phaseInstance.phase = "Terminated"
+                    prevPhase.organization = user
+                    phaseInstance.comment = phaseInstance.comment
+                    phaseInstance.comment = ""
+                    prevPhase.save()
+                    if (!phaseInstance.save(flush: true)) {
+//            render(view: "create", model: [phaseInstance: phaseInstance])
+                        return
+                    }
+                    def contract = Contract.get(params.contractId)
+
+                    contract.addToPhases(phaseInstance)
+                    if (contract.save()) {
+                        render phaseInstance.id
+                        redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
+                    }
+//        } else {
+//            def contract = Contract.get(params.contractId)
+//            redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
+//        }
+                }
+            }
+        }
+    }
 }

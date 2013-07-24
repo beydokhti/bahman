@@ -5,6 +5,73 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'contract.label', default: 'Contract')}"/>
     <title><g:message code="default.show.label" args="[entityName]"/></title>
+    <script type="text/javascript">
+        var loadOverlayAttachmentPhase = function (remoteAddress, saveAddress, saveCallback, loadCallback, params) {
+            if (!params)
+                params = {}
+            $.ajaxSettings.traditional = true;
+            $.ajax({
+                type: "GET",
+                url: remoteAddress
+            }).done(function (response) {
+                        var r = $("#ajax-form" + remoteAddress.hashCode());
+                        if (!r.length)
+                            r = $("<form id='ajax-form" + remoteAddress.hashCode() + "' enctype='multipart/form-data' method='post' action='" + saveAddress + "'></form>")
+                        r.html("")
+
+                        r.dialog({
+                            modal: true,
+                            width: params.width,
+                            resizable: false,
+                            buttons: {
+                                'ذخیره': function () {
+                                    if (params && params.beforeSubmit)
+                                        params.beforeSubmit();
+                                    if (params.switch == 'ajaxSubmit') {
+                                        r.ajaxSubmit({
+                                            url: saveAddress,
+                                            type: "post",
+                                            success: function (resp) {
+                                                if (params && params.afterSave)
+                                                    params.afterSave(resp)
+                                                if (saveCallback) {
+                                                    saveCallback(resp)
+                                                }
+                                            }
+                                        })
+                                    } else {
+                                        r.submit()
+                                    }
+                                    $(this).dialog("close");
+                                },
+                                "انصراف": function () {
+                                    $(this).dialog("close");
+                                }
+                            },
+                            close: function () {
+                                r.html("")
+                            }
+                        })
+                        if (params && params.width) {
+                            r.dialog("option", "width", params.width)
+                            r.dialog("option", "position", "top")
+                        }
+
+                        r.append(response);
+                        if (loadCallback)
+                            loadCallback(response);
+                    });
+        }
+
+        function doSubmit() {
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
+                    '<g:createLink action="cancel" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Pass']"/>',
+                    function () {
+                        window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance?.id]"/>"
+                    }, undefined, {width: 400})
+        }
+
+    </script>
 </head>
 
 <body>
@@ -246,6 +313,10 @@
                             onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"
                             style="margin-top: 0px"/>
 
+        </g:if>
+        <g:if test="${userType == "BuyerBroker"}">
+            <a onclick="doSubmit()" cursor=point><g:message
+                    code="default.button.cancel.label" default="Cancel"/></a>
         </g:if>
         <g:if test="${userType == "Manufacturer" || userType == "Supplier"}">
             <g:link class="print" action="printRemitSales" id="${contractInstance?.id}"><g:message
