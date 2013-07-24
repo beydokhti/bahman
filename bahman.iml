@@ -58,6 +58,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/commons-digester/commons-digester/jars/commons-digester-1.7.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sf.jasperreports/jasperreports/jars/jasperreports-3.7.6.jar!/" />
           <root url="file://$MODULE_DIR$/lib" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/log4j/log4j/jars/log4j-1.2.14.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/net.sourceforge.jexcelapi/jxl/jars/jxl-2.6.12.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

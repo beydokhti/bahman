@@ -66,7 +66,7 @@
                         <rg:eq name='m.phase' value='DealerBroker'/>
                     </rg:criteria>
                 </rg:grid>
-
+                <input type="button" onclick="exportExcel('w1')" value="<g:message code="report.export.excel.label"/>">
             </div>
 
             <div id="rB" class="tab-pane active">
@@ -122,6 +122,7 @@
                     }
                 </g:javascript>
                 <input type="button" ng-click="openContractCreateDialog()" value="<g:message code="create"/>">
+                <input type="button" onclick="exportExcel('w2')" value="<g:message code="report.export.excel.label"/>">
 
             </div>
 
@@ -150,7 +151,7 @@
                     </rg:criteria>
                 </rg:grid>
 
-
+                <input type="button" onclick="exportExcel('m')" value="<g:message code="report.export.excel.label"/>">
             </div>
 
             <div id="rD" class="tab-pane active">
@@ -179,7 +180,7 @@
                         %{--<rg:eq name='m.phase' value='Finished'/>--}%
                     </rg:criteria>
                 </rg:grid>
-
+                <input type="button" onclick="exportExcel('a')" value="<g:message code="report.export.excel.label"/>">
             </div>
 
             <div id="rE" class="tab-pane active" >
@@ -211,13 +212,17 @@
                         <rg:eq name='m.phase' value='DealerBroker'/>
                     </rg:criteria>
                 </rg:grid>
-
+                <input type="button" onclick="exportExcel('p')" value="<g:message code="report.export.excel.label"/>">
             </div>
 
 
         </div>
     </div>
-
+    <script type="text/javascript">
+        var exportExcel = function(status) {
+            window.location = "<g:createLink action='excel'/>/" + status + "?dealerBrokerCode=${organization?.code}";
+        }
+    </script>
 </div>
 </body>
 </html>
