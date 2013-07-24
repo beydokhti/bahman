@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RapidGrails-inplacePlugin.iml" filepath="$PROJECT_DIR$/RapidGrails-inplacePlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RapidGrails.iml" filepath="$PROJECT_DIR$/RapidGrails.iml" />
       <module fileurl="file://$PROJECT_DIR$/bahman.iml" filepath="$PROJECT_DIR$/bahman.iml" />
       <module fileurl="file://$PROJECT_DIR$/bahman-grailsPlugins.iml" filepath="$PROJECT_DIR$/bahman-grailsPlugins.iml" />
     </modules>
