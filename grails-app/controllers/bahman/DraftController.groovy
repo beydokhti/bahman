@@ -1,5 +1,6 @@
 package bahman
 
+import fi.joensuu.joyds1.calendar.JalaliCalendar
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.springframework.dao.DataIntegrityViolationException
 
@@ -125,10 +126,29 @@ class DraftController {
             }
 
         }
-
         def contract = Contract.get(params.contractId)
         def tempDraft = contract.drafts
 
+        if (!draftInstance.description) {
+            if (contract.drafts) {
+                draftInstance.description = tempDraft?.description
+            } else {
+                Manufacturer manufacturer = contract.manufacturer
+                if (manufacturer.draftNoSequence && manufacturer.code == "567") {
+
+                    def cal = Calendar.getInstance()
+                    cal.setTime(new Date())
+                    def jc = new JalaliCalendar(cal)
+                    def formatDraft = "SP" + jc.year.toString().substring(2)
+                    draftInstance.description = manufacturer.draftNoSequence.toString()
+                    manufacturer.draftNoSequence =Integer.valueOf( manufacturer.draftNoSequence ) + 1 + ""
+                    manufacturer.save()
+                    def countOfPadding = 6
+                    if (draftInstance.description.length() <= countOfPadding)
+                        draftInstance.description = formatDraft + draftInstance.description.padLeft(countOfPadding, '0')
+                }
+            }
+        }
         if (tempDraft) {
             draftInstance.versionNo = Integer.valueOf(tempDraft.versionNo) + 1 + ""
             try {
@@ -268,13 +288,28 @@ class DraftController {
     }
 
     def form() {
+        Contract contract = Contract.get(params.contractId)
+        String errorMsg = ""
+        def draftInstance = new Draft()
 
-        def draftInstance
-        if (params.id)
-            draftInstance = Draft.get(params.id)
-        else
-            draftInstance = new Draft()
-        render(template: 'form', model: [draftInstance: draftInstance])
+        if (contract.drafts) {
+            draftInstance.description = contract?.drafts?.description
+        } else {
+//            if (manufacturer.draftNoFormat && manufacturer.draftNoSequence) {
+//                def formatDraft = manufacturer.draftNoFormat.substring(0, contract.manufacturer.draftNoFormat.indexOf('#'))
+//                draftInstance.description = manufacturer.draftNoSequence.toString()
+//                manufacturer.draftNoSequence=manufacturer.draftNoSequence+1
+//                manufacturer.save()
+//                if (draftInstance.description.length()<manufacturer.draftNoFormat.count('#'))
+//                    draftInstance.description =formatDraft + draftInstance.description.padLeft(manufacturer.draftNoFormat.count('#'), '0')
+//            } else {
+//                errorMsg = message(code: 'error.null.draftno.format')
+//            }
+            if (!contract.manufacturer.draftNoSequence) {
+                errorMsg = message(code: 'error.null.draftno.format')
+            }
+        }
+        render(template: 'form', model: [draftInstance: draftInstance, errorMsg: errorMsg])
     }
 
 }

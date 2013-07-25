@@ -52,14 +52,14 @@
                     </li>
                 </g:if>
 
-                <g:if test="${manufacturerInstance?.draftNoFormat}">
-                    <li class="fieldcontain">
-                        <span id="draftNoFormat-label" class="property-label"><g:message code="manufacturer.draftNoFormat.label" default="draftNoFormat" /></span>
+                %{--<g:if test="${manufacturerInstance?.draftNoFormat}">--}%
+                    %{--<li class="fieldcontain">--}%
+                        %{--<span id="draftNoFormat-label" class="property-label"><g:message code="manufacturer.draftNoFormat.label" default="draftNoFormat" /></span>--}%
 
-                        <span class="property-value" aria-labelledby="draftNoFormat-label"><g:fieldValue bean="${manufacturerInstance}" field="draftNoFormat"/></span>
+                        %{--<span class="property-value" aria-labelledby="draftNoFormat-label"><g:fieldValue bean="${manufacturerInstance}" field="draftNoFormat"/></span>--}%
 
-                    </li>
-                </g:if>
+                    %{--</li>--}%
+                %{--</g:if>--}%
                 <g:if test="${manufacturerInstance?.draftNoSequence}">
                     <li class="fieldcontain">
                         <span id="draftNoSequence-label" class="property-label"><g:message code="manufacturer.draftNoSequence.label" default="draftNoSequence" /></span>

@@ -65,7 +65,7 @@
 
         function doSubmit() {
             loadOverlayAttachmentPhase('<g:createLink action="form" controller="phase" />',
-                    '<g:createLink action="cancel" controller="phase" params="[contractId:contractInstance?.id,phaseId:lastPhase?.id,status:'Pass']"/>',
+                    '<g:createLink action="cancel" controller="phase" params="[contractId:contractInstance?.id]"/>',
                     function () {
                         window.location = "<g:createLink controller="contract" action="showPhase"  params="[id: contractInstance?.id]"/>"
                     }, undefined, {width: 400})
@@ -289,7 +289,7 @@
             </g:else>
         </g:if>
         <g:else>
-            <g:if test="${userType == "Supplier"}">
+            <g:if test="${userType == "Supplier" &&  !cancel}">
                 <g:link class="edit" action="showAttachmentPhaseDraft" id="${contractInstance?.id}"><g:message
                         code="default.attachment.label" default="Attachments"/></g:link>
             </g:if>

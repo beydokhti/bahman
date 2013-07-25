@@ -65,15 +65,19 @@
             <rg:filterGrid grid="CustomerGrid" />
         </rg:criteria>
 
-        <rg:grid domainClass="${bahman.Customer}" caption="لیست مشتری">
+        %{--<rg:grid domainClass="${bahman.Customer}" caption="لیست مشتری">--}%
+        %{--</rg:grid>--}%
+        <rg:grid domainClass="${bahman.Customer}" caption="لیست مشتری"
+                 columns="[[name: 'code'], [name: 'description'], [name: 'mobileNo'],[name:'enabled'], [name: 'mobileNo'], [name: 'nId']]">
         </rg:grid>
-
         <rg:dialog id="customer" title="Customer Form">
             <rg:fields bean="${new bahman.Customer()}"></rg:fields>
             <rg:saveButton domainClass="${bahman.Customer}" conroller="customer" params="[method:'post']"/>
             <rg:cancelButton/>
         </rg:dialog>
         <input type="button" ng-click="openCustomerCreateDialog()" value="create">
+
+
 
     </div>
 

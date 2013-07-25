@@ -93,13 +93,17 @@ class ContractController {
                 def customer = Customer.findByCode(contract.customerCode)
 
                 def addedTax = Math.round(0.06 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
-                def fees = Math.round(0.00048 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity) + 0.0018 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity) + 0.0005 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
-                def contractValue = 1.00 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)
+                def fees = Math.round(0.00048 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)) + Math.round(0.0018 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)) + Math.round(0.0005 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
+                def contractValue = Math.round(1.00 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
                 def shareSeller = contractValue - fees
+
+                def cancel =false
+                if (contract.phases.sort { -it.id }?.find { true }.status == "Cancel")
+                    cancel = true
 
 //                if (user.code == code || user.description == desc) {
                 if (user.code == code) {
-                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, addedTax: addedTax, fees: fees, contractValue: contractValue, shareSeller: shareSeller]
+                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, addedTax: addedTax, fees: fees, contractValue: contractValue, shareSeller: shareSeller,cancel:cancel]
                 }
 
             }
@@ -263,7 +267,7 @@ class ContractController {
             }
 
         } catch (Exception e) { e.printStackTrace() }
-        contract.customer=customer1
+        contract.customer = customer1
 
         try {
             broker1 = null
@@ -278,11 +282,11 @@ class ContractController {
             }
 
         } catch (Exception e) { e.printStackTrace() }
-        contract.buyerBroker=broker1
+        contract.buyerBroker = broker1
 
         try {
             manufacturer1 = null
-            manufacturer1= Manufacturer.findByCode(contract.supplierCode) ?: new Manufacturer(code: contract.supplierCode,
+            manufacturer1 = Manufacturer.findByCode(contract.supplierCode) ?: new Manufacturer(code: contract.supplierCode,
                     description: contract.manufacturerDesc,
                     username: "producer" + contract.supplierCode,
                     password: "pass" + contract.supplierCode,
@@ -292,11 +296,11 @@ class ContractController {
             }
 
         } catch (Exception e) { e.printStackTrace() }
-        contract.manufacturer=manufacturer1
+        contract.manufacturer = manufacturer1
 
         try {
             supplier1 = null
-            supplier1= Supplier.findByCode(contract.supplierCode) ?: new Supplier(code: contract.supplierCode,
+            supplier1 = Supplier.findByCode(contract.supplierCode) ?: new Supplier(code: contract.supplierCode,
                     description: contract.manufacturerDesc,
                     username: "supplier" + contract.supplierCode,
                     password: "pass" + contract.supplierCode,
@@ -306,7 +310,7 @@ class ContractController {
             }
 
         } catch (Exception e) { e.printStackTrace() }
-        contract.supplier=supplier1
+        contract.supplier = supplier1
 
         if (!contract.hasErrors() && contract.save()) {
             flash.message = "TekEvent ${contract.id} created"
@@ -410,8 +414,29 @@ class ContractController {
     def excel() {
         def status = params.id
         def dealerBrokerCode = params.dealerBrokerCode
+        def princ = springSecurityService.getPrincipal()
+        def eqString = ""
+        User user
+        if (princ instanceof GrailsUser) {
+            user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                if (user.brokerType == "BuyerBroker") {
+                    eqString = "buyerBrokerCode"
+                } else if (user.brokerType == "DealerBroker") {
+                    eqString = "dealerBrokerCode"
+                }
+            } else if (user instanceof Customer) {
+                eqString = "customerCode"
+            } else if (user instanceof Supplier) {
+                eqString = "supplierCode"
+            } else if (user instanceof Manufacturer) {
+                eqString = "supplierCode"
+            }
+        }
+
         def criteria = {
-            eq("dealerBrokerCode", dealerBrokerCode)
+
+            eq(eqString, user.code)
             switch (status) {
                 case "w1":
                     createAlias "phases", "m"
@@ -430,6 +455,11 @@ class ContractController {
                 case "a":
                     isNotEmpty "amendments"
                     break
+                case "c":
+                    createAlias "phases", "m"
+                    eq "m.status", "Cancel"
+                    eq "m.phase", "BuyerBroker"
+                    break
             }
         }
 
@@ -445,6 +475,7 @@ class ContractController {
                 cell(5, 0, g.message(code: 'contract.customerDesc'))
                 cell(6, 0, g.message(code: 'contract.phase'))
                 cell(7, 0, g.message(code: 'contract.draft'))
+                cell(8, 0, g.message(code: 'contract.productSymbol'))
 
                 contracts.eachWithIndex { Contract contract, index ->
                     cell(0, index + 1, contract.prevStatus)
@@ -453,8 +484,9 @@ class ContractController {
                     cell(3, index + 1, contract.buyerBrokerDesc)
                     cell(4, index + 1, contract.dealerBrokerDesc)
                     cell(5, index + 1, contract.customerDesc)
-                    cell(6, index + 1, g.message(code:contract?.phases?.sort{-it.id}?.find{true}.phase))
-                    cell(7, index + 1, contract?.drafts?.description?:"")
+                    cell(6, index + 1, g.message(code: contract?.phases?.sort { -it.id }?.find { true }.phase))
+                    cell(7, index + 1, contract?.drafts?.description ?: "")
+                    cell(8, index + 1, contract.productSymbol)
                 }
             }
         }
@@ -577,7 +609,7 @@ class ContractController {
                         }
 
                     } catch (Exception e) { e.printStackTrace() }
-                    contract.customer=customer1
+                    contract.customer = customer1
 
                     try {
                         broker1 = null
@@ -592,25 +624,26 @@ class ContractController {
                         }
 
                     } catch (Exception e) { e.printStackTrace() }
-                    contract.buyerBroker=broker1
+                    contract.buyerBroker = broker1
 
                     try {
                         manufacturer1 = null
-                        manufacturer1= Manufacturer.findByCode(contract.supplierCode) ?: new Manufacturer(code: contract.supplierCode,
+                        manufacturer1 = Manufacturer.findByCode(contract.supplierCode) ?: new Manufacturer(code: contract.supplierCode,
                                 description: contract.manufacturerDesc,
                                 username: "producer" + contract.supplierCode,
                                 password: "pass" + contract.supplierCode,
+                                draftNoSequence: "1",
                                 enabled: false).save()
                         if (!broker1.equals(null)) {
                             UserRole.findByUser(manufacturer1) ?: UserRole.create(manufacturer1, manRole)
                         }
 
                     } catch (Exception e) { e.printStackTrace() }
-                    contract.manufacturer=manufacturer1
+                    contract.manufacturer = manufacturer1
 
                     try {
                         supplier1 = null
-                        supplier1= Supplier.findByCode(contract.supplierCode) ?: new Supplier(code: contract.supplierCode,
+                        supplier1 = Supplier.findByCode(contract.supplierCode) ?: new Supplier(code: contract.supplierCode,
                                 description: contract.manufacturerDesc,
                                 username: "supplier" + contract.supplierCode,
                                 password: "pass" + contract.supplierCode,
@@ -620,7 +653,7 @@ class ContractController {
                         }
 
                     } catch (Exception e) { e.printStackTrace() }
-                    contract.supplier=supplier1
+                    contract.supplier = supplier1
 
                     contract.save()
                     phaseService.addDefaultPhases(contract)
@@ -646,6 +679,7 @@ class ContractController {
         //def lll=contractInstance.phases?.find(it?.status=="W")
         def lastPhaseId = Contract.findByPhase(contractInstance)
         def lastPhase = Phase.get(lastPhaseId)
+
         [contractInstance: contractInstance, lastPhase: lastPhase]
     }
 
@@ -694,8 +728,8 @@ class ContractController {
         model.price = df.format(Integer.valueOf(contract.price))
 
         model.addedTax = df.format(Math.round(0.06 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)))
-        def feesNo = Math.round(0.00048 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity) + 0.0018 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity) + 0.0005 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
-        def contractValueNo = 1.00 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)
+        def feesNo = Math.round(0.00048 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)) + Math.round(0.0018 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)) + Math.round(0.0005 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
+        def contractValueNo = Math.round(1.00 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
         model.shareSeller = df.format(contractValueNo - feesNo)
         model.fees = df.format(feesNo)
         model.contractValue = df.format(contractValueNo)

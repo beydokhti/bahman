@@ -125,7 +125,7 @@
 
         function doAddDraft() {
 
-            loadOverlayAttachmentPhase('<g:createLink action="form" controller="draft" />',
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="draft" params="[contractId:contractInstance?.id]" />',
                     '<g:createLink action="saveDraft" controller="draft" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'editAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))

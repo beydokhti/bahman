@@ -10,7 +10,7 @@ class Phase {
 
     static constraints = {
         status(inList: ["Pass", "Reject", "Waiting","Cancel","Terminate"]) //ok-nok-waiting
-        phase(nullable: false, blank: false, inList: ["DealerBroker", "BuyerBroker", "Supplier", "Manufacturer", "Finished","Terminated"])
+        phase(nullable: false, blank: false, inList: ["DealerBroker", "BuyerBroker", "Supplier", "Manufacturer", "Finished"])
         comment(nullable: true, maxSize: 1024)
         startDate(nullable: false)
         endDate(nullable: true)
@@ -44,6 +44,10 @@ class Phase {
             return "برگشت"
         else if (status == 'Waiting')
             return "درحال انتظار"
+        else if (status== "Cancel")
+            return "ابطال شده"
+        else if (status == "Terminate")
+            return "متوقف شده"
 
     }
 

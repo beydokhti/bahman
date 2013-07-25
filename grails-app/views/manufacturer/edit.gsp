@@ -118,17 +118,17 @@
                         <g:textField name="fax" value="${manufacturerInstance?.fax}"/>
                     </div>
 
-                    <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'draftNoFormat', 'error')}">
-                        <label for="draftNoFormat">
-                            <g:message code="manufacturer.draftNoFormat.label" default="draftNoFormat" />
-                        </label>
-                        <g:textField name="draftNoFormat" value="${manufacturerInstance?.draftNoFormat}"/>
-                    </div>
+                    %{--<div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'draftNoFormat', 'error')}">--}%
+                        %{--<label for="draftNoFormat">--}%
+                            %{--<g:message code="manufacturer.draftNoFormat.label" default="draftNoFormat" />--}%
+                        %{--</label>--}%
+                        %{--<g:textField name="draftNoFormat" value="${manufacturerInstance?.draftNoFormat}"/>--}%
+                    %{--</div>--}%
 
 
                     <div class="fieldcontain ${hasErrors(bean: manufacturerInstance, field: 'draftNoSequence', 'error')}">
                         <label for="address">
-                            <g:message code="manufacturer.draftNoSequence.label" default="draftNoFormat" />
+                            <g:message code="manufacturer.draftNoSequence.label" default="draftNoSequence" />
                         </label>
                         <g:textField name="draftNoSequence" value="${manufacturerInstance?.draftNoSequence}"/>
                     </div>

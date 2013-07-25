@@ -75,7 +75,7 @@
 
         function doAddDraft() {
 
-            loadOverlayAttachmentPhase('<g:createLink action="form" controller="draft" />',
+            loadOverlayAttachmentPhase('<g:createLink action="form" controller="draft" params="[contractId:contractInstance?.id]" />',
                     '<g:createLink action="saveDraft" controller="draft" params="[contractId:contractInstance?.id,attr:'Attachment',rcontroller:'contract',raction:'showAttachmentPhaseDraft',redirectId:contractInstance?.id]"/>',
                     function (res) {
                         $("#attachment-container").append($(res))
@@ -191,6 +191,7 @@
                 <g:message code="${flash.message}" args="${flash.args}" default="${flash.default}"/>
             </div>
         </g:if>
+
         <input class="btn" type="button" onclick="doAddDraft()" value="Add Draft">
     </div>
 

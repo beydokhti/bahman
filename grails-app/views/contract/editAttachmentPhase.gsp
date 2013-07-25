@@ -113,13 +113,17 @@
         function doAddFreight() {
             loadOverlayAttachmentPhase('<g:createLink action="freightForm" controller="contract" params="[contractId:contractInstance?.id]"/>',
                     '<g:createLink action="saveFreight" controller="contract" params="[contractId:contractInstance?.id]"/>',
-                    undefined, undefined, {width: 400, switch: 'ajaxSubmit'})
+                    function () {
+                        window.location =window.location
+                    }, undefined, {width: 400, switch: 'ajaxSubmit'})
         }
 
         function doAddAddedTaxReceipt() {
             loadOverlayAttachmentPhase('<g:createLink action="addedTaxReceiptForm" controller="contract" params="[contractId:contractInstance?.id]"/>',
                     '<g:createLink action="saveAddedTaxReceipt" controller="contract" params="[contractId:contractInstance?.id]"/>',
-                    undefined, undefined, {width: 400, switch: 'ajaxSubmit'})
+                    function () {
+                        window.location =window.location
+                    }, undefined, {width: 400, switch: 'ajaxSubmit'})
         }
 
     </script>
@@ -162,7 +166,7 @@
         <div id="freight-label" class="span2 field-label"><g:message
                 code="contract.freight.label" default="Freight"/></div>
 
-        <div class="property-value-small-inline span3" aria-labelledby="contractFreight-label"><g:fieldValue
+        <div class="property-value-small-inline span3" aria-labelledby="contractFreight-label" ><g:fieldValue id="contractFreight"
                 bean="${contractInstance}" field="freight"/></div>
 
     </div>

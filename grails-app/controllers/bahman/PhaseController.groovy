@@ -249,34 +249,43 @@ class PhaseController {
             def user = User.findByUsername(princ.username)
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
-
-
-                    def prevPhase = Phase.get(params.phaseId)
-                    prevPhase.status = "Terminate"
-                    prevPhase.endDate = new Date()
-
+                    Contract contract = Contract.get(params.contractId)
+                    Phase prevPhase
+                    if (contract.phases) {
+                        for (p in contract?.phases) {
+                            if (p.status == 'Waiting')
+                                prevPhase = p
+                        }
+                    }
                     def phaseInstance = new Phase(params)
-                    phaseInstance.startDate = new Date()
-                    phaseInstance.phase = "Terminated"
-                    prevPhase.organization = user
-                    phaseInstance.comment = phaseInstance.comment
-                    phaseInstance.comment = ""
-                    prevPhase.save()
-                    if (!phaseInstance.save(flush: true)) {
-//            render(view: "create", model: [phaseInstance: phaseInstance])
-                        return
-                    }
-                    def contract = Contract.get(params.contractId)
+                    if (prevPhase) {
+                        if (prevPhase.phase != "BuyerBroker") {
+                            prevPhase.status = "Terminate"
+                            prevPhase.endDate = new Date()
+                            prevPhase.organization = user
+                            prevPhase.save()
 
-                    contract.addToPhases(phaseInstance)
-                    if (contract.save()) {
-                        render phaseInstance.id
-                        redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
+                            phaseInstance.startDate = new Date()
+                            phaseInstance.status = "Cancel"
+                            phaseInstance.phase = "BuyerBroker"
+                            phaseInstance.organization = user
+                            if (!phaseInstance.save(flush: true)) {
+                                return
+                            }
+                            contract.addToPhases(phaseInstance)
+                            contract.save()
+                        } else {
+                            prevPhase.status = "Cancel"
+                            prevPhase.endDate = new Date()
+                            prevPhase.organization = user
+                            prevPhase.comment = phaseInstance.comment
+                            prevPhase.save()
+                        }
+
                     }
-//        } else {
-//            def contract = Contract.get(params.contractId)
-//            redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
-//        }
+                    render phaseInstance.id
+                    redirect(controller: "contract", action: "showPhase", params: [id: contract.id])
+
                 }
             }
         }

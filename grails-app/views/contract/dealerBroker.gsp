@@ -32,6 +32,9 @@
             <li class="">
                 <a data-toggle="tab" href="#rE"><g:message code="contract.sent.label" default="ارسالی"></g:message></a>
             </li>
+            <li class="">
+                <a data-toggle="tab" href="#rF"><g:message code="contract.Cancel.label" default="ابطال شده"></g:message></a>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -214,6 +217,39 @@
                 </rg:grid>
                 <input type="button" onclick="exportExcel('p')" value="<g:message code="report.export.excel.label"/>">
             </div>
+
+
+        <div id="rF" class="tab-pane active" >
+
+            <rg:criteria inline='true' id="cr6">
+                <rg:like name="contractNo"/>
+                <rg:like name="contractPartNo"/>
+                <rg:like name="buyerBrokerDesc"/>
+                <rg:like name="customerDesc"/>
+                <rg:eq name="dealerBrokerCode" value="${organization?.code}" hidden="true"/>
+                <rg:alias name='phases' value='m'/>
+                <rg:eq name='m.status' value='Cancel' hidden="true"/>
+                <rg:eq name='m.phase' value='BuyerBroker' hidden="true"/>
+                <rg:filterGrid grid="ContractCancelGrid" label="${message(code: "search")}"/>
+            </rg:criteria>
+            <rg:grid domainClass="${bahman.Contract}" idPostfix="Cancel" caption="ابطال شده"
+                     columns="[[name: 'prevStatus' , expression: 'g.message([code: obj.prevStatus])'],
+                             [name: 'contractNo'],
+                             [name: 'contractPartNo'],
+                             [name: 'buyerBrokerDesc'],
+                             [name: 'dealerBrokerDesc'],
+                             [name: 'customerDesc'],
+                             [name:'phase',expression: 'g.message(code:obj?.phases?.sort{-it.id}?.find{true}.phase)'],
+                             [name: 'draft',expression: 'obj?.drafts?.description']]">
+                <rg:criteria>
+                    <rg:eq name="dealerBrokerCode" value="${organization?.code}"/>
+                    <rg:alias name='phases' value='m'/>
+                    <rg:eq name='m.status' value='Cancel'/>
+                    <rg:eq name='m.phase' value='BuyerBroker'/>
+                </rg:criteria>
+            </rg:grid>
+            <input type="button" onclick="exportExcel('c')" value="<g:message code="report.export.excel.label"/>">
+        </div>
 
 
         </div>

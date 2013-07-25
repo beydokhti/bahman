@@ -79,8 +79,8 @@
 
 
 <div id="footer" role="contentinfo">
-    <g:message code="application.name" default="Cash Management System"/> | <g:message code="application.copyRight"
-                                                                                       default="© AGAH-IT 2012"/>
+    <g:message code="application.name" default="Draft Issuance Management System (DIMS)"/> | <g:message code="application.copyRight"
+                                                                                       default=""/>
 </div><!-- end #footer -->
 
 <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt"
