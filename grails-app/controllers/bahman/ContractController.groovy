@@ -1,6 +1,7 @@
 package bahman
 
 import fi.joensuu.joyds1.calendar.JalaliCalendar
+import grails.plugin.jxl.builder.ExcelBuilder
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
@@ -403,6 +404,65 @@ class ContractController {
     }
 
     def importExcel() {
+
+    }
+
+    def excel() {
+        def status = params.id
+        def dealerBrokerCode = params.dealerBrokerCode
+        def criteria = {
+            eq("dealerBrokerCode", dealerBrokerCode)
+            switch (status) {
+                case "w1":
+                    createAlias "phases", "m"
+                    eq "m.status", "Waiting"
+                    eq "m.phase", "DealerBroker"
+                    break
+                case "w2":
+                    createAlias "phases", "m"
+                    eq "m.status", "Waiting"
+                    ne "m.phase", "DealerBroker"
+                    break
+                case "m":
+                    createAlias "phases", "m"
+                    eq "m.phase", "Finished"
+                    break
+                case "a":
+                    isNotEmpty "amendments"
+                    break
+            }
+        }
+
+        def contracts = Contract.withCriteria(criteria)
+
+        def renderClosure = {
+            sheet('Contracts') {
+                cell(0, 0, g.message(code: 'contract.prevStatus'))
+                cell(1, 0, g.message(code: 'contractNo'))
+                cell(2, 0, g.message(code: 'contract.contractPartNo'))
+                cell(3, 0, g.message(code: 'contract.buyerBrokerDesc'))
+                cell(4, 0, g.message(code: 'contract.dealerBrokerDesc'))
+                cell(5, 0, g.message(code: 'contract.customerDesc'))
+                cell(6, 0, g.message(code: 'contract.phase'))
+                cell(7, 0, g.message(code: 'contract.draft'))
+
+                contracts.eachWithIndex { Contract contract, index ->
+                    cell(0, index + 1, contract.prevStatus)
+                    cell(1, index + 1, contract.contractNo)
+                    cell(2, index + 1, contract.contractPartNo)
+                    cell(3, index + 1, contract.buyerBrokerDesc)
+                    cell(4, index + 1, contract.dealerBrokerDesc)
+                    cell(5, index + 1, contract.customerDesc)
+                    cell(6, index + 1, g.message(code:contract?.phases?.sort{-it.id}?.find{true}.phase))
+                    cell(7, index + 1, contract?.drafts?.description?:"")
+                }
+            }
+        }
+        def stream = new ByteArrayOutputStream()
+        new ExcelBuilder().workbook(stream, renderClosure)
+        response.contentType = 'application/excel'
+        response.setHeader("Content-disposition", "attachment;filename=export.xls")
+        response.outputStream << stream.toByteArray()
 
     }
 

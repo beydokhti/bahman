@@ -53,6 +53,7 @@ grails.project.dependency.resolution = {
         compile ":dynamic-jasper:0.6"
         compile ":spring-security-core:1.2.7.3"
         compile ":twitter-bootstrap:2.3.2"
+        compile ":jxl:0.54"
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
