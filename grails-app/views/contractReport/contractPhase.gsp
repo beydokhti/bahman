@@ -186,22 +186,50 @@
         %{--</div>--}%
     </div>
 
-
-    <g:submitButton name="showReport" class="show" value="${message(code: 'report.show.label', default: 'Show')}"/>
+    <input id="showReport" class="show" type="button" onclick="reloadGrid()" value="${message(code: 'report.show.label', default: 'Show')}" name="showReport">
     <g:actionSubmit value="${message(code: 'report.export.excel.label', default: 'EXCEL')}" action="xls"/>
     <g:actionSubmit value="${message(code: 'report.export.xml.label', default: 'XML')}" action="xml"/>
 </g:form>
+<script type="text/javascript">
+    var reloadGrid = function() {
+        var grid = $("#ContractReportGrid");
+        var url = grid.getGridParam('url');
+        var source = getUrlParamValue(url, "source");
+        eval("var json = " + source);
+        json.params.contractNoFrom = $("#contractNoFrom").val();
+        json.params.contractNoTo = $("#contractNoTo").val();
+        json.params.contractPartNoFrom = $("#contractPartNoFrom").val();
+        json.params.contractPartNoTo = $("#contractPartNoTo").val();
+        json.params.contractDateFrom = $("#contractDateFrom_control").val();
+        json.params.contractDateTo = $("#contractDateTo_control").val();
+        json.params.buyerBrokerCodeFrom = $("#buyerBrokerCodeFrom").val();
+        json.params.buyerBrokerCodeTo = $("#buyerBrokerCodeTo").val();
+        json.params.customerCodeFrom = $("#customerCodeFrom").val();
+        json.params.customerCodeTo = $("#customerCodeTo").val();
+        json.params.supplierCodeFrom = $("#supplierCodeFrom").val();
+        json.params.supplierCodeTo = $("#supplierCodeTo").val();
+        json.params.productSymbolFrom = $("#productSymbolFrom").val();
+        json.params.productSymbolTo = $("#productSymbolTo").val();
+        json.params.importDateFrom = $("#importDateFrom_control").val();
+        json.params.importDateTo = $("#importDateTo_control").val();
+
+        var newSource = $.toJSON(json);
+        var newUrl = setUrlParam(url, "source", newSource);
+        grid.setGridParam({url:newUrl});
+        grid.trigger("reloadGrid");
+    }
+</script>
 <rg:grid domainClass="${bahman.report.ContractReport}" maxColumns="11" showFirstColumn="false" footerRow="true" showAllRows="true"
          width="2000px"
          source="${[service: "contractPhaseReport", method: "report",
-                 params: [contractNoFrom: "${reportParams.contractNoFrom}", contractNoTo: "${reportParams.contractNoTo}",
-                         contractPartNoFrom: "${reportParams.contractPartNoFrom}", contractPartNoTo: "${reportParams.contractPartNoTo}",
-                         contractDateFrom: "${reportParams.contractDateFrom}", contractDateTo: "${reportParams.contractDateTo}",
-                         buyerBrokerCodeFrom: "${reportParams.buyerBrokerCodeFrom}", buyerBrokerCodeTo: "${reportParams.buyerBrokerCodeTo}",
-                         customerCodeFrom:"${reportParams.customerCodeFrom}",customerCodeTo:"${reportParams.customerCodeTo}",
-                         supplierCodeFrom:"${reportParams.supplierCodeFrom}",supplierCodeTo:"${reportParams.supplierCodeTo}",
-                         productSymbol:"${reportParams.productSymbol}",customerDesc:"${reportParams.customerDesc}",
-                         importDateFrom:"${reportParams.importDateFrom}",importDateTo:"${reportParams.importDateTo}"]]}"/>
+                 params: [contractNoFrom: "${reportParams.contractNoFrom?:""}", contractNoTo: "${reportParams.contractNoTo?:""}",
+                         contractPartNoFrom: "${reportParams.contractPartNoFrom?:""}", contractPartNoTo: "${reportParams.contractPartNoTo?:""}",
+                         contractDateFrom: "${reportParams.contractDateFrom?:""}", contractDateTo: "${reportParams.contractDateTo?:""}",
+                         buyerBrokerCodeFrom: "${reportParams.buyerBrokerCodeFrom?:""}", buyerBrokerCodeTo: "${reportParams.buyerBrokerCodeTo?:""}",
+                         customerCodeFrom:"${reportParams.customerCodeFrom?:""}",customerCodeTo:"${reportParams.customerCodeTo?:""}",
+                         supplierCodeFrom:"${reportParams.supplierCodeFrom?:""}",supplierCodeTo:"${reportParams.supplierCodeTo?:""}",
+                         productSymbol:"${reportParams.productSymbol?:""}",customerDesc:"${reportParams.customerDesc?:""}",
+                         importDateFrom:"${reportParams.importDateFrom?:""}",importDateTo:"${reportParams.importDateTo?:""}"]]}"/>
 
 </body>
 </html>

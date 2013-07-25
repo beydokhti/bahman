@@ -148,6 +148,4 @@ class Contract {
                 return "Failed"
         }
     }
-
-
 }
