@@ -416,20 +416,25 @@ class ContractController {
         def dealerBrokerCode = params.dealerBrokerCode
         def princ = springSecurityService.getPrincipal()
         def eqString = ""
+        def userType
         User user
         if (princ instanceof GrailsUser) {
             user = User.findByUsername(princ.username)
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
+                    userType= "BuyerBroker"
                     eqString = "buyerBrokerCode"
                 } else if (user.brokerType == "DealerBroker") {
+                    userType= "DealerBroker"
                     eqString = "dealerBrokerCode"
                 }
             } else if (user instanceof Customer) {
                 eqString = "customerCode"
             } else if (user instanceof Supplier) {
+                userType="Supplier"
                 eqString = "supplierCode"
             } else if (user instanceof Manufacturer) {
+                userType="Manufacturer"
                 eqString = "supplierCode"
             }
         }
@@ -441,7 +446,7 @@ class ContractController {
                 case "w1":
                     createAlias "phases", "m"
                     eq "m.status", "Waiting"
-                    eq "m.phase", "DealerBroker"
+                    eq "m.phase", userType
                     break
                 case "w2":
                     createAlias "phases", "m"
@@ -514,11 +519,12 @@ class ContractController {
 //
 //                    cell(7, index + 1, contract?.drafts?.description ?: "")
 //                    cell(8, index + 1, contract.productSymbol)
-                    cell(1, index + 1, contract?.contractNo)
-                    cell(0, index + 1, contract?.contractPartNo)
+                    cell(0, index + 1, contract?.contractNo)
+                    cell(1, index + 1, contract?.contractPartNo)
                     cell(2, index + 1, formatDate(contract?.contractDate))
                     cell(3, index + 1, formatDate(contract?.allotmentDate))
                     cell(4, index + 1, formatDate(contract?.settlementDeadline))
+                    if(contract?.settlementType)
                     cell(5, index + 1, contract?.settlementType)
                     cell(6, index + 1, contract?.buyerBrokerDesc)
                     cell(7, index + 1, contract?.dealerBrokerDesc)
@@ -532,20 +538,32 @@ class ContractController {
                     cell(15, index + 1, contract?.manufacturerDesc)
                     cell(16, index + 1, contract?.deliveryPlace)
                     cell(17, index + 1, contract?.productMainGroup)
+                    if(contract?.productGroup)
                     cell(18, index + 1, contract?.productGroup)
-                    cell(19, index + 1, contract?.productSubGroup)
-                    cell(20, index + 1, contract?.weight)
-                    cell(21, index + 1, contract?.quantity)
-                    cell(22, index + 1, contract?.buyerBrokerCode)
-                    cell(23, index + 1, contract?.dealerBrokerCode)
-                    cell(24, index + 1, contract?.customerCode)
-                    cell(25, index + 1, contract?.supplierCode)
-                    cell(26, index + 1, contract?.boursePrice)
+                    if (contract?.productSubGroup)
+                        cell(19, index + 1, contract?.productSubGroup)
+                    if (contract?.weight)
+                        cell(20, index + 1, contract?.weight)
+                    if (contract?.quantity)
+                        cell(21, index + 1, contract?.quantity)
+                    if (contract?.buyerBrokerCode)
+                        cell(22, index + 1, contract?.buyerBrokerCode)
+                    if (contract?.dealerBrokerCode)
+                        cell(23, index + 1, contract?.dealerBrokerCode)
+                    if (contract?.customerCode)
+                        cell(24, index + 1, contract?.customerCode)
+                    if (contract.supplierCode)
+                        cell(25, index + 1, contract?.supplierCode)
+                    if (contract?.boursePrice)
+                        cell(26, index + 1, contract?.boursePrice)
                     if (contract?.settlementDate)
-                    cell(27, index + 1, formatDate(contract?.settlementDate))
-                    cell(28, index + 1, contract?.contractID)
-                    cell(29, index + 1, formatDate(contract?.releaseDate))
-                    cell(30, index + 1, formatDate(contract?.importDate))
+                        cell(27, index + 1, formatDate(contract?.settlementDate))
+                    if (contract?.contractID)
+                        cell(28, index + 1, contract?.contractID)
+                    if (contract?.releaseDate)
+                        cell(29, index + 1, formatDate(contract?.releaseDate))
+                    if (contract?.importDate)
+                        cell(30, index + 1, formatDate(contract?.importDate))
                     if (contract?.freight)
                         cell(31, index + 1, contract?.freight)
                     if (contract?.placeOfUnloading)

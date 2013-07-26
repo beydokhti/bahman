@@ -194,7 +194,7 @@
     </div>
 
     <div class="span3">
-        %{--<g:select name="status" from="${["هردو","تسویه شده","تسویه نشده" ]}" valueMessagePrefix="contract.settlementDate" />--}%
+        <g:select name="status" from="${["هردو","تسویه شده","تسویه نشده" ]}" valueMessagePrefix="contract.settlementDate" />
     </div>
     </div>
 

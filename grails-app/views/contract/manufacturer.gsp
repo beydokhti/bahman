@@ -43,7 +43,7 @@
                 <a data-toggle="tab" href="#rE"><g:message code="contract.sent.label" default="ارسالی"></g:message></a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#rF"><g:message code="contract.sent.label" default="ابطال شده"></g:message></a>
+                <a data-toggle="tab" href="#rF"><g:message code="contract.Cancel.label" default="ابطال شده"></g:message></a>
             </li>
         </ul>
 

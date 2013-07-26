@@ -25,14 +25,14 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${brokerInstance?.password}">
-				<li class="fieldcontain">
-					<span id="password-label" class="property-label"><g:message code="broker.password.label" default="Password" /></span>
-					
-						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${brokerInstance}" field="password"/></span>
-					
-				</li>
-				</g:if>
+				%{--<g:if test="${brokerInstance?.password}">--}%
+				%{--<li class="fieldcontain">--}%
+					%{--<span id="password-label" class="property-label"><g:message code="broker.password.label" default="Password" /></span>--}%
+					%{----}%
+						%{--<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${brokerInstance}" field="password"/></span>--}%
+					%{----}%
+				%{--</li>--}%
+				%{--</g:if>--}%
 			
 				<g:if test="${brokerInstance?.code}">
 				<li class="fieldcontain">

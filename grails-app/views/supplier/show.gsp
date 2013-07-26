@@ -25,14 +25,14 @@
 				</li>
 				</g:if>
 
-				<g:if test="${supplierInstance?.password}">
-				<li class="fieldcontain">
-					<span id="password-label" class="property-label"><g:message code="supplier.password.label" default="Password" /></span>
+				%{--<g:if test="${supplierInstance?.password}">--}%
+				%{--<li class="fieldcontain">--}%
+					%{--<span id="password-label" class="property-label"><g:message code="supplier.password.label" default="Password" /></span>--}%
 
-						<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${supplierInstance}" field="password"/></span>
+						%{--<span class="property-value" aria-labelledby="password-label"><g:fieldValue bean="${supplierInstance}" field="password"/></span>--}%
 
-				</li>
-				</g:if>
+				%{--</li>--}%
+				%{--</g:if>--}%
 
 				<g:if test="${supplierInstance?.code}">
 				<li class="fieldcontain">
