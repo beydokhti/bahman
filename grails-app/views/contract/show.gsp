@@ -317,6 +317,9 @@
         <g:if test="${userType == "BuyerBroker"}">
             <a onclick="doSubmit()" cursor=point><g:message
                     code="default.button.cancel.label" default="Cancel"/></a>
+            <g:link class="edit" controller="customer" action="editCustomer" params="[id:contractInstance?.customer.id,contractId:contractInstance.id]">
+                <g:message
+                    code="default.button.edit.customer.label" default="Cancel"/></g:link>
         </g:if>
         <g:if test="${userType == "Manufacturer" || userType == "Supplier"}">
             <g:link class="print" action="printRemitSales" id="${contractInstance?.id}"><g:message

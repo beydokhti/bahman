@@ -113,6 +113,34 @@
         </div>
 
         <div class="row">
+            <div class="span2"><div id="amendmentFreight-label" class="field-label"><g:message
+                    code="amendment.amendmentFreight.label" default="Amendment freight"/></div></div>
+
+            <div class="span2"><div class="property-value" aria-labelledby="amendmentFreight-label"><g:fieldValue
+                    bean="${amendmentInstance}" field="freight"/></div></div>
+
+            <div class="span2"><div id="placeOfUnloading-label" class="field-label"><g:message code="amendment.placeOfUnloading.label"
+                                                                                      default="Comment"/></div></div>
+
+            <div class="span2"><div class="property-value" aria-labelledby="placeOfUnloading-label"><g:fieldValue
+                    bean="${amendmentInstance}" field="placeOfUnloading"/></div></div>
+        </div>
+
+        <div class="row">
+            <div class="span2"><div id="addedTaxReceipt-label" class="field-label"><g:message
+                    code="amendment.addedTaxReceipt.label" default="Amendment addedTaxReceipt"/></div></div>
+
+            <div class="span2"><div class="property-value" aria-labelledby="addedTaxReceipt-label"><g:fieldValue
+                    bean="${amendmentInstance}" field="addedTaxReceipt"/></div></div>
+
+            <div class="span2"><div id="addedTaxReceiptDate-label" class="field-label"><g:message code="amendment.addedTaxReceiptDate.label"
+                                                                                               default="Comment"/></div></div>
+
+            <div class="span2"><div class="property-value" aria-labelledby="addedTaxReceiptDate-label"><rg:formatJalaliDate
+                    date="${amendmentInstance?.addedTaxReceiptDate}"/></div></div>
+        </div>
+
+        <div class="row">
             <div class="span2"><div id="amendmentDocument-label" class="field-label"><g:message
                     code="amendment.amendmentDocument.label" default="Amendment Document"/></div></div>
             <a href="<g:createLink action="getDocument" params="[id: amendmentInstance?.id]"/>" target="_blank">

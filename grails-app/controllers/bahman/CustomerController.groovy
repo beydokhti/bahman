@@ -26,8 +26,8 @@ class CustomerController {
             render(view: "create", model: [customerInstance: customerInstance])
             return
         }
-        def role=Role.findByAuthority("Customer")
-        UserRole.create(customerInstance,role)
+        def role = Role.findByAuthority("Customer")
+        UserRole.create(customerInstance, role)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'customer.label', default: 'Customer'), customerInstance.id])
         redirect(action: "show", id: customerInstance.id)
@@ -35,7 +35,14 @@ class CustomerController {
 
     def show() {
         def customerInstance = Customer.get(params.id)
-        if (!customerInstance) {
+//        def princ = springSecurityService.getPrincipal()
+//        def userType ="admin"
+//        if (princ instanceof GrailsUser) {
+//            def user = User.findByUsername(princ.username)
+//            if (user instanceof Broker) {
+//                userType=user.brokerType
+//            }
+                if (!customerInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'customer.label', default: 'Customer'), params.id])
             redirect(action: "list")
             return
@@ -52,6 +59,25 @@ class CustomerController {
             return
         }
 
+        [customerInstance: customerInstance]
+    }
+
+    def editCustomer() {
+        def customerInstance = Customer.get(params.id)
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                def contract = Contract.get(params.contractId)
+                if (contract.buyerBroker.code == user.code) {
+                    if (!customerInstance) {
+                        flash.message = message(code: 'default.not.found.message', args: [message(code: 'customer.label', default: 'Customer'), params.id])
+                        redirect(action: "list")
+                        return
+                    }
+                }
+            }
+        }
         [customerInstance: customerInstance]
     }
 
@@ -104,17 +130,17 @@ class CustomerController {
         }
     }
 
-    def changePassword(){
+    def changePassword() {
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
             def user = User.findByUsername(princ.username)
 
             def customerInstance = Customer.get(user.id)
-        if (!customerInstance) {
-            return
-        }
+            if (!customerInstance) {
+                return
+            }
 
-        [customerInstance: customerInstance]
+            [customerInstance: customerInstance]
         }
     }
 

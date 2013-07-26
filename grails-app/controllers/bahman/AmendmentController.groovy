@@ -16,6 +16,8 @@ class AmendmentController {
     def list() {
 
         def contractInstance = Contract.get(params.id)
+        if (!contractInstance)
+            contractInstance = Contract.get(params.contractId)
 
         def princ = springSecurityService.getPrincipal()
         if (princ instanceof GrailsUser) {
@@ -245,5 +247,69 @@ class AmendmentController {
             response.outputStream << amendmentInstance.amendmentDocument
             response.outputStream.flush()
         }
+    }
+
+    def create (){
+        [amendmentInstance: new Amendment(params),contractId:params.contractId ]
+
+    }
+
+    def form() {
+
+        Amendment amendment
+        if (params.id)
+            amendment = amendment.get(params.id)
+        else
+            amendment = new Amendment()
+        render(template: 'form', model: [amendmentInstance: amendment])
+    }
+
+    def saveBroker(){
+        def amendmentInstance = new Amendment(params)
+        def file = request.getFile("amendmentDocument")
+        try {
+            amendmentInstance.fileName = file.originalFilename
+            amendmentInstance.contentType = file.getContentType();
+        }
+        catch (Exception e) {
+            amendmentInstance.fileName = ""
+        }
+
+        def userType = ""
+        def conract = Contract.get(params.contractId)
+
+        amendmentInstance.amendmentDate = new Date()
+        amendmentInstance.status="Invisible"
+        amendmentInstance.contractNo = conract.contractNo
+        amendmentInstance.contractPartNo = conract.contractPartNo
+
+        def princ = springSecurityService.getPrincipal()
+        if (princ instanceof GrailsUser) {
+            def user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                if (user.brokerType == "BuyerBroker") {
+                    userType = "BuyerBroker"
+                } else if (user.brokerType == "DealerBroker") {
+                    userType = "DealerBroker"
+                }
+            } else if (user instanceof Supplier) {
+                userType = "Supplier"
+            }
+        }
+
+        def userLevel = Phase.findByPhaseName(userType)
+
+        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel), comment: "ارسال اصلاحیه", organization: null, startDate: new Date(), status: "Pass", endDate: new Date()).save()
+        amendmentInstance.addToPhases new Phase(phase: Phase.findByPhaseLevel(userLevel + 1), comment: "", organization: null, startDate: new Date(), status: "Waiting").save()
+        if (!amendmentInstance.save(flush: true)) {
+            render(view: "create", model: [amendmentInstance: amendmentInstance])
+            return
+        }
+        conract.addToAmendments(amendmentInstance)
+        conract.save()
+//        flash.message = message(code: 'default.created.message', args: [message(code: 'amendment.label', default: 'Amendment'), amendmentInstance.id])
+//        redirect(action: "show", id: amendmentInstance.id)
+        redirect(action: "list", params: [contractId: conract.id])
+
     }
 }

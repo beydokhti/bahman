@@ -16,58 +16,66 @@ class ContractPhaseReportService {
         def format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
         Date contractDateFrom
         Date contractDateTo
+        String status
+
+        if (params.status == "تسویه شده")
+            status = "T"
+        if (params.status == "تسویه نشده")
+            status = "N"
 
 
-            println(params.contractDateFrom?:"")
-            if (params.contractDateFrom) {
-                def dateFrom = params.contractDateFrom
-                if (dateFrom instanceof Date)
-                    contractDateFrom = params.contractDateFrom
-                else {
-                    contractDateFrom = format.parse(dateFrom)
-                }
+        println(params.contractDateFrom ?: "")
+        if (params.contractDateFrom) {
+            def dateFrom = params.contractDateFrom
+            if (dateFrom instanceof Date)
+                contractDateFrom = params.contractDateFrom
+            else {
+                contractDateFrom = format.parse(dateFrom)
+            }
+        }
+
+        if (params.contractDateTo) {
+            def dateTo = params.contractDateTo
+            if (dateTo instanceof Date)
+                contractDateTo = params.contractDateTo
+            else {
+
+                contractDateTo = format.parse(dateTo)
             }
 
-            if (params.contractDateTo)
-            {
-                def dateTo = params.contractDateTo
-                if (dateTo instanceof Date)
-                    contractDateTo = params.contractDateTo
-                else {
-
-                    contractDateTo = format.parse(dateTo)
-                }
-
-            }
+        }
 
         Date importDateFrom
         Date importDateTo
 
-            if (params.importDateFrom)
-            {
-                def iDateFrom = params.importDateFrom
-                if (iDateFrom instanceof Date)
-                    importDateFrom = params.importDateFrom
-                else {
-                    importDateFrom = format.parse(iDateFrom)
-                }
+        if (params.importDateFrom) {
+            def iDateFrom = params.importDateFrom
+            if (iDateFrom instanceof Date)
+                importDateFrom = params.importDateFrom
+            else {
+                importDateFrom = format.parse(iDateFrom)
+            }
 
+        }
+        if (params.importDateTo) {
+            def iDateTo = params.importDateTo
+            if (iDateTo instanceof Date)
+                importDateTo = params.importDateTo
+            else {
+                importDateTo = format.parse(iDateTo)
             }
-            if (params.importDateTo){
-                def iDateTo = params.importDateTo
-                if (iDateTo instanceof Date)
-                    importDateTo = params.importDateTo
-                else {
-                    importDateTo = format.parse(iDateTo)
-                }
-            }
+        }
 
         def princ = springSecurityService.getPrincipal()
         //////////////
-        def p=params.customerDesc
+        def p = params.customerDesc
 
         def results = c.list {
             and {
+                if (status == "T")
+                    isNotNull("settlementDate")
+                if (status == "N")
+                    isNull("settlementDate")
                 if (params.contractNoFrom && params.contractNoTo)
                     between("contractNo", params.contractNoFrom, params.contractNoTo)
                 if (params.contractPartNoFrom && params.contractPartNoTo)
@@ -83,9 +91,9 @@ class ContractPhaseReportService {
                 if (params.supplierCodeFrom && params.supplierCodeTo)
                     between("supplierCode", params.supplierCodeFrom, params.supplierCodeTo)
                 if (params.productSymbol)
-                    eq("productSymbol",params.productSymbol)
+                    eq("productSymbol", params.productSymbol)
                 if (params.customerDesc)
-                    eq("customerDesc",params.customerDesc)
+                    eq("customerDesc", params.customerDesc)
                 if (princ instanceof GrailsUser) {
                     def user = User.findByUsername(princ.username)
                     if (user instanceof Broker) {
@@ -162,9 +170,17 @@ class ContractPhaseReportService {
         def format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
         Date contractDateFrom
         Date contractDateTo
+        String status
+
+        if (params.status == "تسویه شده")
+            status = "T"
+        if (params.status == "تسویه نشده")
+            status = "N"
 
 
-        println(params.contractDateFrom?:"")
+
+
+        println(params.contractDateFrom ?: "")
         if (params.contractDateFrom) {
             def dateFrom = params.contractDateFrom
             if (dateFrom instanceof Date)
@@ -174,8 +190,7 @@ class ContractPhaseReportService {
             }
         }
 
-        if (params.contractDateTo)
-        {
+        if (params.contractDateTo) {
             def dateTo = params.contractDateTo
             if (dateTo instanceof Date)
                 contractDateTo = params.contractDateTo
@@ -189,8 +204,7 @@ class ContractPhaseReportService {
         Date importDateFrom
         Date importDateTo
 
-        if (params.importDateFrom)
-        {
+        if (params.importDateFrom) {
             def iDateFrom = params.importDateFrom
             if (iDateFrom instanceof Date)
                 importDateFrom = params.importDateFrom
@@ -199,7 +213,7 @@ class ContractPhaseReportService {
             }
 
         }
-        if (params.importDateTo){
+        if (params.importDateTo) {
             def iDateTo = params.importDateTo
             if (iDateTo instanceof Date)
                 importDateTo = params.importDateTo
@@ -210,10 +224,14 @@ class ContractPhaseReportService {
 
         def princ = springSecurityService.getPrincipal()
         //////////////
-        def p=params.customerDesc
+        def p = params.customerDesc
 
         def results = c.list {
             and {
+                if (status == "T")
+                    isNotNull("settlementDate")
+                if (status == "N")
+                    isNull("settlementDate")
                 if (params.contractNoFrom && params.contractNoTo)
                     between("contractNo", params.contractNoFrom, params.contractNoTo)
                 if (params.contractPartNoFrom && params.contractPartNoTo)
@@ -229,9 +247,9 @@ class ContractPhaseReportService {
                 if (params.supplierCodeFrom && params.supplierCodeTo)
                     between("supplierCode", params.supplierCodeFrom, params.supplierCodeTo)
                 if (params.productSymbol)
-                    eq("productSymbol",params.productSymbol)
+                    eq("productSymbol", params.productSymbol)
                 if (params.customerDesc)
-                    eq("customerDesc",params.customerDesc)
+                    eq("customerDesc", params.customerDesc)
                 if (princ instanceof GrailsUser) {
                     def user = User.findByUsername(princ.username)
                     if (user instanceof Broker) {
@@ -294,11 +312,11 @@ class ContractPhaseReportService {
             contractReport.customerNId = it.customer.nId
             contractReport.customerPhoneNo = it.customer.phoneNo
             contractReport.customerPostalCode = it.customer.postalCode
-            contractReport.manufacturerAddress=it.manufacturer.address
-            contractReport.manufacturerBusinessId=it.manufacturer.businessId
-            contractReport.manufacturerFax=it.manufacturer.fax
-            contractReport.manufacturerPhoneNo=it.manufacturer.phoneNo
-            contractReport.manufacturerPostalCode=it.manufacturer.postalCode
+            contractReport.manufacturerAddress = it.manufacturer.address
+            contractReport.manufacturerBusinessId = it.manufacturer.businessId
+            contractReport.manufacturerFax = it.manufacturer.fax
+            contractReport.manufacturerPhoneNo = it.manufacturer.phoneNo
+            contractReport.manufacturerPostalCode = it.manufacturer.postalCode
             contractReport.releaseDate = formatDate(it.releaseDate)
             contractReport.importDate = formatDate(it.importDate)
 //            contractReport.draftNo = it.drafts.description

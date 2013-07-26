@@ -59,6 +59,15 @@ class PhaseController {
 
             if (contract) {
                 if (contract.lastPhase == prevPhase.phase && params.status == 'Pass') {
+                    if (amendment.freight)
+                        contract.freight=amendment.freight
+                    if (amendment.placeOfUnloading)
+                        contract.placeOfUnloading=amendment.placeOfUnloading
+                    if (amendment.addedTaxReceipt)
+                        contract.addedTaxReceipt=amendment.addedTaxReceipt
+                    if (amendment.addedTaxReceiptDate)
+                        contract.addedTaxReceiptDate=amendment.addedTaxReceiptDate
+                    contract.save()
                     amendment.status = "Visible"
                     phaseInstance.phase = "Finished"
                     phaseInstance.status = params.status

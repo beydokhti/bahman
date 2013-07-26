@@ -12,7 +12,7 @@
                                                                   default="Skip to content&hellip;"/></a>
 
 <div id="create-amendment" class="content scaffold-create" role="main">
-    <h1><g:message code="default.create.label" args="[entityName]"/></h1>
+    %{--<h1><g:message code="default.create.label" args="[entityName]"/></h1>--}%
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
@@ -24,7 +24,7 @@
             </g:eachError>
         </ul>
     </g:hasErrors>
-    <g:form action="save" enctype="multipart/form-data">
+    <g:form action="saveBroker" enctype="multipart/form-data" params="[contractId:contractId]">
         <fieldset class="form">
             <g:render template="form"/>
         </fieldset>

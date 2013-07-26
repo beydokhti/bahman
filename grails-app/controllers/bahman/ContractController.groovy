@@ -97,13 +97,13 @@ class ContractController {
                 def contractValue = Math.round(1.00 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
                 def shareSeller = contractValue - fees
 
-                def cancel =false
+                def cancel = false
                 if (contract.phases.sort { -it.id }?.find { true }.status == "Cancel")
                     cancel = true
 
 //                if (user.code == code || user.description == desc) {
                 if (user.code == code) {
-                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, addedTax: addedTax, fees: fees, contractValue: contractValue, shareSeller: shareSeller,cancel:cancel]
+                    return [contractInstance: contract, userType: userType, limit: limit, showAmendment: showAmendment, addedTax: addedTax, fees: fees, contractValue: contractValue, shareSeller: shareSeller, cancel: cancel]
                 }
 
             }
@@ -467,26 +467,94 @@ class ContractController {
 
         def renderClosure = {
             sheet('Contracts') {
-                cell(0, 0, g.message(code: 'contract.prevStatus'))
-                cell(1, 0, g.message(code: 'contractNo'))
-                cell(2, 0, g.message(code: 'contract.contractPartNo'))
-                cell(3, 0, g.message(code: 'contract.buyerBrokerDesc'))
-                cell(4, 0, g.message(code: 'contract.dealerBrokerDesc'))
-                cell(5, 0, g.message(code: 'contract.customerDesc'))
-                cell(6, 0, g.message(code: 'contract.phase'))
-                cell(7, 0, g.message(code: 'contract.draft'))
-                cell(8, 0, g.message(code: 'contract.productSymbol'))
+                cell(0, 0, g.message(code: 'contractNo'))
+                cell(1, 0, g.message(code: 'contractPartNo'))
+                cell(2, 0, g.message(code: 'contractDate'))
+                cell(3, 0, g.message(code: 'allotmentDate'))
+                cell(4, 0, g.message(code: 'settlementDeadline'))
+                cell(5, 0, g.message(code: 'settlementType'))
+                cell(6, 0, g.message(code: 'buyerBrokerDesc'))
+                cell(7, 0, g.message(code: 'dealerBrokerDesc'))
+                cell(8, 0, g.message(code: 'customerDesc'))
+                cell(9, 0, g.message(code: 'productSymbol'))
+                cell(10, 0, g.message(code: 'productDesc'))
+                cell(11, 0, g.message(code: 'totalShipments'))
+                cell(12, 0, g.message(code: 'price'))
+                cell(13, 0, g.message(code: 'contractType'))
+                cell(14, 0, g.message(code: 'deliveryDate'))
+                cell(15, 0, g.message(code: 'manufacturerDesc'))
+                cell(16, 0, g.message(code: 'deliveryPlace'))
+                cell(17, 0, g.message(code: 'productMainGroup'))
+                cell(18, 0, g.message(code: 'productGroup'))
+                cell(19, 0, g.message(code: 'productSubGroup'))
+                cell(20, 0, g.message(code: 'weight'))
+                cell(21, 0, g.message(code: 'quantity'))
+                cell(22, 0, g.message(code: 'buyerBrokerCode'))
+                cell(23, 0, g.message(code: 'dealerBrokerCode'))
+                cell(24, 0, g.message(code: 'customerCode'))
+                cell(25, 0, g.message(code: 'contract.supplierCode'))
+                cell(26, 0, g.message(code: 'boursePrice'))
+                cell(27, 0, g.message(code: 'settlementDate'))
+                cell(28, 0, g.message(code: 'contractID'))
+                cell(29, 0, g.message(code: 'releaseDate'))
+                cell(30, 0, g.message(code: 'importDate'))
+                cell(31, 0, g.message(code: 'contract.freight'))
+                cell(32, 0, g.message(code: 'contract.placeOfUnloading'))
+                cell(33, 0, g.message(code: 'contract.addedTaxReceipt'))
+                cell(34, 0, g.message(code: 'contract.addedTaxReceiptDate'))
+                cell(34, 0, g.message(code: 'contract.phase'))
 
                 contracts.eachWithIndex { Contract contract, index ->
-                    cell(0, index + 1, contract.prevStatus)
-                    cell(1, index + 1, contract.contractNo)
-                    cell(2, index + 1, contract.contractPartNo)
-                    cell(3, index + 1, contract.buyerBrokerDesc)
-                    cell(4, index + 1, contract.dealerBrokerDesc)
-                    cell(5, index + 1, contract.customerDesc)
-                    cell(6, index + 1, g.message(code: contract?.phases?.sort { -it.id }?.find { true }.phase))
-                    cell(7, index + 1, contract?.drafts?.description ?: "")
-                    cell(8, index + 1, contract.productSymbol)
+//                    //cell(0, index + 1, contract.prevStatus)
+//                    cell(1, index + 1, contract.contractNo)
+//                    cell(2, index + 1, contract.contractPartNo)
+//                    cell(3, index + 1, contract.buyerBrokerDesc)
+//                    cell(4, index + 1, contract.dealerBrokerDesc)
+//                    cell(5, index + 1, contract.customerDesc)
+//
+//                    cell(7, index + 1, contract?.drafts?.description ?: "")
+//                    cell(8, index + 1, contract.productSymbol)
+                    cell(1, index + 1, contract?.contractNo)
+                    cell(0, index + 1, contract?.contractPartNo)
+                    cell(2, index + 1, formatDate(contract?.contractDate))
+                    cell(3, index + 1, formatDate(contract?.allotmentDate))
+                    cell(4, index + 1, formatDate(contract?.settlementDeadline))
+                    cell(5, index + 1, contract?.settlementType)
+                    cell(6, index + 1, contract?.buyerBrokerDesc)
+                    cell(7, index + 1, contract?.dealerBrokerDesc)
+                    cell(8, index + 1, contract?.customerDesc)
+                    cell(9, index + 1, contract?.productSymbol)
+                    cell(10, index + 1, contract?.productDesc)
+                    cell(11, index + 1, contract?.totalShipments)
+                    cell(12, index + 1, contract?.price)
+                    cell(13, index + 1, contract?.contractType)
+                    cell(14, index + 1, contract?.deliveryDate)
+                    cell(15, index + 1, contract?.manufacturerDesc)
+                    cell(16, index + 1, contract?.deliveryPlace)
+                    cell(17, index + 1, contract?.productMainGroup)
+                    cell(18, index + 1, contract?.productGroup)
+                    cell(19, index + 1, contract?.productSubGroup)
+                    cell(20, index + 1, contract?.weight)
+                    cell(21, index + 1, contract?.quantity)
+                    cell(22, index + 1, contract?.buyerBrokerCode)
+                    cell(23, index + 1, contract?.dealerBrokerCode)
+                    cell(24, index + 1, contract?.customerCode)
+                    cell(25, index + 1, contract?.supplierCode)
+                    cell(26, index + 1, contract?.boursePrice)
+                    if (contract?.settlementDate)
+                    cell(27, index + 1, formatDate(contract?.settlementDate))
+                    cell(28, index + 1, contract?.contractID)
+                    cell(29, index + 1, formatDate(contract?.releaseDate))
+                    cell(30, index + 1, formatDate(contract?.importDate))
+                    if (contract?.freight)
+                        cell(31, index + 1, contract?.freight)
+                    if (contract?.placeOfUnloading)
+                        cell(32, index + 1, contract?.placeOfUnloading)
+                    if (contract?.addedTaxReceipt)
+                        cell(33, index + 1, contract?.addedTaxReceipt)
+                    if (contract?.addedTaxReceiptDate)
+                        cell(34, index + 1, formatDate(contract?.addedTaxReceiptDate))
+                    cell(34, index + 1, g.message(code: contract?.phases?.sort { -it.id }?.find { true }?.phase))
                 }
             }
         }
@@ -804,6 +872,21 @@ class ContractController {
             contractInstance = Contract.get(params.contractId)
             render(template: 'addedTaxReceiptForm', model: [contractInstance: contractInstance])
         }
+    }
+
+    private def formatDate(date) {
+        try {
+            if (date) {
+                def cal = Calendar.getInstance()
+                cal.setTime(date)
+
+                def jc = new JalaliCalendar(cal)
+
+                return String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay())
+            }
+        } catch (e) {}
+        return ""
+
     }
 
 }

@@ -8,6 +8,10 @@ class Amendment {
     String comment
     String contractNo
     String contractPartNo
+    String freight
+    String placeOfUnloading
+    String addedTaxReceipt
+    Date addedTaxReceiptDate
 //    String dealerBroker
 //    String buyerBroker
 //    String supplier
@@ -26,6 +30,10 @@ class Amendment {
         phases(nullable: true)
         contractNo(nullable: false, maxSize: 50)
         contractPartNo(nullable: false, maxSize: 50)
+        freight(nullable: true, maxSize: 100)
+        placeOfUnloading(nullable: true, maxSize: 500)
+        addedTaxReceipt(nullable: true, maxSize: 50)
+        addedTaxReceiptDate(nullable: true)
 //        dealerBroker(nullable:true, inList: ['N', 'Y'])
 //        buyerBroker(nullable: true, inList: ['N', 'Y'])
 //        supplier(nullable: true, inList: ['N', 'Y'])

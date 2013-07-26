@@ -186,6 +186,19 @@
         %{--</div>--}%
     </div>
 
+    <div class="row">
+%{--<div class="fieldcontain">--}%
+    <div class="span2">
+        <g:message code="contract.prevStatus.label" default="Prev Status"/>
+
+    </div>
+
+    <div class="span3">
+        %{--<g:select name="status" from="${["هردو","تسویه شده","تسویه نشده" ]}" valueMessagePrefix="contract.settlementDate" />--}%
+    </div>
+    </div>
+
+
     <input id="showReport" class="show" type="button" onclick="reloadGrid()" value="${message(code: 'report.show.label', default: 'Show')}" name="showReport">
     <g:actionSubmit value="${message(code: 'report.export.excel.label', default: 'EXCEL')}" action="xls"/>
     <g:actionSubmit value="${message(code: 'report.export.xml.label', default: 'XML')}" action="xml"/>

@@ -173,6 +173,7 @@
         </g:if>
 
     </ol>
+<sec:ifAllGranted roles="Admin">
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${customerInstance?.id}"/>
@@ -184,6 +185,7 @@
             %{--<g:link class="list" action="list" ><g:message code="default.button.list.label" default="List" /></g:link>--}%
         </fieldset>
     </g:form>
+   </sec:ifAllGranted>
 </div>
 
 </body>
