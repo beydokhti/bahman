@@ -2,13 +2,13 @@ package bahman.report
 
 import bahman.ContractPhaseReportService
 import bahman.Role
+import grails.plugin.jxl.builder.ExcelBuilder
 import groovy.xml.StreamingMarkupBuilder
 import groovy.xml.XmlUtil
 import org.springframework.dao.DataIntegrityViolationException
 import rapidgrails.Field
 
 class ContractReportController {
-    def exportService
     def contractPhaseReportService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -38,94 +38,94 @@ class ContractReportController {
     }
 
     private def export(format) {
+//        def fields = []
+//
 
-        def reportTitle = "Contract"
-        def subTitle = "Details"
+        def reportList = contractPhaseReportService.report(params).list
 
-        def fields = []
+        def renderClosure = {
+            sheet('Contracts') {
+                cell(0, 0, g.message(code: 'contract.contractNo.label'))
+                cell(1, 0, g.message(code: 'contract.contractPartNo.label'))
+                cell(2, 0, g.message(code: 'contract.lastPhase.label'))
+                cell(3, 0, g.message(code: 'contract.contractDate.label'))
+                cell(4, 0, g.message(code: 'contract.allotmentDate.label'))
+                cell(5, 0, g.message(code: 'contract.settlementDeadline.label'))
+                cell(6, 0, g.message(code: 'contract.settlementType.label'))
+                cell(7, 0, g.message(code: 'contract.buyerBrokerDesc.label'))
+                cell(8, 0, g.message(code: 'contract.dealerBrokerDesc.label'))
+                cell(9, 0, g.message(code: 'contract.customerDesc.label'))
+                cell(10, 0, g.message(code: 'contract.productSymbol.label'))
+                cell(11, 0, g.message(code: 'contract.productDesc.label'))
+                cell(12, 0, g.message(code: 'contract.totalShipments.label'))
+                cell(13, 0, g.message(code: 'contract.price.label'))
+                cell(14, 0, g.message(code: 'contract.contractType.label'))
+                cell(15, 0, g.message(code: 'contract.deliveryDate.label'))
+                cell(16, 0, g.message(code: 'contract.manufacturerDesc.label'))
+                cell(17, 0, g.message(code: 'contract.deliveryPlace.label'))
+                cell(18, 0, g.message(code: 'contract.productMainGroup.label'))
+                cell(19, 0, g.message(code: 'contract.productGroup.label'))
+                cell(20, 0, g.message(code: 'contract.productSubGroup.label'))
+                cell(21, 0, g.message(code: 'contract.weight.label'))
+                cell(22, 0, g.message(code: 'contract.quantity.label'))
+                cell(23, 0, g.message(code: 'contract.buyerBrokerCode.label'))
+                cell(24, 0, g.message(code: 'contract.dealerBrokerCode.label'))
+                cell(25, 0, g.message(code: 'contract.customerCode.label'))
+                cell(26, 0, g.message(code: 'contract.supplierCode.label'))
+                cell(27, 0, g.message(code: 'contract.boursePrice.label'))
+                cell(28, 0, g.message(code: 'contract.settlementDate.label'))
+                cell(29, 0, g.message(code: 'contract.contractID.label'))
+                cell(30, 0, g.message(code: 'contract.releaseDate.label'))
+                cell(31, 0, g.message(code: 'contract.importDate.label'))
+                cell(32, 0, g.message(code: 'contract.draftNo.label'))
+                cell(33, 0, g.message(code: 'contract.freight.label'))
 
-        fields << Field.String(name: "contractNo")
-        fields << Field.String(name: "contractPartNo")
-        fields << Field.String(name: "lastPhase")
-        fields << Field.String(name: "contractDate")
-        fields << Field.String(name: "allotmentDate")
-        fields << Field.String(name: "settlementDeadline")
-        fields << Field.String(name: "settlementType")
-        fields << Field.String(name: "buyerBrokerDesc")
-        fields << Field.String(name: "dealerBrokerDesc")
-        fields << Field.String(name: "customerDesc")
-        fields << Field.String(name: "productSymbol")
-        fields << Field.String(name: "productDesc")
-        fields << Field.String(name: "totalShipments")
-        fields << Field.String(name: "price")
-        fields << Field.String(name: "contractType")
-        fields << Field.String(name: "deliveryDate")
-        fields << Field.String(name: "manufacturerDesc")
-        fields << Field.String(name: "deliveryPlace")
-        fields << Field.String(name: "productMainGroup")
-        fields << Field.String(name: "productGroup")
-        fields << Field.String(name: "productSubGroup")
-        fields << Field.String(name: "weight")
-        fields << Field.String(name: "quantity")
-        fields << Field.String(name: "buyerBrokerCode")
-        fields << Field.String(name: "dealerBrokerCode")
-        fields << Field.String(name: "customerCode")
-        fields << Field.String(name: "supplierCode")
-        fields << Field.String(name: "boursePrice")
-        fields << Field.String(name: "settlementDate")
-        fields << Field.String(name: "contractID")
-        fields << Field.String(name: "releaseDate")
-        fields << Field.String(name: "importDate")
-        fields << Field.String(name: "draftNo")
-        fields << Field.String(name: "freight")
+                reportList.eachWithIndex { contract, i ->
+                    cell(0, i + 1, contract.contractNo)
+                    cell(1, i + 1, contract.contractPartNo)
+                    cell(2, i + 1, contract.lastPhase)
+                    cell(3, i + 1, contract.contractDate)
+                    cell(4, i + 1, contract.allotmentDate)
+                    cell(5, i + 1, contract.settlementDeadline)
+                    cell(6, i + 1, contract.settlementType ?: "")
+                    cell(7, i + 1, contract.buyerBrokerDesc)
+                    cell(8, i + 1, contract.dealerBrokerDesc)
+                    cell(9, i + 1, contract.customerDesc)
+                    cell(10, i + 1, contract.productSymbol)
+                    cell(11, i + 1, contract.productDesc)
+                    cell(12, i + 1, contract.totalShipments)
+                    cell(13, i + 1, contract.price)
+                    cell(14, i + 1, contract.contractType)
+                    cell(15, i + 1, contract.deliveryDate)
+                    cell(16, i + 1, contract.manufacturerDesc)
+                    cell(17, i + 1, contract.deliveryPlace)
+                    cell(18, i + 1, contract.productMainGroup)
+                    cell(19, i + 1, contract.productGroup)
+                    cell(20, i + 1, contract.productSubGroup)
+                    cell(21, i + 1, contract.weight)
+                    cell(22, i + 1, contract.quantity)
+                    cell(23, i + 1, contract.buyerBrokerCode)
+                    cell(24, i + 1, contract.dealerBrokerCode)
+                    cell(25, i + 1, contract.customerCode)
+                    cell(26, i + 1, contract.supplierCode)
+                    cell(27, i + 1, contract.boursePrice)
+                    cell(28, i + 1, contract.settlementDate)
+                    cell(29, i + 1, contract.contractID)
+                    cell(30, i + 1, contract.releaseDate)
+                    cell(31, i + 1, contract.importDate)
+                    cell(32, i + 1, contract.draftNo ?: "")
+                    cell(33, i + 1, contract.freight ?: "")
+
+                }
+            }
+        }
 
 
-        def columns = fields.collect {it.title}
-
-        def colMap =[:]
-        colMap.put("contractNo",message(code:"contract.contractNo.label"))
-        colMap.put("contractPartNo",message(code:"contract.contractPartNo.label"))
-        colMap.put("lastPhase",message(code:"contract.lastPhase.label"))
-        colMap.put("contractDate",message(code:"contract.contractDate.label"))
-        colMap.put("allotmentDate",message(code:"contract.allotmentDate.label"))
-        colMap.put("settlementDeadline",message(code:"contract.settlementDeadline.label"))
-        colMap.put("settlementType",message(code:"contract.settlementType.label"))
-        colMap.put("buyerBrokerDesc",message(code:"contract.buyerBrokerDesc.label"))
-        colMap.put("dealerBrokerDesc",message(code:"contract.dealerBrokerDesc.label"))
-        colMap.put("customerDesc",message(code:"contract.customerDesc.label"))
-        colMap.put("productSymbol",message(code:"contract.productSymbol.label"))
-        colMap.put("productDesc",message(code:"contract.productDesc.label"))
-        colMap.put("totalShipments",message(code:"contract.totalShipments.label"))
-        colMap.put("price",message(code:"contract.price.label"))
-        colMap.put("contractType",message(code:"contract.contractType.label"))
-        colMap.put("deliveryDate",message(code:"contract.deliveryDate.label"))
-        colMap.put("manufacturerDesc",message(code:"contract.manufacturerDesc.label"))
-        colMap.put("deliveryPlace",message(code:"contract.deliveryPlace.label"))
-        colMap.put("productMainGroup",message(code:"contract.productMainGroup.label"))
-        colMap.put("productGroup",message(code:"contract.productGroup.label"))
-        colMap.put("productSubGroup",message(code:"contract.productSubGroup.label"))
-        colMap.put("weight",message(code:"contract.weight.label"))
-        colMap.put("quantity",message(code:"contract.quantity.label"))
-        colMap.put("buyerBrokerCode",message(code:"contract.buyerBrokerCode.label"))
-        colMap.put("dealerBrokerCode",message(code:"contract.dealerBrokerCode.label"))
-        colMap.put("customerCode",message(code:"contract.customerCode.label"))
-        colMap.put("supplierCode",message(code:"contract.supplierCode.label"))
-        colMap.put("boursePrice",message(code:"contract.boursePrice.label"))
-        colMap.put("settlementDate",message(code:"contract.settlementDate.label"))
-        colMap.put("contractID",message(code:"contract.contractID.label"))
-        colMap.put("releaseDate",message(code:"contract.releaseDate.label"))
-        colMap.put("importDate",message(code:"contract.importDate.label"))
-        colMap.put("draftNo",message(code:"contract.draftNo.label"))
-        colMap.put("freight",message(code:"contract.freight.label"))
-
-
-
-        def reportList = contractPhaseReportService.report (params).list
-        println(reportList)
-        response.contentType = 'application/vnd.ms-excel'
-        response.setHeader("Content-disposition", "attachment; filename=report.xls")
-        exportService.export("excel",response.outputStream, reportList,columns, colMap, [:],[:])
-
+        def stream = new ByteArrayOutputStream()
+        new ExcelBuilder().workbook(stream, renderClosure)
+        response.contentType = 'application/excel'
+        response.setHeader("Content-disposition", "attachment;filename=export.xls")
+        response.outputStream << stream.toByteArray()
     }
 
 
