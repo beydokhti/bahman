@@ -1,7 +1,10 @@
 package bahman
 
+import bahman.report.ContractReport
 import fi.joensuu.joyds1.calendar.JalaliCalendar
 import grails.plugin.jxl.builder.ExcelBuilder
+import groovy.xml.StreamingMarkupBuilder
+import groovy.xml.XmlUtil
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
@@ -892,7 +895,222 @@ class ContractController {
         }
     }
 
-    private def formatDate(date) {
+    def xml() {
+        def status = params.id
+        def dealerBrokerCode = params.dealerBrokerCode
+        def princ = springSecurityService.getPrincipal()
+        def eqString = ""
+        def userType
+        User user
+        if (princ instanceof GrailsUser) {
+            user = User.findByUsername(princ.username)
+            if (user instanceof Broker) {
+                if (user.brokerType == "BuyerBroker") {
+                    userType= "BuyerBroker"
+                    eqString = "buyerBrokerCode"
+                } else if (user.brokerType == "DealerBroker") {
+                    userType= "DealerBroker"
+                    eqString = "dealerBrokerCode"
+                }
+            } else if (user instanceof Customer) {
+                eqString = "customerCode"
+            } else if (user instanceof Supplier) {
+                userType="Supplier"
+                eqString = "supplierCode"
+            } else if (user instanceof Manufacturer) {
+                userType="Manufacturer"
+                eqString = "supplierCode"
+            }
+        }
+
+        def criteria = {
+
+            eq(eqString, user.code)
+            switch (status) {
+                case "w1":
+                    createAlias "phases", "m"
+                    eq "m.status", "Waiting"
+                    eq "m.phase", userType
+                    break
+                case "w2":
+                    createAlias "phases", "m"
+                    eq "m.status", "Waiting"
+                    ne "m.phase", "DealerBroker"
+                    break
+                case "m":
+                    createAlias "phases", "m"
+                    eq "m.phase", "Finished"
+                    break
+                case "a":
+                    isNotEmpty "amendments"
+                    break
+                case "c":
+                    createAlias "phases", "m"
+                    eq "m.status", "Cancel"
+                    eq "m.phase", "BuyerBroker"
+                    break
+            }
+        }
+
+//        def collection
+        def list = []
+        def results = Contract.withCriteria(criteria)
+        results.each {
+            def contractReport = new ContractReport()
+
+            contractReport.contractNo = it.contractNo
+            contractReport.contractPartNo = it.contractPartNo
+            contractReport.contractDate = formatDate(it.contractDate)
+            contractReport.buyerBrokerDesc = it.buyerBrokerDesc
+            contractReport.dealerBrokerDesc = it.dealerBrokerDesc
+            contractReport.customerDesc = it.customerDesc
+            contractReport.manufacturerDesc = it.manufacturerDesc
+            contractReport.supplierCode = it.supplierCode
+            contractReport.productSymbol = it.productSymbol
+            contractReport.lastPhase = it.phases?.sort { -it.id }?.find { true }?.phase
+            contractReport.draftNo = it.drafts?.description
+            contractReport.allotmentDate = formatDate(it.allotmentDate)
+            contractReport.settlementDeadline = formatDate(it.settlementDeadline)
+            contractReport.settlementType = it.settlementType
+            contractReport.productDesc = it.productDesc
+            contractReport.totalShipments = it.totalShipments
+            contractReport.price = it.price
+            contractReport.contractType = it.contractType
+            contractReport.deliveryDate = formatDate(it.deliveryDate)
+            contractReport.deliveryPlace = it.deliveryPlace
+            contractReport.productMainGroup = it.productMainGroup
+            contractReport.productGroup = it.productGroup
+            contractReport.productSubGroup = it.productSubGroup
+            contractReport.weight = it.weight
+            contractReport.quantity = it.quantity
+            contractReport.buyerBrokerCode = it.buyerBrokerCode
+            contractReport.dealerBrokerCode = it.dealerBrokerCode
+            contractReport.customerCode = it.customerCode
+            contractReport.boursePrice = it.boursePrice
+            contractReport.settlementDate = formatDate(it.settlementDate)
+            contractReport.contractID = it.contractID
+            contractReport.freight = it.freight
+            contractReport.placeOfUnloading = it.placeOfUnloading
+            contractReport.addedTaxReceipt = it.addedTaxReceipt
+            contractReport.addedTaxReceiptDate = formatDate(it.addedTaxReceiptDate)
+            contractReport.customerAddress = it.customer.address
+            contractReport.customerBusinessId = it.customer.businessId
+            contractReport.customerNId = it.customer.nId
+            contractReport.customerPhoneNo = it.customer.phoneNo
+            contractReport.customerPostalCode = it.customer.postalCode
+            contractReport.manufacturerAddress = it.manufacturer.address
+            contractReport.manufacturerBusinessId = it.manufacturer.businessId
+            contractReport.manufacturerFax = it.manufacturer.fax
+            contractReport.manufacturerPhoneNo = it.manufacturer.phoneNo
+            contractReport.manufacturerPostalCode = it.manufacturer.postalCode
+            contractReport.releaseDate = formatDate(it.releaseDate)
+            contractReport.importDate = formatDate(it.importDate)
+//            contractReport.draftNo = it.drafts.description
+            try {
+                if (it.drafts.description)
+                    contractReport.draftNo = it.drafts.description
+            } catch (Exception) {
+
+            }
+            list << contractReport
+        }
+            try{
+//        def collection = contractPhaseReportService.completeReport(params).list
+
+        def process = { binding, element, name ->
+            if( element[ name ] instanceof Collection ) {
+                element[ name ].each { n ->
+                    binding."$name"( n )
+                }
+            }
+            else if( element[ name ] ) {
+                binding."$name"( element[ name ] )
+            }
+        }
+
+        def xmlRep= XmlUtil.serialize( new StreamingMarkupBuilder().with { builder ->
+            builder.bind { binding ->
+                contractList {
+                    list.each { e ->
+                        contract {
+                            process( binding, e, 'contractNo' )
+                            process( binding, e, 'contractPartNo' )
+                            process( binding, e, 'contractDate' )
+                            process( binding, e, 'allotmentDate' )
+                            process( binding, e, 'settlementDeadline' )
+                            process( binding, e, 'settlementType' )
+                            process( binding, e, 'buyerBrokerDesc' )
+                            process( binding, e, 'dealerBrokerDesc' )
+                            process( binding, e, 'customerDesc' )
+                            process( binding, e, 'productSymbol' )
+                            process( binding, e, 'productDesc' )
+                            process( binding, e, 'totalShipments' )
+                            process( binding, e, 'price' )
+                            process( binding, e, 'contractType' )
+                            process( binding, e, 'deliveryDate' )
+                            process( binding, e, 'manufacturerDesc' )
+                            process( binding, e, 'deliveryPlace' )
+                            process( binding, e, 'productMainGroup' )
+                            process( binding, e, 'productGroup' )
+                            process( binding, e, 'weight' )
+                            process( binding, e, 'quantity' )
+                            process( binding, e, 'buyerBrokerCode' )
+                            process( binding, e, 'dealerBrokerCode' )
+                            process( binding, e, 'customerCode' )
+                            process( binding, e, 'supplierCode' )
+                            process( binding, e, 'boursePrice' )
+                            process( binding, e, 'settlementDate' )
+                            process( binding, e, 'contractID' )
+                            process( binding, e, 'releaseDate' )
+                            process( binding, e, 'importDate' )
+                            process( binding, e, 'draftNo' )
+                            process( binding, e, 'freight' )
+                            process( binding, e, 'placeOfUnloading' )
+                            process( binding, e, 'addedTaxReceipt' )
+                            process( binding, e, 'addedTaxReceiptDate' )
+                            process( binding, e, 'customerAddress' )
+                            process( binding, e, 'customerBusinessId' )
+                            process( binding, e, 'customerNId' )
+                            process( binding, e, 'customerPhoneNo' )
+                            process( binding, e, 'customerPostalCode' )
+                            process( binding, e, 'manufacturerAddress' )
+                            process( binding, e, 'manufacturerBusinessId' )
+                            process( binding, e, 'manufacturerFax' )
+                            process( binding, e, 'manufacturerPhoneNo' )
+                            process( binding, e, 'manufacturerPostalCode' )
+                        }
+                    }
+                }
+            }
+        } )
+
+
+        def stringWriter = new StringWriter()
+        def node = new XmlParser().parseText(xmlRep)
+        def printer = new XmlNodePrinter(new PrintWriter(stringWriter))
+
+        printer.preserveWhitespace = true
+        printer.print(node)
+
+        def newXml = stringWriter.toString().trim()
+
+        // The actual file download. This approach actually calls the save dialog of the browser.
+        byte[] byteArr = newXml.getBytes("UTF-8")
+
+
+        response.setHeader("Content-disposition", "attachment; filename=report.xml")
+//            response.setHeader("Content-Length", "${byteArr.length}")
+        response.contentType = "text/xml"
+        response.outputStream << byteArr
+        response.outputStream.flush()
+
+    } catch (Exception e) {
+        e.printStackTrace()
+    }
+
+    }
+
+        private def formatDate(date) {
         try {
             if (date) {
                 def cal = Calendar.getInstance()

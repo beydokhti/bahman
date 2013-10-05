@@ -94,6 +94,7 @@
                 </g:javascript>
                 <input type="button" ng-click="openContractCreateDialog()" value="<g:message code="create"/>">
                 <input type="button" onclick="exportExcel('w1')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('w1')" value="<g:message code="report.export.excel.label"/>">
             </div>
 
             <div id="rB" class="tab-pane active">
@@ -126,6 +127,9 @@
                         <rg:ne name='m.phase' value='BuyerBroker'/>
                     </rg:criteria>
                 </rg:grid>
+                <input type="button" onclick="exportExcel('w2')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('w2')" value="<g:message code="report.export.xml.label"/>">
+
             </div>
 
             <div id="rC" class="tab-pane active">
@@ -149,7 +153,8 @@
                         <rg:eq name='m.phase' value='Finished'/>
                     </rg:criteria>
                 </rg:grid>
-                <input type="button" onclick="exportExcel('w2')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportExcel('m')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('m')" value="<g:message code="report.export.xml.label"/>">
             </div>
 
             <div id="rD" class="tab-pane active">
@@ -181,6 +186,7 @@
                     </rg:criteria>
                 </rg:grid>
                 <input type="button" onclick="exportExcel('a')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('a')" value="<g:message code="report.export.xml.label"/>">
             </div>
 
             <div id="rE" class="tab-pane active" >
@@ -210,6 +216,7 @@
                     </rg:criteria>
                 </rg:grid>
                 <input type="button" onclick="exportExcel('p')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('p')" value="<g:message code="report.export.xml.label"/>">
             </div>
 
             <div id="rF" class="tab-pane active" >
@@ -239,6 +246,7 @@
                     </rg:criteria>
                 </rg:grid>
                 <input type="button" onclick="exportExcel('c')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('c')" value="<g:message code="report.export.xml.label"/>">
             </div>
 
 
@@ -248,6 +256,10 @@
     var exportExcel = function(status) {
         window.location = "<g:createLink action='excel'/>/" + status + "?dealerBrokerCode=${organization?.code}";
     }
+    var exportXml = function(status) {
+        window.location = "<g:createLink action='xml'/>/" + status + "?dealerBrokerCode=${organization?.code}";
+    }
+
 </script>
 </div>
 </body>

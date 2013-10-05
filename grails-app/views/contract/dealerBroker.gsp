@@ -70,6 +70,7 @@
                     </rg:criteria>
                 </rg:grid>
                 <input type="button" onclick="exportExcel('w1')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportXml('w1')" value="<g:message code="report.export.xml.label"/>">
             </div>
 
             <div id="rB" class="tab-pane active">
@@ -126,6 +127,7 @@
                 </g:javascript>
                 <input type="button" ng-click="openContractCreateDialog()" value="<g:message code="create"/>">
                 <input type="button" onclick="exportExcel('w2')" value="<g:message code="report.export.excel.label"/>">
+                <input type="button" onclick="exportExcel('w2')" value="<g:message code="report.export.xml.label"/>">
 
             </div>
 
@@ -258,6 +260,10 @@
         var exportExcel = function(status) {
             window.location = "<g:createLink action='excel'/>/" + status + "?dealerBrokerCode=${organization?.code}";
         }
+        var exportXml = function(status) {
+            window.location = "<g:createLink action='xml'/>/" + status + "?dealerBrokerCode=${organization?.code}";
+        }
+
     </script>
 </div>
 </body>
