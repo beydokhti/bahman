@@ -425,19 +425,19 @@ class ContractController {
             user = User.findByUsername(princ.username)
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
-                    userType= "BuyerBroker"
+                    userType = "BuyerBroker"
                     eqString = "buyerBrokerCode"
                 } else if (user.brokerType == "DealerBroker") {
-                    userType= "DealerBroker"
+                    userType = "DealerBroker"
                     eqString = "dealerBrokerCode"
                 }
             } else if (user instanceof Customer) {
                 eqString = "customerCode"
             } else if (user instanceof Supplier) {
-                userType="Supplier"
+                userType = "Supplier"
                 eqString = "supplierCode"
             } else if (user instanceof Manufacturer) {
-                userType="Manufacturer"
+                userType = "Manufacturer"
                 eqString = "supplierCode"
             }
         }
@@ -527,8 +527,8 @@ class ContractController {
                     cell(2, index + 1, formatDate(contract?.contractDate))
                     cell(3, index + 1, formatDate(contract?.allotmentDate))
                     cell(4, index + 1, formatDate(contract?.settlementDeadline))
-                    if(contract?.settlementType)
-                    cell(5, index + 1, contract?.settlementType)
+                    if (contract?.settlementType)
+                        cell(5, index + 1, contract?.settlementType)
                     cell(6, index + 1, contract?.buyerBrokerDesc)
                     cell(7, index + 1, contract?.dealerBrokerDesc)
                     cell(8, index + 1, contract?.customerDesc)
@@ -541,8 +541,8 @@ class ContractController {
                     cell(15, index + 1, contract?.manufacturerDesc)
                     cell(16, index + 1, contract?.deliveryPlace)
                     cell(17, index + 1, contract?.productMainGroup)
-                    if(contract?.productGroup)
-                    cell(18, index + 1, contract?.productGroup)
+                    if (contract?.productGroup)
+                        cell(18, index + 1, contract?.productGroup)
                     if (contract?.productSubGroup)
                         cell(19, index + 1, contract?.productSubGroup)
                     if (contract?.weight)
@@ -830,6 +830,52 @@ class ContractController {
     }
 
 
+    def printIranco() {
+        def model = [:]
+        def user
+
+        def contract = Contract.findById(params.id)
+        if (!contract.letterNo) {
+            def cal = Calendar.getInstance()
+            cal.setTime(new Date())
+            def jc = new JalaliCalendar(cal)
+            def letterDate = jc.year.toString().substring(2) + "${jc.month}".padLeft(2,'0')
+
+            def princ = springSecurityService.getPrincipal()
+            if (princ instanceof GrailsUser) {
+                user = User.findByUsername(princ.username)
+            }
+            if (user instanceof Broker && !user.iralcoDate.equals(letterDate)) {
+                user.iralcoDate = letterDate
+                user.iralcoSeq = 0
+            }
+            user.iralcoSeq = user.iralcoSeq + 1
+            user.save()
+
+            def letterNo = "${user.iralcoSeq}".padLeft(3, '0')
+
+            contract.letterNo = letterDate + "/" + letterNo
+            contract.save()
+        }
+
+        model.contractInstance = contract
+        model.customer = Customer.findByCode(contract.customerCode)
+        model.draftNo = contract.drafts?.description
+        model.draftDate = contract.drafts?.uploadDate
+        def df = new DecimalFormat("###,###,###,###,###")
+        model.today = new Date()
+        model.quantity = df.format(Integer.valueOf(contract.quantity))
+        model.price = df.format(Integer.valueOf(contract.price))
+        model.addedTax = df.format(Math.round(0.06 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)))
+        def feesNo = Math.round(0.00048 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)) + Math.round(0.0018 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity)) + Math.round(0.0005 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
+        def contractValueNo = Math.round(1.00 * Integer.valueOf(contract.price) * Integer.valueOf(contract.quantity))
+        model.shareSeller = df.format(contractValueNo - feesNo)
+        model.fees = df.format(feesNo)
+        model.contractValue = df.format(contractValueNo)
+
+        return model
+    }
+
     def printRemitSales() {
         def model = [:]
 
@@ -906,19 +952,19 @@ class ContractController {
             user = User.findByUsername(princ.username)
             if (user instanceof Broker) {
                 if (user.brokerType == "BuyerBroker") {
-                    userType= "BuyerBroker"
+                    userType = "BuyerBroker"
                     eqString = "buyerBrokerCode"
                 } else if (user.brokerType == "DealerBroker") {
-                    userType= "DealerBroker"
+                    userType = "DealerBroker"
                     eqString = "dealerBrokerCode"
                 }
             } else if (user instanceof Customer) {
                 eqString = "customerCode"
             } else if (user instanceof Supplier) {
-                userType="Supplier"
+                userType = "Supplier"
                 eqString = "supplierCode"
             } else if (user instanceof Manufacturer) {
-                userType="Manufacturer"
+                userType = "Manufacturer"
                 eqString = "supplierCode"
             }
         }
@@ -1014,103 +1060,102 @@ class ContractController {
             }
             list << contractReport
         }
-            try{
+        try {
 //        def collection = contractPhaseReportService.completeReport(params).list
 
-        def process = { binding, element, name ->
-            if( element[ name ] instanceof Collection ) {
-                element[ name ].each { n ->
-                    binding."$name"( n )
+            def process = { binding, element, name ->
+                if (element[name] instanceof Collection) {
+                    element[name].each { n ->
+                        binding."$name"(n)
+                    }
+                } else if (element[name]) {
+                    binding."$name"(element[name])
                 }
             }
-            else if( element[ name ] ) {
-                binding."$name"( element[ name ] )
-            }
-        }
 
-        def xmlRep= XmlUtil.serialize( new StreamingMarkupBuilder().with { builder ->
-            builder.bind { binding ->
-                contractList {
-                    list.each { e ->
-                        contract {
-                            process( binding, e, 'contractNo' )
-                            process( binding, e, 'contractPartNo' )
-                            process( binding, e, 'contractDate' )
-                            process( binding, e, 'allotmentDate' )
-                            process( binding, e, 'settlementDeadline' )
-                            process( binding, e, 'settlementType' )
-                            process( binding, e, 'buyerBrokerDesc' )
-                            process( binding, e, 'dealerBrokerDesc' )
-                            process( binding, e, 'customerDesc' )
-                            process( binding, e, 'productSymbol' )
-                            process( binding, e, 'productDesc' )
-                            process( binding, e, 'totalShipments' )
-                            process( binding, e, 'price' )
-                            process( binding, e, 'contractType' )
-                            process( binding, e, 'deliveryDate' )
-                            process( binding, e, 'manufacturerDesc' )
-                            process( binding, e, 'deliveryPlace' )
-                            process( binding, e, 'productMainGroup' )
-                            process( binding, e, 'productGroup' )
-                            process( binding, e, 'weight' )
-                            process( binding, e, 'quantity' )
-                            process( binding, e, 'buyerBrokerCode' )
-                            process( binding, e, 'dealerBrokerCode' )
-                            process( binding, e, 'customerCode' )
-                            process( binding, e, 'supplierCode' )
-                            process( binding, e, 'boursePrice' )
-                            process( binding, e, 'settlementDate' )
-                            process( binding, e, 'contractID' )
-                            process( binding, e, 'releaseDate' )
-                            process( binding, e, 'importDate' )
-                            process( binding, e, 'draftNo' )
-                            process( binding, e, 'freight' )
-                            process( binding, e, 'placeOfUnloading' )
-                            process( binding, e, 'addedTaxReceipt' )
-                            process( binding, e, 'addedTaxReceiptDate' )
-                            process( binding, e, 'customerAddress' )
-                            process( binding, e, 'customerBusinessId' )
-                            process( binding, e, 'customerNId' )
-                            process( binding, e, 'customerPhoneNo' )
-                            process( binding, e, 'customerPostalCode' )
-                            process( binding, e, 'manufacturerAddress' )
-                            process( binding, e, 'manufacturerBusinessId' )
-                            process( binding, e, 'manufacturerFax' )
-                            process( binding, e, 'manufacturerPhoneNo' )
-                            process( binding, e, 'manufacturerPostalCode' )
+            def xmlRep = XmlUtil.serialize(new StreamingMarkupBuilder().with { builder ->
+                builder.bind { binding ->
+                    contractList {
+                        list.each { e ->
+                            contract {
+                                process(binding, e, 'contractNo')
+                                process(binding, e, 'contractPartNo')
+                                process(binding, e, 'contractDate')
+                                process(binding, e, 'allotmentDate')
+                                process(binding, e, 'settlementDeadline')
+                                process(binding, e, 'settlementType')
+                                process(binding, e, 'buyerBrokerDesc')
+                                process(binding, e, 'dealerBrokerDesc')
+                                process(binding, e, 'customerDesc')
+                                process(binding, e, 'productSymbol')
+                                process(binding, e, 'productDesc')
+                                process(binding, e, 'totalShipments')
+                                process(binding, e, 'price')
+                                process(binding, e, 'contractType')
+                                process(binding, e, 'deliveryDate')
+                                process(binding, e, 'manufacturerDesc')
+                                process(binding, e, 'deliveryPlace')
+                                process(binding, e, 'productMainGroup')
+                                process(binding, e, 'productGroup')
+                                process(binding, e, 'weight')
+                                process(binding, e, 'quantity')
+                                process(binding, e, 'buyerBrokerCode')
+                                process(binding, e, 'dealerBrokerCode')
+                                process(binding, e, 'customerCode')
+                                process(binding, e, 'supplierCode')
+                                process(binding, e, 'boursePrice')
+                                process(binding, e, 'settlementDate')
+                                process(binding, e, 'contractID')
+                                process(binding, e, 'releaseDate')
+                                process(binding, e, 'importDate')
+                                process(binding, e, 'draftNo')
+                                process(binding, e, 'freight')
+                                process(binding, e, 'placeOfUnloading')
+                                process(binding, e, 'addedTaxReceipt')
+                                process(binding, e, 'addedTaxReceiptDate')
+                                process(binding, e, 'customerAddress')
+                                process(binding, e, 'customerBusinessId')
+                                process(binding, e, 'customerNId')
+                                process(binding, e, 'customerPhoneNo')
+                                process(binding, e, 'customerPostalCode')
+                                process(binding, e, 'manufacturerAddress')
+                                process(binding, e, 'manufacturerBusinessId')
+                                process(binding, e, 'manufacturerFax')
+                                process(binding, e, 'manufacturerPhoneNo')
+                                process(binding, e, 'manufacturerPostalCode')
+                            }
                         }
                     }
                 }
-            }
-        } )
+            })
 
 
-        def stringWriter = new StringWriter()
-        def node = new XmlParser().parseText(xmlRep)
-        def printer = new XmlNodePrinter(new PrintWriter(stringWriter))
+            def stringWriter = new StringWriter()
+            def node = new XmlParser().parseText(xmlRep)
+            def printer = new XmlNodePrinter(new PrintWriter(stringWriter))
 
-        printer.preserveWhitespace = true
-        printer.print(node)
+            printer.preserveWhitespace = true
+            printer.print(node)
 
-        def newXml = stringWriter.toString().trim()
+            def newXml = stringWriter.toString().trim()
 
-        // The actual file download. This approach actually calls the save dialog of the browser.
-        byte[] byteArr = newXml.getBytes("UTF-8")
+            // The actual file download. This approach actually calls the save dialog of the browser.
+            byte[] byteArr = newXml.getBytes("UTF-8")
 
 
-        response.setHeader("Content-disposition", "attachment; filename=report.xml")
+            response.setHeader("Content-disposition", "attachment; filename=report.xml")
 //            response.setHeader("Content-Length", "${byteArr.length}")
-        response.contentType = "text/xml"
-        response.outputStream << byteArr
-        response.outputStream.flush()
+            response.contentType = "text/xml"
+            response.outputStream << byteArr
+            response.outputStream.flush()
 
-    } catch (Exception e) {
-        e.printStackTrace()
+        } catch (Exception e) {
+            e.printStackTrace()
+        }
+
     }
 
-    }
-
-        private def formatDate(date) {
+    private def formatDate(date) {
         try {
             if (date) {
                 def cal = Calendar.getInstance()

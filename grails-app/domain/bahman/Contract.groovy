@@ -41,6 +41,7 @@ class Contract {
     Broker buyerBroker
     Supplier supplier
     Draft drafts
+    String letterNo
     static hasMany = [attachments: Attachment,
             phases: Phase,
             amendments: Amendment]
@@ -89,6 +90,7 @@ class Contract {
         drafts(nullable: true)
         attachments(nullable: true)
         phases(nullable: true)
+        letterNo(nullable:true)
         lastPhase()
     }
 
