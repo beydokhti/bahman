@@ -11,6 +11,7 @@ import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
 import org.grails.plugins.excelimport.ExpectedPropertyType
 import org.springframework.dao.DataIntegrityViolationException
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import rapidgrails.JalaliDateFormat
 
 import java.text.DecimalFormat
 
@@ -829,17 +830,14 @@ class ContractController {
         return model
     }
 
-
-    def printIranco() {
-        def model = [:]
-        def user
-
+    def printIrancoPre() {
         def contract = Contract.findById(params.id)
+        def user
         if (!contract.letterNo) {
             def cal = Calendar.getInstance()
             cal.setTime(new Date())
             def jc = new JalaliCalendar(cal)
-            def letterDate = jc.year.toString().substring(2) + "${jc.month}".padLeft(2,'0')
+            def letterDate = jc.year.toString().substring(2) + "${jc.month}".padLeft(2, '0')
 
             def princ = springSecurityService.getPrincipal()
             if (princ instanceof GrailsUser) {
@@ -857,6 +855,20 @@ class ContractController {
             contract.letterNo = letterDate + "/" + letterNo
             contract.save()
         }
+        def cal = Calendar.getInstance();
+        cal.setTime(contract.settlementDate);
+
+        JalaliCalendar jc = new JalaliCalendar(cal);
+        def date = String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay());
+        [contract: contract, letterNo: contract.letterNo, letterDate: date]
+    }
+
+    def printIranco() {
+        def model = [:]
+
+
+        def contract = Contract.findById(params.id)
+
 
         model.contractInstance = contract
         model.customer = Customer.findByCode(contract.customerCode)
@@ -872,7 +884,8 @@ class ContractController {
         model.shareSeller = df.format(contractValueNo - feesNo)
         model.fees = df.format(feesNo)
         model.contractValue = df.format(contractValueNo)
-
+        model.letterNo = params.letterNo
+        model.letterDate = params.letterDate
         return model
     }
 

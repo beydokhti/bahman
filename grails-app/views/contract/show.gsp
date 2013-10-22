@@ -306,7 +306,7 @@
         <g:link class="print" action="printContract" controller="contract" id="${contractInstance.id}"><g:message
                 code="default.print.label" default="Print"/></g:link>
         <g:if test="${userType == "DealerBroker"}">
-            <g:link class="print" action="printIranco" controller="contract" id="${contractInstance.id}"><g:message
+            <g:link class="print" action="printIrancoPre" controller="contract" id="${contractInstance.id}"><g:message
                     code="default.printIranco.label" default="Print Iranco"/></g:link>
             <g:link class="edit" action="edit" id="${contractInstance?.id}"><g:message
                     code="default.button.edit.label" default="Edit"/></g:link>

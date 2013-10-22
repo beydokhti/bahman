@@ -91,7 +91,7 @@
     border-left:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:15.0pt'>
         <p class=MsoNormal dir=RTL style='margin-bottom:0in;margin-bottom:.0001pt;
         text-align:right;line-height:normal;direction:rtl;unicode-bidi:embed'><b><span
-                lang=AR-SA style='font-family:"B Nazanin";color:black'>شماره :</span><span>${contractInstance.letterNo}</span></b></p>
+                lang=AR-SA style='font-family:"B Nazanin";color:black'>شماره :</span><span>${letterNo}</span></b></p>
     </td>
 </tr>
 <tr style='height:.25in'>
@@ -100,7 +100,7 @@
         <p class=MsoNormal dir=RTL style='margin-bottom:0in;margin-bottom:.0001pt;
         text-align:right;line-height:normal;direction:rtl;unicode-bidi:embed'><b><span
                 lang=AR-SA style='font-family:"B Nazanin";color:black'>تار&#1740;خ:</span></b><b><span
-                dir=LTR style='color:black'>&nbsp;<rg:formatJalaliDate date="${contractInstance?.settlementDeadline}"></rg:formatJalaliDate>&nbsp;</span></b><span dir=RTL></span><b><span
+                dir=LTR style='color:black'>&nbsp;${letterDate}&nbsp;</span></b><span dir=RTL></span><b><span
                 style='font-family:"B Nazanin";color:black'><span dir=RTL></span> </span></b></p>
     </td>
 </tr>
@@ -213,7 +213,7 @@
                     dir=RTL></span> مقدار </span></b><b><span dir=LTR style='font-size:10.5pt;
         color:black'>${quantity}</span></b><span dir=RTL></span><b><span lang=AR-SA
                                                                    style='font-size:10.5pt;font-family:"B Nazanin";color:black'><span dir=RTL></span>
-            ک&#1740;لو گرم کالا به شزح ذ&#1740;ل در بورس فلزات معامله گرد&#1740;د. دستور
+            ک&#1740;لو گرم کالا به شرح ذ&#1740;ل در بورس فلزات معامله گرد&#1740;د. دستور
             فرما&#1740;&#1740;دطبق مقررات بورس فلزات اقدامات لازم جهت صدور حواله  و دستور
             حمل به مقصد خر&#1740;دار صادر گردد.</span></b></p>
     </td>
@@ -328,7 +328,7 @@
                 lang=AR-SA style='font-size:10.5pt;font-family:"B Nazanin";color:black'>مبلغ </span></b><b><span
                 dir=LTR style='font-size:10.5pt;color:black'>${fees}</span></b><span
                 dir=RTL></span><b><span lang=AR-SA style='font-size:10.5pt;font-family:"B Nazanin";
-        color:black'><span dir=RTL></span> ر&#1740;ال- کارمزد کارگزار فروشنده</span></b></p>
+        color:black'><span dir=RTL></span> ر&#1740;ال- جمع کارمزد فروشنده</span></b></p>
     </td>
 </tr>
 <tr style='height:14.25pt'>
@@ -359,7 +359,7 @@
                 lang=AR-SA style='font-size:10.5pt;font-family:"B Nazanin";color:black'>مبلغ</span></b><b><span
                 dir=LTR style='font-size:10.5pt;color:black'>${shareSeller}</span></b><span
                 dir=RTL></span><b><span lang=AR-SA style='font-size:10.5pt;font-family:"B Nazanin";
-        color:black'><span dir=RTL></span> ر&#1740;ال- کارمزد کارگزار خالص سهم
+        color:black'><span dir=RTL></span> ر&#1740;ال- خالص سهم
         فروشنده</span></b></p>
     </td>
 </tr>
@@ -551,7 +551,7 @@
         <p class=MsoNormal dir=RTL style='margin-bottom:0in;margin-bottom:.0001pt;
         text-align:right;line-height:normal;direction:rtl;unicode-bidi:embed'><span
                 dir=RTL></span><b><span lang=AR-SA style='font-size:10.5pt;font-family:"B Nazanin";
-        color:black;margin-right: 80px;'><span dir=RTL></span>                                                                                                                             
+        color:black;margin-right: 175px;'><span dir=RTL></span>                                                                                                                             
         با احترام </span></b></p>
     </td>
 </tr>
