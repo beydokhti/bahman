@@ -856,7 +856,8 @@ class ContractController {
             contract.save()
         }
         def cal = Calendar.getInstance();
-        cal.setTime(contract.settlementDate);
+        if (contract.settlementDate)
+            cal.setTime(contract.settlementDate);
 
         JalaliCalendar jc = new JalaliCalendar(cal);
         def date = String.format("%04d/%02d/%02d", jc.getYear(), jc.getMonth(), jc.getDay());
